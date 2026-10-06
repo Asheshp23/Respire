@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "id": "the-unprompted-mind",
+  "order": 2,
+  "title": "The Unprompted Mind",
+  "subtitle": "Five days of presence between the prompt and the reply",
+  "summary": "Screens ask for an answer every few seconds. This journey takes five gates from the 112 and places them where your day actually happens: before you press send, at the empty prompt box, in a blink, at the reach for your phone, and beneath the endless feed.",
+  "symbol": "cursorarrow.and.square.on.square.dashed",
+  "hue": 6,
+  "origin": {
+    "title": "Where this comes from",
+    "body": "These days are drawn from 112 Gates, a contemporary synthesis of the Vijñāna Bhairava Tantra that reimagines its ancient ways of noticing for an age of screens and synthetic minds. Each day names the gate it comes from, so you can find it again in the library."
+  },
+  "chapters": [
+    {
+      "id": "before-send",
+      "day": 1,
+      "title": "Before You Send",
+      "tagline": "Gate 1 · The In-Between Breath",
+      "gate": 1,
+      "world": "aurora",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 2,
+        "exhale": 5,
+        "holdEmpty": 1,
+        "minutes": 4,
+        "guidance": "At the top of each breath, imagine your finger resting just above send."
+      },
+      "cards": [
+        {
+          "kind": "origin",
+          "eyebrow": "Before you begin",
+          "title": "Old gates, new rooms",
+          "body": "Centuries ago, contemplatives wrote down simple places to rest attention: the turn of the breath, a sound fading, the space behind the eyes. Those places haven't gone anywhere. They're inside every message you send and every reply you wait for. This journey visits five of them.",
+          "openness": 0.3
+        },
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "The cursor over send",
+          "body": "You've written the message. Your finger hovers over send. In that half second, nothing has happened yet, and everything is still possible. Every breath has a moment just like it, at the top, where breathing in has finished and breathing out hasn't begun.",
+          "openness": 1.0
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Pause at the turn",
+          "body": "Breathe in easily. At the top, let the breath rest for a moment, as if your finger were hovering above send. Don't hold tight; just pause. Then let it go. Later today, before you send something that matters, take one breath like this first.",
+          "cue": "In… hover… send.",
+          "openness": 0.9
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Four minutes at Aurora Lake",
+          "body": "A gentle rhythm with a short, loose pause at the top. Each time the lotus opens fully, hover there with it before the breath goes out.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "What changed in the half second before you pressed send?",
+      "completion": {
+        "title": "You found the hover",
+        "body": "One breath before send is enough to turn a reaction into a choice. Tomorrow we'll sit with the prompt box itself, empty."
+      }
+    },
+    {
+      "id": "the-empty-prompt",
+      "day": 2,
+      "title": "The Empty Prompt",
+      "tagline": "Gate 26 · The Unprompted Space",
+      "gate": 26,
+      "world": "desert",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 5,
+        "guidance": "Rest like an empty prompt box: open, blinking, asking nothing."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "A box that could hold anything",
+          "body": "An empty prompt box is strange when you look at it. A cursor blinks in a space that could become any question, any poem, any plan. The desert sky at night is like that too: huge, quiet, waiting, and complete without anything written on it.",
+          "openness": 0.3
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Don't type yet",
+          "body": "Breathe, and let the mind be an empty prompt box. When a thought arrives with a question or a task, notice it like a cursor blink and let it go without typing it. Rest in the space before anything is asked. It isn't blank. It's full of possibility.",
+          "cue": "Blink… and stay open.",
+          "openness": 0.2
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes beneath the stars",
+          "body": "A slow rhythm with a soft rest after each out-breath. In each rest, let your attention be as open as the desert sky, with nothing to prompt.",
+          "openness": 0.5
+        }
+      ],
+      "reflection": "What was there in the space before the first question?",
+      "completion": {
+        "title": "You sat with the empty box",
+        "body": "Not every space needs filling. Tomorrow, a gate that lives in the most ordinary motion of all: the blink."
+      }
+    },
+    {
+      "id": "the-blink",
+      "day": 3,
+      "title": "The Blink",
+      "tagline": "Gate 23 · Blinking as Reset",
+      "gate": 23,
+      "world": "sakura",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 5,
+        "guidance": "Let each out-breath close like an eyelid, and each in-breath open fresh."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "A shutter closing",
+          "body": "You blink about fifteen times a minute, and almost never notice. Each blink is a tiny darkness, a shutter closing on the moment that just was. When the eyes open again, the moon, the blossoms, the screen are all new, if you let them be.",
+          "openness": 0.6
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Rest behind the eyes",
+          "body": "Soften the muscles around your eyes. Let them rest back in their sockets. Then blink slowly and notice the brief dark. Let your out-breath feel like a long, slow blink, and your in-breath like opening onto a fresh moment. Nothing carried over.",
+          "cue": "Close… and open new.",
+          "openness": 0.4
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes under the Sakura Moon",
+          "body": "A soft rhythm with a pause after each out-breath. You can close your eyes in the pauses and open them as the blossoms open.",
+          "openness": 0.7
+        }
+      ],
+      "reflection": "What did the moment after a blink feel like?",
+      "completion": {
+        "title": "Every blink, a fresh start",
+        "body": "Thousands of resets are built into your day already. Tomorrow we'll meet the pull that comes before reaching for your phone."
+      }
+    },
+    {
+      "id": "the-reach",
+      "day": 4,
+      "title": "The Reach",
+      "tagline": "Gate 37 · Dopamine Spike Awareness",
+      "gate": 37,
+      "world": "volcano",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 8,
+        "holdEmpty": 0,
+        "minutes": 5,
+        "guidance": "Feel the pull gather, then let the long out-breath release it."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Heat before the eruption",
+          "body": "Before a volcano erupts, heat gathers under the surface. The urge to check your phone works the same way: a small rising warmth, a pressure in the chest or hands, and then the reach happens almost by itself. Today you'll feel the heat without erupting.",
+          "openness": 0.8
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Feel the pull, don't follow it",
+          "body": "Think of a notification you might be waiting for. Notice where the pull lives: the hands, the chest, the eyes. Feel it as sensation, warm or tight or buzzy, without picking anything up. Then breathe out long and slow, twice as long as the in-breath, and watch the heat settle. If the long exhale ever strains, shorten it.",
+          "cue": "Feel it rise… let it cool.",
+          "openness": 0.6
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes at Ember Peak",
+          "body": "Breathe in for four, out for eight, from gate three, The Down-Step Exhale. As heat gathers in the crater on the in-breath, let the long out-breath carry it away.",
+          "openness": 0.7
+        }
+      ],
+      "reflection": "Where in your body does the urge to check live?",
+      "completion": {
+        "title": "You felt the pull and stayed",
+        "body": "The urge rose and fell without needing anything from you. Tomorrow, the last gate: the screen beneath everything you see."
+      }
+    },
+    {
+      "id": "the-background-canvas",
+      "day": 5,
+      "title": "The Background Canvas",
+      "tagline": "Gate 36 · The Background Canvas",
+      "gate": 36,
+      "world": "thunder",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 5,
+        "holdFull": 2,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 6,
+        "guidance": "Let the feed be the storm, and you the warm, still room it passes."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "The storm and the window",
+          "body": "Lightning, thunder, rain on the glass, and inside the cabin a window glows, untouched. Your feed is like that storm: headlines, messages, flashes of outrage and delight. The awareness watching it is like the warm room. Everything passes across it; nothing stains it.",
+          "openness": 0.5
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Watch it pass",
+          "body": "Let thoughts come like weather: a worry, a plan, a line from something you read. Don't follow them or push them away. Notice instead what they appear on, the quiet space that's there before, during, and after each one. Gate 83 puts it simply: you are the space in which it appears.",
+          "cue": "Let it pass… stay the room.",
+          "openness": 0.3
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Six minutes in the Distant Storm",
+          "body": "A long, easy rhythm with soft pauses at both ends. As the cabin window warms on each in-breath, rest as the room, not the weather.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "What stays the same while everything on the screen changes?",
+      "completion": {
+        "title": "You found the canvas",
+        "body": "The feed will keep moving. So will thoughts. Underneath, something stays quiet. The other 107 gates are waiting in the library whenever you want to explore."
+      }
+    }
+  ]
+}

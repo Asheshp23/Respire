@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "id": "digital-twilight",
+  "order": 5,
+  "title": "Digital Twilight",
+  "subtitle": "Five evenings of stepping out of the screen and into rest",
+  "summary": "The last hour before sleep is often the brightest: feeds, messages, one more video. Over five evenings, from the Sleep & Transitions gates, you'll close the digital day on purpose, let the screen go dark, melt into the mattress, notice the edge of sleep, and, on the last day, catch the first moment of waking.",
+  "symbol": "moon.haze",
+  "hue": 5,
+  "origin": {
+    "title": "Where this comes from",
+    "body": "These evenings come from section VIII of 112 Gates, Sleep, Transitions & Digital Twilight, a contemporary synthesis of the Vijñāna Bhairava Tantra. The old text treats the edges of sleep and waking as rare, open moments of awareness. Each day names its gate so you can find it in the library."
+  },
+  "chapters": [
+    {
+      "id": "closing-the-tabs",
+      "day": 1,
+      "title": "Closing the Tabs",
+      "tagline": "Gate 92 · Exiting the Digital Realm",
+      "gate": 92,
+      "world": "ocean",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 2,
+        "exhale": 6,
+        "holdEmpty": 1,
+        "minutes": 4,
+        "guidance": "With each out-breath, close one more tab and come back to the body."
+      },
+      "cards": [
+        {
+          "kind": "origin",
+          "eyebrow": "Before you begin",
+          "title": "The longest twilight",
+          "body": "The sun sets, but screens keep the day lit long after. These five evenings are about crossing from the bright digital day into night on purpose, one small threshold at a time. Practice them in the evening if you can, ideally after your last scroll.",
+          "openness": 0.3
+        },
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "The tide going out",
+          "body": "At dusk the tide draws back from the beach, slowly, leaving the sand smooth and quiet. Every open tab, chat, and half-read article is a little of you still out there in the water. Tonight you'll call it back in, one tab at a time.",
+          "openness": 0.4
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "One tab, one breath",
+          "body": "Before you begin, close what's open: apps, tabs, conversations. Do it slowly, one at a time, with one breath each. As each one closes, imagine a thread of attention returning from the screen into your body: the hands, the chest, the belly. Notice how much quieter it gets.",
+          "cue": "Close… and come back.",
+          "openness": 0.3
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Four minutes with the tide",
+          "body": "A soft evening rhythm. As the tide draws back on each out-breath, let attention come all the way home from the screen.",
+          "openness": 0.5
+        }
+      ],
+      "reflection": "How many threads of attention were still out there?",
+      "completion": {
+        "title": "You came back from the screen",
+        "body": "Closing the day on purpose makes the night feel wider. Tomorrow evening: the bridge from screen to sleep."
+      }
+    },
+    {
+      "id": "the-bridge-to-sleep",
+      "day": 2,
+      "title": "The Bridge to Sleep",
+      "tagline": "Gate 85 · Screen-to-Sleep Bridge",
+      "gate": 85,
+      "world": "sakura",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 7,
+        "exhale": 8,
+        "holdEmpty": 0,
+        "minutes": 5,
+        "guidance": "Let the mind dim slowly, like moonlight on still water."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "The moon doesn't switch off",
+          "body": "Night doesn't arrive all at once. The sky dims by degrees, the moon rises, petals settle on the pond. A screen goes from bright to black in an instant, but the mind needs a slower dusk. Tonight you'll give it one: a bridge of quiet between the last screen and sleep.",
+          "openness": 0.4
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Let it dim",
+          "body": "After this practice, try putting your devices away for the last half hour before sleep. For now, notice the mind's brightness: the leftover thoughts, plans, images. Don't push them away. Just let each one dim a little on every out-breath, the way the sky darkens a shade at a time.",
+          "cue": "Dim… and dimmer.",
+          "openness": 0.3
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes under the Sakura Moon",
+          "body": "The 4-7-8 rhythm, a classic for winding down: in for four, a soft pause for seven, out for eight. If the pause ever strains, breathe whenever you need to.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "Which thought was the last to dim?",
+      "completion": {
+        "title": "You built the bridge",
+        "body": "Half an hour without a screen is a gift to sleep. Tomorrow evening, you'll let the whole day melt away."
+      }
+    },
+    {
+      "id": "melting-into-the-mattress",
+      "day": 3,
+      "title": "Melting Down",
+      "tagline": "Gate 94 · Dissolving Night Fatigue",
+      "gate": 94,
+      "world": "rain",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 4,
+        "exhale": 8,
+        "holdEmpty": 0,
+        "minutes": 6,
+        "guidance": "Lying down, let the day's strain melt downward, like rain soaking into earth."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Rain soaking in",
+          "body": "Rain doesn't sit on the ground for long; it soaks down into the earth and disappears. The effort of the day can do the same. Thinking, deciding, typing, scrolling: all of it can sink downward, out of the head, through the body, into the bed.",
+          "openness": 0.4
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Down into the bed",
+          "body": "For this one, lie down somewhere safe and comfortable, ideally in bed. Feel the whole back of the body against the mattress. On each long out-breath, let tiredness and strain sink downward: from the forehead, the eyes, the jaw, the shoulders, all the way down and out. Let the bed take it.",
+          "cue": "Sink… and soak away.",
+          "openness": 0.2
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Six minutes at Rain Pond",
+          "body": "A long, slow out-breath for melting. You can close your eyes; the rain will keep time, and the session ends gently on its own.",
+          "openness": 0.4
+        }
+      ],
+      "reflection": "Where in the body did the day's strain finally let go?",
+      "completion": {
+        "title": "You let the day soak away",
+        "body": "Whatever's left of today can wait until tomorrow. Next evening, you'll watch for the edge of sleep itself."
+      }
+    },
+    {
+      "id": "the-edge-of-sleep",
+      "day": 4,
+      "title": "The Edge of Sleep",
+      "tagline": "Gate 86 · The Threshold of Sleep",
+      "gate": 86,
+      "world": "aurora",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 4,
+        "exhale": 8,
+        "holdEmpty": 0,
+        "minutes": 6,
+        "guidance": "Rest at the edge, where clear thinking starts to drift into dream."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "The lights over the lake",
+          "body": "The northern lights drift and fold in ways no one can predict, sometimes clear curtains, sometimes a soft glow. The edge of sleep is like that: thoughts loosen, images appear on their own, logic bends. Most nights we pass through it without ever noticing we're there.",
+          "openness": 0.5
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Watch the drift",
+          "body": "Lying down, let yourself get drowsy. Notice when thoughts stop making perfect sense, when images or snippets drift by on their own. Don't grab for them, and don't try to stay awake. Just be lightly curious about the edge, and if sleep comes, let it.",
+          "cue": "Drift… and let it.",
+          "openness": 0.3
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Six minutes at Aurora Lake",
+          "body": "A slow, sleep-friendly rhythm. Lie down if you can, watch the lotus close, and rest lightly at the edge of sleep. Falling asleep counts as success.",
+          "openness": 0.4
+        }
+      ],
+      "reflection": "Did you notice the moment thinking turned into drifting?",
+      "completion": {
+        "title": "You visited the edge",
+        "body": "There's a soft doorway between waking and sleep every night. The last practice belongs to the morning: tomorrow, catch the moment you wake."
+      }
+    },
+    {
+      "id": "the-waking-flash",
+      "day": 5,
+      "title": "The Waking Flash",
+      "tagline": "Gate 87 · The Waking Flash",
+      "gate": 87,
+      "world": "wind",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 6,
+        "holdEmpty": 1,
+        "minutes": 4,
+        "guidance": "Before the first notification, rest in the first clear moment of the day."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Sunrise over the grass",
+          "body": "In the first light, the prairie is still before the wind picks up, and everything looks new. Waking has a moment like that: a flash of plain awareness before you remember the day, the messages, the plans. It lasts a second or two. Today you'll be there for it.",
+          "openness": 0.6
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Before the phone",
+          "body": "Try this one in the morning if you can. When you wake, before reaching for your phone, stay still for a few breaths. Notice the very first moments: light, sound, the weight of the body, awareness simply switching on. Only then pick up the day. This practice can be your first few minutes of it.",
+          "cue": "Awake… before anything.",
+          "openness": 0.5
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Four minutes in Prairie Wind",
+          "body": "A gentle morning rhythm. As the wind gathers and the grass bends, keep resting in the fresh, clear awareness that came before the day began.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "What was there in the first moment, before you remembered anything?",
+      "completion": {
+        "title": "You caught the waking flash",
+        "body": "Evenings ending on purpose, mornings beginning in awareness: the twilight belongs to you again. The other Sleep & Transitions gates are waiting in the library, and you can set gentle reminders for these moments there."
+      }
+    }
+  ]
+}

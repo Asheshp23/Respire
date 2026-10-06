@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "id": "listening-as-an-anchor",
+  "order": 3,
+  "title": "Listening as an Anchor",
+  "subtitle": "Five days of letting sound bring you here",
+  "summary": "Sound is always arriving: a fan, a street, rain, your own breath. Over five days, from the Inner Sound gates, you'll use what you hear as an anchor, moving from one near sound, to all sound at once, to sound inside the body, and finally to the silence that holds it all.",
+  "symbol": "ear",
+  "hue": 3,
+  "origin": {
+    "title": "Where this comes from",
+    "body": "These days come from section V of 112 Gates, Inner Sound, Resonance & Vibration, a contemporary synthesis of the Vijñāna Bhairava Tantra. The old text returns again and again to sound as a doorway: a tone that fades, a hum, the silence after. Each day names its gate so you can find it in the library."
+  },
+  "chapters": [
+    {
+      "id": "the-nearest-sound",
+      "day": 1,
+      "title": "The Nearest Sound",
+      "tagline": "Gate 51 · The Machine Fan Mantra",
+      "gate": 51,
+      "world": "rain",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 6,
+        "holdEmpty": 1,
+        "minutes": 4,
+        "guidance": "Rest your attention on one steady sound, like rain on the pond."
+      },
+      "cards": [
+        {
+          "kind": "origin",
+          "eyebrow": "Before you begin",
+          "title": "The ears never close",
+          "body": "You can shut your eyes, but not your ears. Sound keeps arriving, whether you notice it or not. That makes it a faithful anchor: whenever attention drifts, there's always something to listen to, right now. This journey uses that, gently, for five days.",
+          "openness": 0.3
+        },
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "A hum you stopped hearing",
+          "body": "Somewhere near you there's probably a steady sound you stopped hearing long ago: a fan, a fridge, a laptop, distant traffic, rain. It has been keeping you company all day. Today it becomes a place to rest, like a single note held under everything else.",
+          "openness": 0.4
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "One sound, then rest",
+          "body": "Find the steadiest sound around you. If it's quiet, turn on the Rain Pond's sound from the session card. Let your attention lean on it like a hand on a railing. When thoughts pull you away, come back to the sound, not with effort, just by listening again.",
+          "cue": "Hear it… rest on it.",
+          "openness": 0.3
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Four minutes at Rain Pond",
+          "body": "A slow rhythm with a long out-breath. Let the rain be your anchor. Each time the circle of stillness widens, listen a little more closely.",
+          "openness": 0.5
+        }
+      ],
+      "reflection": "Which sound had been there all along without you noticing?",
+      "completion": {
+        "title": "You found your anchor",
+        "body": "One steady sound is enough to come back to. Tomorrow we'll open the ears to everything at once."
+      }
+    },
+    {
+      "id": "one-ocean-of-sound",
+      "day": 2,
+      "title": "One Ocean of Sound",
+      "tagline": "Gate 58 · The Cosmic Frequency",
+      "gate": 58,
+      "world": "ocean",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 5,
+        "holdFull": 0,
+        "exhale": 6,
+        "holdEmpty": 1,
+        "minutes": 5,
+        "guidance": "Let every sound join the sea, near and far, in one wide wave."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Many waves, one sea",
+          "body": "From far away, the sea isn't separate waves; it's one wide sound, breathing in and out. Traffic, voices, a keyboard, birds, the hum of a device: up close they compete for attention. Heard all together, they become one ocean, and you can float on it.",
+          "openness": 0.6
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Widen the ears",
+          "body": "Instead of picking one sound, let all of them in at once: the nearest, the farthest, the faint ones at the edges. Don't name them or follow them. Let them blend into a single field of sound, rising and falling, with you resting somewhere in the middle of it.",
+          "cue": "Everything… all at once.",
+          "openness": 0.5
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes with the tide",
+          "body": "A long, easy rhythm. With the ocean's sound on or off, let every sound around you wash in and out with the tide.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "What happened to the noise when you stopped sorting it?",
+      "completion": {
+        "title": "You heard the whole sea",
+        "body": "Noise becomes something softer when nothing has to be singled out. Tomorrow, we'll listen inside the body."
+      }
+    },
+    {
+      "id": "sound-in-the-bones",
+      "day": 3,
+      "title": "Sound in the Bones",
+      "tagline": "Gate 56 · Resonance in the Bones",
+      "gate": 56,
+      "world": "waterfall",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 7,
+        "holdEmpty": 1,
+        "minutes": 5,
+        "guidance": "On each out-breath, feel sound move through your skull and chest."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Water through stone",
+          "body": "A waterfall isn't only heard; you feel it in the rock under your feet. Your own voice works the same way. When you speak or hum, sound travels through your jaw, your skull, your chest. You hear it from the inside before it ever reaches the air.",
+          "openness": 0.7
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Hum, and feel it",
+          "body": "If you're somewhere you can, let a soft hum ride each out-breath, low and easy. Feel where it buzzes: lips, teeth, the bones behind the eyes, the breastbone. If humming isn't possible right now, imagine it and feel the faint echo anyway. Let the hum end whenever the breath does.",
+          "cue": "Hum… and feel it ring.",
+          "openness": 0.5
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes at Hidden Falls",
+          "body": "A long out-breath, made for humming. Let the falls' steady roar stand in for the sound in your bones on any breath you rest silently.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "Where in your body did the sound feel strongest?",
+      "completion": {
+        "title": "You listened from inside",
+        "body": "Sound isn't only out there; you're an instrument too. Tomorrow, we'll listen for the quiet between sounds."
+      }
+    },
+    {
+      "id": "between-the-syllables",
+      "day": 4,
+      "title": "Between the Syllables",
+      "tagline": "Gate 57 · The Silence Between Syllables",
+      "gate": 57,
+      "world": "wind",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 5,
+        "guidance": "Between gusts of wind, listen for the tiny quiet that follows."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Gaps in the gusts",
+          "body": "Wind across the grass comes in gusts, and between them there's a small, bright quiet. Speech is like that too: even a synthetic voice reading quickly leaves tiny gaps between words. Usually we listen for the meaning and skip the gaps. Today, the gaps are the point.",
+          "openness": 0.6
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Listen for the gap",
+          "body": "Listen to whatever sound is around you, or to the wind. Rather than following each sound, wait for the moment just after it ends. That tiny pause is today's anchor. Each time you catch one, rest there for as long as it lasts, then wait for the next.",
+          "cue": "Sound… and the gap.",
+          "openness": 0.4
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes in Prairie Wind",
+          "body": "A rhythm with soft pauses at both ends. Let the breath's own pauses match the gaps between sounds.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "Were the gaps easier to hear than you expected?",
+      "completion": {
+        "title": "You heard between the sounds",
+        "body": "Every sound comes with a silence attached. Tomorrow, the last day: the silence on its own."
+      }
+    },
+    {
+      "id": "the-acoustic-void",
+      "day": 5,
+      "title": "The Silence Underneath",
+      "tagline": "Gate 60 · The Acoustic Void",
+      "gate": 60,
+      "world": "desert",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 7,
+        "holdEmpty": 2,
+        "minutes": 6,
+        "guidance": "Beneath every sound, feel the desert's wide quiet, holding it all."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "The desert at night",
+          "body": "In a desert at night, silence is so complete it almost has weight. A candle crackles and the sound seems to sit inside the quiet, like a star inside the dark. Every sound you've heard this week has been sitting in a quiet like that.",
+          "openness": 0.4
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Feel the quiet",
+          "body": "Listen to whatever sounds remain, and then notice what they appear in: the open quiet that's there before, during, and after each one. Imagine the room going completely silent for a moment, and feel the weight of that. Then let sound return, and notice the silence is still there.",
+          "cue": "Sound… inside silence.",
+          "openness": 0.3
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Six minutes beneath the stars",
+          "body": "A slow rhythm with gentle pauses. In each pause, listen to the quiet itself, the wide stillness the candle's crackle sits inside.",
+          "openness": 0.5
+        }
+      ],
+      "reflection": "What does silence sound like to you now?",
+      "completion": {
+        "title": "You found the silence underneath",
+        "body": "From one steady hum to the quiet that holds everything: sound can bring you home any time you listen. The other Inner Sound gates are waiting in the library."
+      }
+    }
+  ]
+}

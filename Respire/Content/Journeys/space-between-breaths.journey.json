@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "id": "space-between-breaths",
+  "order": 1,
+  "title": "The Space Between Breaths",
+  "subtitle": "Five days with the quiet turn inside every breath",
+  "summary": "Every breath has two small pauses: one at the top, where breathing in becomes breathing out, and one at the bottom, before the next breath arrives. Over five days you'll find them, feel them, and learn to rest in them.",
+  "symbol": "circle.dotted.circle",
+  "hue": 4,
+  "origin": {
+    "title": "Where this comes from",
+    "body": "This journey is inspired by the Vijñāna Bhairava, a contemplative text more than a thousand years old that offers 112 simple ways of noticing ordinary experience. One of the first is attention to the turning points of the breath. We keep its spirit, curiosity about the plain, felt moment, and leave the doctrine aside."
+  },
+  "chapters": [
+    {
+      "id": "the-turn",
+      "day": 1,
+      "title": "The Turn",
+      "tagline": "Find the moment breathing in becomes breathing out",
+      "world": "aurora",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 5,
+        "holdEmpty": 1,
+        "minutes": 4,
+        "guidance": "Each time the lotus opens fully, arrive at the turn."
+      },
+      "cards": [
+        {
+          "kind": "origin",
+          "eyebrow": "Before you begin",
+          "title": "An old way of noticing",
+          "body": "Long ago, contemplatives wrote down simple ways to rest attention in what is already here. Not beliefs, just places to look. This journey borrows one of the oldest: the turning points of the breath. You don't need any background. Only a few quiet minutes, and some curiosity.",
+          "openness": 0.3
+        },
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "The top of the swing",
+          "body": "Push a swing and watch it rise. Just before it falls back, there's an instant where it neither climbs nor drops. It simply hangs there. Every in-breath has that instant too. Most of us breathe a lifetime without noticing it.",
+          "openness": 1.0
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Find the turn",
+          "body": "Breathe in without effort. As the in-breath finishes, be curious about the exact moment it becomes an out-breath. There's no need to hold it or make it longer. Just be there when it happens, the way you might wait for the swing to reach the top.",
+          "cue": "In… the turn… out.",
+          "openness": 0.85
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Four minutes at Aurora Lake",
+          "body": "A gentle rhythm with the softest pause at the top. Watch the lotus open as you breathe in. When it's fully open, let your attention arrive at the turn, then let the breath go.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "Was the turn a point, a pause, or a softening?",
+      "completion": {
+        "title": "You found the turn",
+        "body": "It was there all along, inside every breath. Tomorrow we'll look for its quieter twin, at the bottom of the breath."
+      }
+    },
+    {
+      "id": "the-hollow",
+      "day": 2,
+      "title": "The Hollow",
+      "tagline": "Rest in the hush after the breath goes out",
+      "world": "rain",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 5,
+        "holdEmpty": 2,
+        "minutes": 5,
+        "guidance": "When the breath is out, wait for the water to go still."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Still water after a ripple",
+          "body": "Drop a pebble into a pond. Rings spread, soften, and fade, and then the surface is flat again, though nothing announces the moment it happens. At the bottom of each out-breath, the body goes quiet in the same way.",
+          "openness": 0.0
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Rest at the bottom",
+          "body": "Let the out-breath empty without pushing. When it's done, notice what's there before the next breath arrives on its own. Maybe a hush, a slight hollowness, a sense of waiting. Let it be exactly that. The next breath will come by itself; you don't have to fetch it.",
+          "cue": "Out… empty… and wait.",
+          "openness": 0.1
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes at Rain Pond",
+          "body": "The rhythm leaves two quiet seconds after each out-breath. Let them be loose, never held tight. Rest your attention in the circle of still water at the center of the pond.",
+          "openness": 0.4
+        }
+      ],
+      "reflection": "Did the next breath come by itself, or did you reach for it?",
+      "completion": {
+        "title": "You rested in the hollow",
+        "body": "Two pauses now: one full, one empty. Tomorrow we'll find the breath where it first touches you."
+      }
+    },
+    {
+      "id": "where-breath-begins",
+      "day": 3,
+      "title": "Where Breath Begins",
+      "tagline": "Feel the cool and the warm at the edge of the nose",
+      "world": "desert",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 6,
+        "holdEmpty": 1,
+        "minutes": 5,
+        "guidance": "Rest where the air meets your skin, like the candle in the dark."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "A candle's edge",
+          "body": "A candle flame leans at the faintest movement of air, so faint you'd never feel it on your hand. At the rim of your nostrils, the breath is that delicate: a cool thread coming in, a slightly warmer one going out.",
+          "openness": 0.7
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "The cool and the warm",
+          "body": "Rest your attention where air meets skin, at the tip of the nose or just above the lip. Feel the coolness of the in-breath and the gentle warmth of the out-breath. Then, between them, notice the moment when there's no air moving at all. That stillness is today's doorway.",
+          "cue": "Cool… still… warm.",
+          "openness": 0.5
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes beneath the stars",
+          "body": "A slow rhythm with soft pauses at both ends. As the candle flame rises and settles, keep a light touch of attention on the edge of the nose, and notice when the air goes still.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "Where on your skin did you feel the breath most clearly?",
+      "completion": {
+        "title": "You found where it begins",
+        "body": "The pauses have a texture now: the air stops, and so, for a moment, does something in you. Tomorrow we'll let them grow a little."
+      }
+    },
+    {
+      "id": "widening-the-pause",
+      "day": 4,
+      "title": "Widening the Pause",
+      "tagline": "Let the quiet at each end grow a little roomier",
+      "world": "sakura",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 3,
+        "exhale": 6,
+        "holdEmpty": 3,
+        "minutes": 6,
+        "guidance": "Float in each pause like a petal on the air. Breathe whenever you need to."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Petals on the air",
+          "body": "A cherry petal doesn't fall straight to the ground. It floats, hangs, and drifts, held up by nothing at all. Today the pauses are a little longer: long enough to float in, the way a petal rests on the air before it lands.",
+          "openness": 0.9
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Loose, not held",
+          "body": "There's a difference between holding your breath and letting it pause. Holding grips the throat and chest; pausing leaves them soft, like a held note that stays gentle. Keep the face, throat, and belly easy. If a pause ever strains, simply breathe. The rhythm will wait for you.",
+          "cue": "Float… and let go.",
+          "openness": 1.0
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Six minutes under the Sakura Moon",
+          "body": "Three soft seconds at the top and the bottom of each breath. Watch the blossoms open and close. In each pause, notice how still the moonlit pond is, and how still you can be.",
+          "openness": 0.7
+        }
+      ],
+      "reflection": "Which pause felt easier: the full one, or the empty one?",
+      "completion": {
+        "title": "The pauses have room now",
+        "body": "You let the quiet grow without forcing it. Tomorrow, the last day: instead of passing through the space, you'll rest in it."
+      }
+    },
+    {
+      "id": "resting-in-the-space",
+      "day": 5,
+      "title": "Resting in the Space",
+      "tagline": "Let attention land in the pause, and stay",
+      "world": "ocean",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 5,
+        "holdFull": 2,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 7,
+        "guidance": "Between the waves, let your attention land like a bird."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Between two waves",
+          "body": "Between two waves, the sea doesn't stop; it gathers itself. The space between breaths isn't empty either. It's a place where attention can rest with nothing to do, the way a seabird settles on the water between swells.",
+          "openness": 0.5
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Land, and rest",
+          "body": "Breathe with the tide. Each time a pause comes, let attention settle into it, like a bird landing. When the breath moves again, let it carry you, and then land again. Over time, notice whether some of that stillness stays with you, even while the breath is moving.",
+          "cue": "Land… and rest.",
+          "openness": 0.3
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Seven minutes with the tide",
+          "body": "A long, easy rhythm with soft pauses at both ends. As the tide washes in and draws back, let each pause be a place to land. No need to make anything happen. Just rest where the breath turns.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "What is the space between breaths like for you now?",
+      "completion": {
+        "title": "You've walked the whole path",
+        "body": "The space between breaths is always here, twice in every breath you take. You can visit it any time, even in the middle of a busy day, for the length of a single pause."
+      }
+    }
+  ]
+}

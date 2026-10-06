@@ -1,0 +1,824 @@
+{
+  "schemaVersion": 1,
+  "id": "112-gates",
+  "title": "112 Gates",
+  "subtitle": "Dharanas for an age of screens and synthetic minds",
+  "attribution": "A contemporary synthesis of the Vijñāna Bhairava Tantra, drawing on the traditional Kashmir Shaivism of Swami Lakshmanjoo, the scholarship of Jaideva Singh, Osho’s psychological adaptations, Lorin Roche’s sensory poetry, and modern nondual inquiry, reinterpreted for the era of AI, digital saturation, and synthetic intelligence.",
+  "glossary": [
+    {
+      "term": "Dharana",
+      "meaning": "A way of placing attention; each one is a “gate” into awareness.",
+      "matches": [
+        "dharana"
+      ]
+    },
+    {
+      "term": "Kumbhaka",
+      "meaning": "A natural pause or gentle hold of the breath.",
+      "matches": [
+        "kumbhaka"
+      ]
+    },
+    {
+      "term": "Prana",
+      "meaning": "The felt sense of aliveness and breath moving through the body.",
+      "matches": [
+        "prana",
+        "pranic"
+      ]
+    },
+    {
+      "term": "Anahata",
+      "meaning": "The heart center; also the “unstruck” sound heard in silence.",
+      "matches": [
+        "anahata"
+      ]
+    },
+    {
+      "term": "AUM",
+      "meaning": "A traditional sound, hummed to feel vibration in the chest and skull.",
+      "matches": [
+        "aum"
+      ]
+    },
+    {
+      "term": "Mantra",
+      "meaning": "A sound or phrase repeated to steady attention.",
+      "matches": [
+        "mantra"
+      ]
+    },
+    {
+      "term": "Third eye",
+      "meaning": "The space between the eyebrows, used as a point of attention.",
+      "matches": [
+        "third eye"
+      ]
+    },
+    {
+      "term": "Bhairava",
+      "meaning": "In the text, the vast awareness at the heart of all experience.",
+      "matches": [
+        "bhairava"
+      ]
+    },
+    {
+      "term": "Lila",
+      "meaning": "Play: the world seen as a spontaneous, playful expression.",
+      "matches": [
+        "lila"
+      ]
+    },
+    {
+      "term": "Svarupa",
+      "meaning": "One's own essential nature.",
+      "matches": [
+        "svarupa"
+      ]
+    },
+    {
+      "term": "Ananda",
+      "meaning": "The quiet joy of simply being.",
+      "matches": [
+        "ananda"
+      ]
+    },
+    {
+      "term": "Soham",
+      "meaning": "“I am that”, a phrase traditionally heard in the sound of the breath.",
+      "matches": [
+        "soham"
+      ]
+    },
+    {
+      "term": "Nondual",
+      "meaning": "Not two: no final separation between the one who knows and what is known.",
+      "matches": [
+        "nondual"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "breath-and-neural-pacing",
+      "numeral": "I",
+      "title": "Breath & Neural Pacing",
+      "subtitle": "Pacing the nervous system to the speed of breath, not the machine",
+      "world": "aurora",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 2,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 3
+      },
+      "dharanas": [
+        {
+          "number": 1,
+          "title": "The In-Between Breath",
+          "text": "Pause at the exact turning point between inhale and exhale before pressing send on a prompt or message."
+        },
+        {
+          "number": 2,
+          "title": "The Terminal Kumbhaka",
+          "text": "Retain the breath at the top of an inhalation while staring at a blank screen; experience the quiet fullness before typing.",
+          "caution": "Hold only while it stays easy and the throat stays soft. Skip breath holds if you're pregnant or have heart, lung, or blood-pressure concerns."
+        },
+        {
+          "number": 3,
+          "title": "The Down-Step Exhale",
+          "text": "Extend your exhale to double the length of your inhale to down-regulate your nervous system during high computational workloads.",
+          "caution": "Lengthen the exhale only as far as feels comfortable; there's no need to strain toward exactly double."
+        },
+        {
+          "number": 4,
+          "title": "Prana-Sensing the Palms",
+          "text": "Feel the subtle energetic tingling in your hands as they hover over the keyboard before touching any key."
+        },
+        {
+          "number": 5,
+          "title": "The Heart-Center Nexus",
+          "text": "Focus attention on the central space of your chest every time an AI response streams onto the screen."
+        },
+        {
+          "number": 6,
+          "title": "Subtle Spine Breathing",
+          "text": "Trace breath moving up and down the spinal column while sitting motionless at your workstation."
+        },
+        {
+          "number": 7,
+          "title": "The Breath of Unprompted Silence",
+          "text": "Take three conscious breaths without generating a single thought, task, or search query."
+        },
+        {
+          "number": 8,
+          "title": "Micro-Pause Transition",
+          "text": "Take one full, silent breath every time you switch browser tabs or software applications."
+        },
+        {
+          "number": 9,
+          "title": "The Solar Plexus Anchor",
+          "text": "Rest awareness in the navel center during fast-paced algorithmic news or media feeds."
+        },
+        {
+          "number": 10,
+          "title": "Luminous Inhalation",
+          "text": "Imagine inhaling pure light through the third eye, dissolving screen fatigue and cognitive overload."
+        },
+        {
+          "number": 11,
+          "title": "Dissolving Exhalation",
+          "text": "Exhale through every pore of your skin, releasing all mental momentum and data processing."
+        },
+        {
+          "number": 12,
+          "title": "The Unbroken Thread",
+          "text": "Observe the breath as a continuous, seamless flow beneath all digital interactions and machine speed."
+        }
+      ]
+    },
+    {
+      "id": "sensory-deprogramming",
+      "numeral": "II",
+      "title": "Sensory Deprogramming & Synthetic Perception",
+      "subtitle": "Unlearning the screen and returning to raw sensation",
+      "world": "sakura",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 6,
+        "holdEmpty": 0,
+        "minutes": 3
+      },
+      "dharanas": [
+        {
+          "number": 13,
+          "title": "The Pixellated Gaze",
+          "text": "Soften your visual focus on high-definition screens until images blur into pure geometry and light."
+        },
+        {
+          "number": 14,
+          "title": "Audio Noise De-filtering",
+          "text": "Listen to cooling fans or server noise, not as machine sound, but as raw vibration devoid of meaning."
+        },
+        {
+          "number": 15,
+          "title": "Haptic Pure Feeling",
+          "text": "Touch a device or surface without naming the object; rest entirely in the tactile sensation itself."
+        },
+        {
+          "number": 16,
+          "title": "Screen-Off Darkness",
+          "text": "Close your eyes after viewing a bright display and rest in the inner space behind the eyelids."
+        },
+        {
+          "number": 17,
+          "title": "Eye-Socket Relaxation",
+          "text": "Release tension behind the eyes, feeling the optic nerves rest backward into the brain."
+        },
+        {
+          "number": 18,
+          "title": "Synthetic Voice Dissolution",
+          "text": "Listen to an AI-generated voice, ignoring semantic meaning to focus strictly on pitch and cadence."
+        },
+        {
+          "number": 19,
+          "title": "Peripheral Expansion",
+          "text": "While looking at a screen, simultaneously expand visual awareness to the extreme left and right peripheries."
+        },
+        {
+          "number": 20,
+          "title": "The Unseen Smell",
+          "text": "Focus on the subtle smell of ambient air in your room, anchoring in physical reality over virtual space."
+        },
+        {
+          "number": 21,
+          "title": "Taste of Pure Presence",
+          "text": "Savor a sip of water away from all digital devices, experiencing raw sensation without distraction."
+        },
+        {
+          "number": 22,
+          "title": "The Void Behind the Eyes",
+          "text": "Direct attention backward toward the observer sitting behind your visual field."
+        },
+        {
+          "number": 23,
+          "title": "Blinking as Reset",
+          "text": "Treat every eye blink as an absolute shutter closing on the past moment and opening to pure presence."
+        },
+        {
+          "number": 24,
+          "title": "Multi-Sensory Convergence",
+          "text": "Merge sight, sound, and touch into a single unified field of raw awareness without labels."
+        }
+      ]
+    },
+    {
+      "id": "digital-void",
+      "numeral": "III",
+      "title": "The Digital Void & Cognitive Space",
+      "subtitle": "The open space beneath thought, data, and prompts",
+      "world": "desert",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 3
+      },
+      "dharanas": [
+        {
+          "number": 25,
+          "title": "The Space Between Thoughts",
+          "text": "Notice the silent interval that exists between one thought and the next while drafting text."
+        },
+        {
+          "number": 26,
+          "title": "The Unprompted Space",
+          "text": "Sit before an open AI prompt box without entering a query; rest in unmanifest potential."
+        },
+        {
+          "number": 27,
+          "title": "The Cognitive Cache Clear",
+          "text": "Imagine emptying the mind’s working memory as cleanly as clearing a browser history."
+        },
+        {
+          "number": 28,
+          "title": "The Void Within the Skull",
+          "text": "Feel the interior of your head as vast, hollow, and spacious like outer space."
+        },
+        {
+          "number": 29,
+          "title": "The Unwritten Output",
+          "text": "Allow a thought to arise, peak, and dissolve into silence without turning it into a task or document."
+        },
+        {
+          "number": 30,
+          "title": "Infinite Sky Mind",
+          "text": "Expand your awareness beyond your physical body into the vast sky outside your room."
+        },
+        {
+          "number": 31,
+          "title": "The Gap in the Algorithm",
+          "text": "Recognize that no prediction model can predict the immediate, spontaneous present moment."
+        },
+        {
+          "number": 32,
+          "title": "The Silence After the Sound",
+          "text": "When a notification ping ends, track the fading tail of sound into absolute silence."
+        },
+        {
+          "number": 33,
+          "title": "The Non-Conceptual Screen",
+          "text": "View your display screen as photons illuminating a piece of glass."
+        },
+        {
+          "number": 34,
+          "title": "The Void of No-Data",
+          "text": "Spend 60 seconds resting in awareness without consuming, producing, or organizing information."
+        },
+        {
+          "number": 35,
+          "title": "The Unborn Thought",
+          "text": "Catch a thought at its absolute origin point before it crystallizes into language."
+        },
+        {
+          "number": 36,
+          "title": "The Background Canvas",
+          "text": "Realize that all thoughts, code, and data appear on the unchanging screen of your own consciousness."
+        }
+      ]
+    },
+    {
+      "id": "emotion-and-dopamine",
+      "numeral": "IV",
+      "title": "Emotion, Dopamine & Algorithmic Freedom",
+      "subtitle": "Meeting urgency, outrage, and desire as sensation",
+      "world": "volcano",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 8,
+        "holdEmpty": 0,
+        "minutes": 3
+      },
+      "dharanas": [
+        {
+          "number": 37,
+          "title": "Dopamine Spike Awareness",
+          "text": "Feel the exact physical sensation of urgency when reaching for a device, without acting on it."
+        },
+        {
+          "number": 38,
+          "title": "The Shock of the Sudden",
+          "text": "When an unexpected alert sounds, anchor in the raw flash of awareness before reacting."
+        },
+        {
+          "number": 39,
+          "title": "Detaching Outrage",
+          "text": "Observe online controversy as pure neuro-chemical energy inside your body without taking a side."
+        },
+        {
+          "number": 40,
+          "title": "The Space of Infinite Delight",
+          "text": "When experiencing insight or joy online, rest in the joy itself rather than sharing it."
+        },
+        {
+          "number": 41,
+          "title": "Fulfillment Beyond Feedback",
+          "text": "Experience inner satisfaction without needing external likes, comments, or validation."
+        },
+        {
+          "number": 42,
+          "title": "The Dissolution of Urgency",
+          "text": "Trace the physical sensation of hurry in your chest until it softens and dissolves."
+        },
+        {
+          "number": 43,
+          "title": "Equanimity in the Feed",
+          "text": "Scroll through contrasting news while maintaining a steady, immovable heart center."
+        },
+        {
+          "number": 44,
+          "title": "The Void of Desire",
+          "text": "Notice the quiet space that opens up immediately after a desire or task is satisfied."
+        },
+        {
+          "number": 45,
+          "title": "Neutralizing Curiosity",
+          "text": "Hold a burning question in mind for two minutes before searching or asking an AI, enjoying pure wondering."
+        },
+        {
+          "number": 46,
+          "title": "Sensing the Digital Persona",
+          "text": "Observe the avatar or online persona you project as an object separate from your true self."
+        },
+        {
+          "number": 47,
+          "title": "The Compassion Shift",
+          "text": "View every username or text generator on the web as an expression of the underlying life force."
+        },
+        {
+          "number": 48,
+          "title": "Resting in Unknowing",
+          "text": "Embrace the feeling of \"not knowing\" an answer rather than instantly seeking algorithmic certainty."
+        }
+      ]
+    },
+    {
+      "id": "inner-sound",
+      "numeral": "V",
+      "title": "Inner Sound, Resonance & Vibration",
+      "subtitle": "Sound and vibration as doorways to stillness",
+      "world": "rain",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 6,
+        "holdEmpty": 0,
+        "minutes": 4
+      },
+      "dharanas": [
+        {
+          "number": 49,
+          "title": "The Inner Humming (Anahata)",
+          "text": "Close your ears with your thumbs and listen to the subtle internal reverberation of your body.",
+          "caution": "Press the ear openings closed lightly, never into the ear canal, and stop if anything feels uncomfortable."
+        },
+        {
+          "number": 50,
+          "title": "Vowel Sound Resonance",
+          "text": "Vocalize \"AUM\" or \"AH\" softly, feeling the vibration resonate through the center of your chest.",
+          "caution": "Keep the sound soft and let it end whenever the breath runs out."
+        },
+        {
+          "number": 51,
+          "title": "The Machine Fan Mantra",
+          "text": "Use the steady hum of computer fans or servers as an anchor to tune into inner silence."
+        },
+        {
+          "number": 52,
+          "title": "The Silent Name",
+          "text": "Repeat a sacred sound or mantra internally at the speed of your heartbeat, unaffected by external noise."
+        },
+        {
+          "number": 53,
+          "title": "The Origin of Speech",
+          "text": "Trace where inner monologue arises inside the throat and chest before it becomes words."
+        },
+        {
+          "number": 54,
+          "title": "Subtle Ear Tone",
+          "text": "Focus on the natural high-frequency tone present in quiet rooms, using it as a bridge to pure awareness."
+        },
+        {
+          "number": 55,
+          "title": "The Unspoken Word",
+          "text": "Feel the energy of a sentence in your mind before you type or speak it aloud."
+        },
+        {
+          "number": 56,
+          "title": "Resonance in the Bones",
+          "text": "Feel the sound of your own voice vibrating through your skull and jawbone during calls."
+        },
+        {
+          "number": 57,
+          "title": "The Silence Between Syllables",
+          "text": "Pay attention to the tiny gaps of stillness between words spoken by voice synthesis models."
+        },
+        {
+          "number": 58,
+          "title": "The Cosmic Frequency",
+          "text": "Merge all environmental sound (traffic, typing, voices, ambient tech) into a single ocean of sound."
+        },
+        {
+          "number": 59,
+          "title": "Dissolving Sound in Heart",
+          "text": "Bring the sound of audio into the center of your heart and let it dissolve there."
+        },
+        {
+          "number": 60,
+          "title": "The Acoustic Void",
+          "text": "Imagine your room becoming instantly silent, feeling the weight of absolute quiet."
+        }
+      ]
+    },
+    {
+      "id": "somatic-grounding",
+      "numeral": "VI",
+      "title": "Somatic Grounding in the Machine Age",
+      "subtitle": "Coming back to weight, bone, breath, and skin",
+      "world": "wind",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 6,
+        "holdEmpty": 1,
+        "minutes": 4
+      },
+      "dharanas": [
+        {
+          "number": 61,
+          "title": "Body-Weight Awareness",
+          "text": "Feel the gravitational pull pressing your body firmly into your chair or floor right now."
+        },
+        {
+          "number": 62,
+          "title": "The Hollow Body",
+          "text": "Visualize your physical body as hollow, light, and transparent like a glass container."
+        },
+        {
+          "number": 63,
+          "title": "Spinal Energy Pillar",
+          "text": "Imagine a glowing column of light extending from the base of your spine up through the crown of your head."
+        },
+        {
+          "number": 64,
+          "title": "Skin Boundary Dissolution",
+          "text": "Soften awareness of where your skin ends and the surrounding air begins."
+        },
+        {
+          "number": 65,
+          "title": "Heartbeat Tracking",
+          "text": "Feel your pulse in your fingertips or chest without using a wearable or monitor."
+        },
+        {
+          "number": 66,
+          "title": "Weightlessness Simulation",
+          "text": "Rest in the sensation of buoyancy, feeling as though your body is floating in zero gravity.",
+          "caution": "If floating sensations ever feel unsettling, open your eyes and feel your feet on the floor."
+        },
+        {
+          "number": 67,
+          "title": "Foot-to-Earth Contact",
+          "text": "Place both bare feet flat on the floor and feel connected to the physical earth beneath the building."
+        },
+        {
+          "number": 68,
+          "title": "Heat & Energy Flow",
+          "text": "Feel the warmth in your hands, treating it as pure primal prana rather than physical temperature."
+        },
+        {
+          "number": 69,
+          "title": "Dissolving Stiffness",
+          "text": "Send breath directly into neck and shoulder tightness caused by desk work, letting muscle tension release."
+        },
+        {
+          "number": 70,
+          "title": "The Skeleton Framework",
+          "text": "Shift awareness away from skin and muscles to the strong, calm bone structure supporting you."
+        },
+        {
+          "number": 71,
+          "title": "Pranic Electric Field",
+          "text": "Feel the subtle electromagnetic field surrounding your physical body like an energetic cocoon."
+        },
+        {
+          "number": 72,
+          "title": "Total Body Presence",
+          "text": "Feel your entire body illuminated simultaneously as a single, glowing field of living awareness."
+        }
+      ]
+    },
+    {
+      "id": "consciousness-and-machine",
+      "numeral": "VII",
+      "title": "Consciousness vs. Machine Intelligence",
+      "subtitle": "The awareness that watches all the processing",
+      "world": "thunder",
+      "focus": "focus",
+      "practice": {
+        "inhale": 5,
+        "holdFull": 2,
+        "exhale": 5,
+        "holdEmpty": 2,
+        "minutes": 4
+      },
+      "dharanas": [
+        {
+          "number": 73,
+          "title": "The Observer of the AI",
+          "text": "Recognize that while AI processes data, you are the conscious subject observing the processing."
+        },
+        {
+          "number": 74,
+          "title": "The Uncomputable Self",
+          "text": "Identify the aspect of your awareness that cannot be reduced to code, data, or logic."
+        },
+        {
+          "number": 75,
+          "title": "The Mirror Consciousness",
+          "text": "View your mind as a clean mirror; information reflects on it, but the mirror remains untouched."
+        },
+        {
+          "number": 76,
+          "title": "The Unbroken Witness",
+          "text": "Realize that the awareness watching your screen today is the exact same awareness that watched your childhood."
+        },
+        {
+          "number": 77,
+          "title": "Subject vs. Object Separation",
+          "text": "Distinguish between thoughts (objects) and the awareness perceiving them (subject)."
+        },
+        {
+          "number": 78,
+          "title": "Synthetic vs. Living Awareness",
+          "text": "Feel the living warmth of human consciousness compared to cold computational output."
+        },
+        {
+          "number": 79,
+          "title": "The Self-Luminous Light",
+          "text": "Recognize that awareness illuminates itself without needing any external source of light or input."
+        },
+        {
+          "number": 80,
+          "title": "Awareness of Processing",
+          "text": "Observe your brain analyzing options in real-time, watching thoughts form like software running."
+        },
+        {
+          "number": 81,
+          "title": "The Non-Algorithmic Spark",
+          "text": "Value spontaneous intuition and flashes of creative insight that arise from inner silence."
+        },
+        {
+          "number": 82,
+          "title": "The Universal Mind Field",
+          "text": "Contemplate individual consciousness as a node in an infinite ocean of universal mind."
+        },
+        {
+          "number": 83,
+          "title": "De-Identifying from Content",
+          "text": "Remind yourself: \"I am not the data, I am not the feed; I am the space in which it appears.\""
+        },
+        {
+          "number": 84,
+          "title": "The Source of Intelligence",
+          "text": "Direct your attention back to the origin from which intelligence itself arises."
+        }
+      ]
+    },
+    {
+      "id": "sleep-and-transitions",
+      "numeral": "VIII",
+      "title": "Sleep, Transitions & Digital Twilight",
+      "subtitle": "Thresholds of waking, sleeping, and switching",
+      "world": "ocean",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 7,
+        "exhale": 8,
+        "holdEmpty": 0,
+        "minutes": 5
+      },
+      "dharanas": [
+        {
+          "number": 85,
+          "title": "Screen-to-Sleep Bridge",
+          "text": "Put away devices 30 minutes before sleep and rest in the gradual darkening of mental activity.",
+          "caution": "Practice somewhere safe to rest, never while driving or moving."
+        },
+        {
+          "number": 86,
+          "title": "The Threshold of Sleep",
+          "text": "Catch the exact moment consciousness slips from waking rational thought into dream states.",
+          "caution": "Practice somewhere safe to rest, never while driving or moving."
+        },
+        {
+          "number": 87,
+          "title": "The Waking Flash",
+          "text": "Capture the instant of pure awareness immediately upon waking, before checking notifications."
+        },
+        {
+          "number": 88,
+          "title": "The Dreamlike Nature of Media",
+          "text": "View virtual realities, videos, and feeds as waking dreams flowing through consciousness."
+        },
+        {
+          "number": 89,
+          "title": "Lucid Waking",
+          "text": "Move through your tech-infused environment with the light, spacious awareness of being in a dream."
+        },
+        {
+          "number": 90,
+          "title": "The Pause Between Tasks",
+          "text": "When finishing one project and starting another, take 30 seconds of absolute stillness."
+        },
+        {
+          "number": 91,
+          "title": "Entering the Digital Realm",
+          "text": "State your intention before opening an app or browser, remaining anchored in presence."
+        },
+        {
+          "number": 92,
+          "title": "Exiting the Digital Realm",
+          "text": "Close tabs consciously, visualizing pulling your attention back into your physical body."
+        },
+        {
+          "number": 93,
+          "title": "The Midnight Silence",
+          "text": "Use nighttime quiet to experience the stillness underlying the global digital network."
+        },
+        {
+          "number": 94,
+          "title": "Dissolving Night Fatigue",
+          "text": "Lie down flat, feeling all cognitive strain melt downward into the mattress.",
+          "caution": "Lie somewhere safe and comfortable before you begin."
+        },
+        {
+          "number": 95,
+          "title": "The State Between States",
+          "text": "Rest awareness in transitions—between waking and sleeping, typing and resting, action and inaction."
+        },
+        {
+          "number": 96,
+          "title": "The Eternal Twilight",
+          "text": "Realize that pure consciousness neither wakes nor sleeps, but remains eternally present behind all states."
+        }
+      ]
+    },
+    {
+      "id": "nondual-integration",
+      "numeral": "IX",
+      "title": "Nondual Integration & The Infinite Field",
+      "subtitle": "One field: the screen, the room, the heart",
+      "world": "waterfall",
+      "focus": "focus",
+      "practice": {
+        "inhale": 5,
+        "holdFull": 2,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 5
+      },
+      "dharanas": [
+        {
+          "number": 97,
+          "title": "Bhairava in the Binary",
+          "text": "Recognize the divine nondual consciousness expressed through every electron, circuit, and algorithm."
+        },
+        {
+          "number": 98,
+          "title": "The World as Consciousness",
+          "text": "View your desk, computer, and body as condensations of the same unified field of awareness."
+        },
+        {
+          "number": 99,
+          "title": "Omnipresent Space",
+          "text": "Feel that the space inside your room, inside your screen, and inside your heart are one space."
+        },
+        {
+          "number": 100,
+          "title": "The Unmoving Center",
+          "text": "Remain rooted in your silent inner core while the hyper-fast digital world spins around you."
+        },
+        {
+          "number": 101,
+          "title": "Seeing Consciousness in Others",
+          "text": "Look at people across video calls and recognize the same spark of awareness glowing in them."
+        },
+        {
+          "number": 102,
+          "title": "The Interconnected Mesh",
+          "text": "Contemplate the internet as a physical shadow of the deeper cosmic unity connecting all living beings."
+        },
+        {
+          "number": 103,
+          "title": "Time-Space Collapse",
+          "text": "In the instant of awareness, realize that past, future, and physical distance dissolve into now."
+        },
+        {
+          "number": 104,
+          "title": "The Divine Play (Lila)",
+          "text": "View the entire era of technology and AI as cosmic consciousness exploring itself in digital form."
+        },
+        {
+          "number": 105,
+          "title": "Every Place as Sacred Space",
+          "text": "Realize that a messy workstation or server room is no less sacred than a mountain cave."
+        },
+        {
+          "number": 106,
+          "title": "Every Action as Svarupa",
+          "text": "Perform every click, keystroke, and code commit as an offering of presence to the Supreme Self."
+        },
+        {
+          "number": 107,
+          "title": "The Infinite Potential",
+          "text": "Rest in the unmanifest potential before any reality, text, or form is created."
+        },
+        {
+          "number": 108,
+          "title": "Freedom from Outcomes",
+          "text": "Act, create, and prompt with full engagement while remaining completely detached from the result."
+        },
+        {
+          "number": 109,
+          "title": "The Self Containing the Universe",
+          "text": "Feel that the entire digital cosmos and physical world exist inside your awareness, not outside."
+        },
+        {
+          "number": 110,
+          "title": "Unbroken Joy (Ananda)",
+          "text": "Tap into the effortless bliss that arises simply from being, independent of external stimuli."
+        },
+        {
+          "number": 111,
+          "title": "Dissolution into Light",
+          "text": "Visualize your physical and digital existence dissolving into pure, uncreated, radiant light."
+        },
+        {
+          "number": 112,
+          "title": "The Ultimate Realization (Soham)",
+          "text": "Rest in the final truth of the Vijñāna Bhairava Tantra: \"I am not the machine, I am not the mind; I am the supreme, infinite Consciousness.\""
+        }
+      ]
+    }
+  ]
+}

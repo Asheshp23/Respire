@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://respire.app/schemas/journey.schema.json",
+  "title": "Respire Journey",
+  "description": "A sequence of daily awareness practices told through story cards. One file per journey, bundled as <id>.journey.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "subtitle",
+    "summary",
+    "symbol",
+    "hue",
+    "chapters"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "$ref": "#/$defs/slug"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "subtitle": {
+      "type": "string",
+      "maxLength": 90
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 400
+    },
+    "symbol": {
+      "type": "string",
+      "description": "SF Symbol name for the journey's sidebar row."
+    },
+    "hue": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 6,
+      "description": "Starting index into the prism's seven colors; each day steps one hue onward."
+    },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "body"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string",
+          "maxLength": 600
+        }
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/chapter"
+      }
+    },
+    "order": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Position in the sidebar; lower comes first."
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "chapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "day",
+        "title",
+        "tagline",
+        "world",
+        "focus",
+        "practice",
+        "cards",
+        "reflection",
+        "completion"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/slug"
+        },
+        "day": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "tagline": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "world": {
+          "enum": [
+            "aurora",
+            "ocean",
+            "sakura",
+            "desert",
+            "waterfall",
+            "volcano",
+            "rain",
+            "wind",
+            "thunder"
+          ],
+          "description": "The breath world the chapter is set in."
+        },
+        "focus": {
+          "enum": [
+            "calmAnxiety",
+            "focus",
+            "windDown"
+          ]
+        },
+        "practice": {
+          "$ref": "#/$defs/practice"
+        },
+        "cards": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/card"
+          },
+          "description": "Read in order. The last card must be of kind 'practice'."
+        },
+        "reflection": {
+          "type": "string",
+          "maxLength": 140,
+          "description": "One question to carry after the session."
+        },
+        "completion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "title",
+            "body"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "body": {
+              "type": "string",
+              "maxLength": 300
+            }
+          }
+        },
+        "gate": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 112,
+          "description": "The 112 Gates dharana this day is drawn from; woven into the personal opening."
+        }
+      }
+    },
+    "practice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inhale",
+        "holdFull",
+        "exhale",
+        "holdEmpty",
+        "minutes",
+        "guidance"
+      ],
+      "properties": {
+        "inhale": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "holdFull": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "exhale": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "holdEmpty": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "minutes": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "guidance": {
+          "type": "string",
+          "maxLength": 90,
+          "description": "The guiding line shown on the session screen before breathing begins."
+        }
+      }
+    },
+    "card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "eyebrow",
+        "title",
+        "body"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "origin",
+            "image",
+            "notice",
+            "practice"
+          ]
+        },
+        "eyebrow": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "body": {
+          "type": "string",
+          "maxLength": 480
+        },
+        "cue": {
+          "type": "string",
+          "maxLength": 48,
+          "description": "A short phrase to repeat silently, e.g. 'In… the turn… out.'"
+        },
+        "openness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "How open the world appears in the card's art: 0 empty, 1 full breath."
+        }
+      }
+    }
+  }
+}

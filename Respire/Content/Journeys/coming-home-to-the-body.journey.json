@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "id": "coming-home-to-the-body",
+  "order": 4,
+  "title": "Coming Home to the Body",
+  "subtitle": "Five days of weight, ground, and bone after hours at a screen",
+  "summary": "A day at a screen can leave you living in your eyes and fingertips. Over five days, from the Somatic Grounding gates, you'll come back down: into weight, into the floor beneath you, into tight shoulders letting go, into the strong frame of your bones, and finally into the whole body, all at once.",
+  "symbol": "figure.mind.and.body",
+  "hue": 1,
+  "origin": {
+    "title": "Where this comes from",
+    "body": "These days come from section VI of 112 Gates, Somatic Grounding in the Machine Age, a contemporary synthesis of the Vijñāna Bhairava Tantra. The old text treats the body itself as a doorway to awareness, not something to rise above. Each day names its gate so you can find it in the library."
+  },
+  "chapters": [
+    {
+      "id": "the-weight-of-you",
+      "day": 1,
+      "title": "The Weight of You",
+      "tagline": "Gate 61 · Body-Weight Awareness",
+      "gate": 61,
+      "world": "wind",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 6,
+        "holdEmpty": 1,
+        "minutes": 4,
+        "guidance": "With each out-breath, let the ground take a little more of your weight."
+      },
+      "cards": [
+        {
+          "kind": "origin",
+          "eyebrow": "Before you begin",
+          "title": "Back from the screen",
+          "body": "Hours at a screen pull you up and forward: into the eyes, the hands, the next thing. The body keeps working underneath, mostly unnoticed. This journey brings you back down into it, one simple sensation a day, starting with the most constant one of all: weight.",
+          "openness": 0.3
+        },
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Grass lying down",
+          "body": "When the wind passes, prairie grass bends, then settles back toward the earth. Gravity is doing that to you right now, all the time, pulling you gently toward the ground. You're always being held. Most of the day you just don't feel it.",
+          "openness": 0.5
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Feel what holds you",
+          "body": "Notice where your body touches the chair, the floor, the bed. Feel the pressure there, the weight pressing down. On each out-breath, let a little more of that weight go into whatever is holding you, as if you no longer need to hold yourself up.",
+          "cue": "Out… and heavier.",
+          "openness": 0.3
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Four minutes in Prairie Wind",
+          "body": "A gentle rhythm with a longer out-breath. As the grass bends and settles, let your weight settle with it.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "Where did your body feel most held?",
+      "completion": {
+        "title": "You let yourself be held",
+        "body": "The ground was there all day. Tomorrow we'll meet it on purpose, through the soles of your feet."
+      }
+    },
+    {
+      "id": "feet-on-the-earth",
+      "day": 2,
+      "title": "Feet on the Earth",
+      "tagline": "Gate 67 · Foot-to-Earth Contact",
+      "gate": 67,
+      "world": "desert",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 1,
+        "exhale": 6,
+        "holdEmpty": 1,
+        "minutes": 5,
+        "guidance": "Feel your feet on the floor, and the earth beneath the building."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Sand under the dunes",
+          "body": "Below every floor, below the building and the street, there's earth: the same ground that runs out under the desert dunes. Your feet rest a few layers above it. Today you'll feel down through those layers, and remember what you're standing on.",
+          "openness": 0.5
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Down through the soles",
+          "body": "If you can, take off your shoes and set both feet flat on the floor. Feel the heels, the balls of the feet, each toe. Notice temperature and texture. Then imagine the floor continuing downward, solid all the way to the earth. Breathe out, and feel it hold you.",
+          "cue": "Feet… floor… earth.",
+          "openness": 0.4
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes beneath the stars",
+          "body": "A steady rhythm. Keep part of your attention in the soles of your feet the whole time, as the candle burns on the sand.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "What did your feet notice that you usually miss?",
+      "completion": {
+        "title": "You touched the ground",
+        "body": "From the soles up, you're connected to something solid. Tomorrow we'll help the shoulders and neck let go."
+      }
+    },
+    {
+      "id": "the-desk-lets-go",
+      "day": 3,
+      "title": "The Desk Lets Go",
+      "tagline": "Gate 69 · Dissolving Stiffness",
+      "gate": 69,
+      "world": "rain",
+      "focus": "calmAnxiety",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 0,
+        "exhale": 7,
+        "holdEmpty": 1,
+        "minutes": 5,
+        "guidance": "Breathe into the neck and shoulders; let each out-breath rain the tension down."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Rain off the eaves",
+          "body": "Rain gathers on a roof and runs down the edges, drop by drop, until the roof is clear. Tension from a day at a desk gathers in the neck and shoulders the same way. Today it gets somewhere to run.",
+          "openness": 0.6
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Breathe into the tight places",
+          "body": "Find the tightest spot across your neck and shoulders. On the in-breath, imagine the breath reaching right into it, filling it with space. On the long out-breath, let the shoulders drop a little and the tension run down the arms and out through the fingertips. No forcing; just a little more each time.",
+          "cue": "In to it… let it run.",
+          "openness": 0.4
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes at Rain Pond",
+          "body": "A long out-breath for letting go. With each one, let tension fall from the shoulders like rain from the eaves.",
+          "openness": 0.5
+        }
+      ],
+      "reflection": "Which tight place softened, even a little?",
+      "completion": {
+        "title": "The shoulders came down",
+        "body": "Tension doesn't have to be fought, only given a way out. Tomorrow we'll find the strong frame underneath."
+      }
+    },
+    {
+      "id": "the-quiet-frame",
+      "day": 4,
+      "title": "The Quiet Frame",
+      "tagline": "Gate 70 · The Skeleton Framework",
+      "gate": 70,
+      "world": "volcano",
+      "focus": "focus",
+      "practice": {
+        "inhale": 4,
+        "holdFull": 2,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 5,
+        "guidance": "Rest in your bones: steady and strong, like rock beneath the glow."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Rock beneath the fire",
+          "body": "A volcano's glow and smoke change by the minute, but the mountain itself stays put: old, calm rock. You're like that too. Skin and muscle react to everything; underneath, your skeleton simply holds you up, steady, without needing to be asked.",
+          "openness": 0.5
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "Feel the bones",
+          "body": "Shift attention inward, past skin and muscle, to the bones. Feel the skull balanced on the spine, the ribs around the breath, the pelvis resting on the seat, the long bones of the legs. Let the muscles do less, and let the bones do the holding. Notice how calm the frame is.",
+          "cue": "Bones… holding… easy.",
+          "openness": 0.4
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Five minutes at Ember Peak",
+          "body": "A rhythm with soft pauses at both ends. In each pause, feel how still the frame of your body already is.",
+          "openness": 0.6
+        }
+      ],
+      "reflection": "What does it feel like to let the bones do the holding?",
+      "completion": {
+        "title": "You found the frame",
+        "body": "Steady support was there under every tense moment. Tomorrow, the last day: the whole body, all at once."
+      }
+    },
+    {
+      "id": "the-whole-body-glowing",
+      "day": 5,
+      "title": "The Whole Body Glowing",
+      "tagline": "Gate 72 · Total Body Presence",
+      "gate": 72,
+      "world": "aurora",
+      "focus": "windDown",
+      "practice": {
+        "inhale": 5,
+        "holdFull": 2,
+        "exhale": 6,
+        "holdEmpty": 2,
+        "minutes": 6,
+        "guidance": "Feel the whole body at once, one quiet field of light, like the aurora."
+      },
+      "cards": [
+        {
+          "kind": "image",
+          "eyebrow": "An image",
+          "title": "Light across the whole sky",
+          "body": "The northern lights don't shine in one spot; they fill the whole sky at once, shimmering everywhere together. Attention can do that with the body: not hand, then foot, then chest, but all of it at the same time, one field of living sensation.",
+          "openness": 0.7
+        },
+        {
+          "kind": "notice",
+          "eyebrow": "What to notice",
+          "title": "All of it at once",
+          "body": "Start with the weight, the feet, the shoulders, the bones: everything from this week. Then stop moving around and widen, so you feel the whole body at once, head to toe, inside and out. If it helps, imagine it softly lit from within. Rest there, breathing.",
+          "cue": "Everywhere… all at once.",
+          "openness": 0.6
+        },
+        {
+          "kind": "practice",
+          "eyebrow": "Today's practice",
+          "title": "Six minutes at Aurora Lake",
+          "body": "A long, easy rhythm. As the aurora glows across the sky and the lotus opens, let the whole body be felt as one.",
+          "openness": 0.7
+        }
+      ],
+      "reflection": "How does the body feel when you sense all of it together?",
+      "completion": {
+        "title": "You came home",
+        "body": "Weight, ground, softness, bone, and the whole of you: the body is always here to return to, even mid-scroll. The other Somatic Grounding gates are waiting in the library."
+      }
+    }
+  ]
+}
