@@ -53,6 +53,8 @@ struct JourneyPracticeView: View {
                         .foregroundStyle(Theme.Palette.inkSecondary)
                 }
 
+                PulseCheckRow()
+
                 Button(action: leave) {
                     Text("Return to the journey")
                         .frame(maxWidth: .infinity)

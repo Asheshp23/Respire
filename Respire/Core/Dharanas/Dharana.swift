@@ -30,9 +30,17 @@ nonisolated struct DharanaCollection: Codable, Hashable, Sendable {
         sections.first { section in section.dharanas.contains { $0.number == number } }
     }
 
+    /// Gates practiced before the subtler ones are offered as the gate of the day.
+    static let foundationsFirst = 7
+
     /// One gate per calendar day, walking through all 112 in order and starting over.
-    func dharanaOfTheDay(for date: Date = .now, calendar: Calendar = .current) -> Dharana? {
-        let gates = allDharanas
+    /// Until `practicedCount` reaches `foundationsFirst`, only foundation gates are offered.
+    func dharanaOfTheDay(for date: Date = .now, practicedCount: Int = .max, calendar: Calendar = .current) -> Dharana? {
+        var gates = allDharanas
+        if practicedCount < Self.foundationsFirst {
+            let foundations = gates.filter { $0.level == .foundation }
+            if !foundations.isEmpty { gates = foundations }
+        }
         guard !gates.isEmpty else { return nil }
         let day = calendar.ordinality(of: .day, in: .era, for: date) ?? 0
         return gates[day % gates.count]
@@ -84,8 +92,32 @@ nonisolated struct Dharana: Codable, Hashable, Sendable, Identifiable {
     var text: String
     /// A gentle safety note for gates that ask the body for something specific.
     var caution: String?
+    /// How much the gate asks; older content without a level counts as a foundation.
+    var level: Level?
 
     var id: Int { number }
+
+    nonisolated enum Level: String, Codable, Hashable, Sendable, CaseIterable {
+        case foundation
+        case deepening
+        case nondual
+
+        var title: String {
+            switch self {
+            case .foundation: "Foundation"
+            case .deepening: "Deepening"
+            case .nondual: "Nondual"
+            }
+        }
+
+        var symbol: String {
+            switch self {
+            case .foundation: "circle.bottomhalf.filled"
+            case .deepening: "circle.circle"
+            case .nondual: "circle.dotted"
+            }
+        }
+    }
 }
 
 extension DharanaSection {

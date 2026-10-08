@@ -57,6 +57,21 @@ nonisolated struct BreathPattern: Identifiable, Hashable, Sendable, Codable {
     /// A pattern needs at least an inhale and an exhale to be breathable.
     var isValid: Bool { inhale > 0 && exhale > 0 }
 
+    /// The rhythm in words a beginner can follow: "In 4s · Hold 7s · Out 8s".
+    var timingLabel: String {
+        BreathPhase.allCases.compactMap { phase in
+            let seconds = duration(of: phase)
+            guard seconds > 0 else { return nil }
+            let name = switch phase {
+            case .inhale: "In"
+            case .holdFull, .holdEmpty: "Hold"
+            case .exhale: "Out"
+            }
+            return "\(name) \(seconds.formatted(.number.precision(.fractionLength(0...1))))s"
+        }
+        .joined(separator: " · ")
+    }
+
     /// Compact rhythm label such as "4 · 7 · 8".
     var rhythmLabel: String {
         BreathPhase.allCases
@@ -67,23 +82,36 @@ nonisolated struct BreathPattern: Identifiable, Hashable, Sendable, Codable {
     }
 }
 
-extension BreathPattern {
+nonisolated extension BreathPattern {
+    /// In 4, out 6: six breaths a minute with a longer out-breath, the easiest way to settle.
+    static let calm = BreathPattern(
+        id: "calm", name: "Calm", summary: "A longer out-breath to settle",
+        inhale: 4, holdFull: 0, exhale: 6, holdEmpty: 0
+    )
+
+    /// In 4, out 8: a long, slow release before rest, with no holds to manage.
+    static let unwind = BreathPattern(
+        id: "unwind", name: "Unwind", summary: "A long, slow out-breath before rest",
+        inhale: 4, holdFull: 0, exhale: 8, holdEmpty: 0
+    )
+
     static let box = BreathPattern(
-        id: "box", name: "Box", summary: "Steady focus and composure",
+        id: "box", name: "Box", summary: "Four equal counts: in, hold, out, hold",
         inhale: 4, holdFull: 4, exhale: 4, holdEmpty: 4
     )
 
     static let relaxing478 = BreathPattern(
-        id: "478", name: "4-7-8", summary: "Deep relaxation before sleep",
+        id: "478", name: "4-7-8", summary: "A long hold and a longer out-breath, for sleep",
         inhale: 4, holdFull: 7, exhale: 8, holdEmpty: 0
     )
 
     static let coherent = BreathPattern(
-        id: "coherent", name: "Coherent", summary: "Balance heart-rate variability",
+        id: "coherent", name: "Coherent", summary: "Even and steady, about five breaths a minute",
         inhale: 5.5, holdFull: 0, exhale: 5.5, holdEmpty: 0
     )
 
-    static let presets: [BreathPattern] = [.box, .relaxing478, .coherent]
+    /// Gentlest first: no-hold rhythms, then the classic patterns with holds.
+    static let presets: [BreathPattern] = [.calm, .coherent, .unwind, .box, .relaxing478]
 
     static let customDefault = BreathPattern(
         id: "custom", name: "Custom", summary: "Your own rhythm",

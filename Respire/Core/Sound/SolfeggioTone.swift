@@ -64,6 +64,8 @@ enum SolfeggioTone: String, CaseIterable, Identifiable {
         case .wind: .hz741
         case .desert: .hz852
         case .aurora: .hz963
+        // The tone most often sung to water.
+        case .cymatics: .hz528
         }
     }
 
@@ -93,6 +95,7 @@ extension BreathTheme {
         case .rain: "Rain on the pond, softer as you breathe out"
         case .wind: "Gusts that rise with the in-breath"
         case .thunder: "Rain, and thunder rolling far away"
+        case .cymatics: "A singing bowl, humming as you breathe"
         }
     }
 }

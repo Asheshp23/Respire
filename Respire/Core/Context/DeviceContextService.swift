@@ -125,6 +125,12 @@ actor DeviceContextService {
 
     // MARK: - Location
 
+    /// Asks for approximate location up front, during onboarding, so the first opening
+    /// doesn't wait on the prompt. The location found is discarded.
+    func requestLocationAccess() async {
+        _ = await coarseLocation()
+    }
+
     /// A one-shot, while-in-use, approximate location, rounded to ~1 km.
     private func coarseLocation() async -> CLLocation? {
         let status = await MainActor.run { CLLocationManager().authorizationStatus }

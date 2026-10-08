@@ -2,8 +2,8 @@
 //  PatternListView.swift
 //  Respire
 //
-//  Sidebar of breathing rhythms, in the dark room over a still version of the
-//  chosen world. On iPhone this becomes the root of the navigation stack.
+//  Everything in the app on one list: Today, Places, the practice library, courses,
+//  and the rhythms. Each row opens its place in the tabs.
 //
 
 import SwiftUI
@@ -13,18 +13,32 @@ struct PatternListView: View {
     @Environment(JourneyLibrary.self) private var journeys
     @Environment(JourneyProgressStore.self) private var progress
     @Environment(DharanaLibrary.self) private var gates
+    @Environment(SessionViewModel.self) private var session
 
     var body: some View {
-        @Bindable var library = library
+        List {
+            Section {
+                TodayRow(isSelected: library.tab == .today) { library.tab = .today }
+            }
 
-        List(selection: $library.selection) {
             if let collection = gates.collection {
                 Section {
+                    PlacesRow(isSelected: false) {
+                        var path = NavigationPath()
+                        path.append(BreatheRoute.places)
+                        library.breathePath = path
+                        library.tab = .breathe
+                    }
                     GatesRow(
                         collection: collection,
                         practiced: gates.practiced.count,
-                        isSelected: library.selection == .gates
-                    )
+                        isSelected: false
+                    ) {
+                        var path = NavigationPath()
+                        path.append(CoursesRoute.practices)
+                        library.coursesPath = path
+                        library.tab = .courses
+                    }
                 } header: {
                     sectionHeader("Explore")
                 }
@@ -36,8 +50,8 @@ struct PatternListView: View {
                         JourneyRow(
                             journey: journey,
                             completed: progress.completedCount(in: journey),
-                            isSelected: library.selection == .journey(journey.id)
-                        )
+                            isSelected: false
+                        ) { library.openCourse(journey.id) }
                     }
                 } header: {
                     sectionHeader("Journeys")
@@ -46,14 +60,14 @@ struct PatternListView: View {
 
             Section {
                 ForEach(library.presets) { pattern in
-                    PatternRow(pattern: pattern, isSelected: library.selection == .pattern(pattern.id))
+                    PatternRow(pattern: pattern, isSelected: false) { library.open(pattern, in: session) }
                 }
             } header: {
                 sectionHeader("How to breathe")
             }
 
             Section {
-                PatternRow(pattern: library.custom, isSelected: library.selection == .pattern(library.custom.id))
+                PatternRow(pattern: library.custom, isSelected: false) { library.open(library.custom, in: session) }
             } header: {
                 sectionHeader("Your own")
             }
@@ -75,9 +89,10 @@ struct PatternListView: View {
 private struct PatternRow: View {
     let pattern: BreathPattern
     let isSelected: Bool
+    var action: () -> Void
 
     var body: some View {
-        NavigationLink(value: SidebarItem.pattern(pattern.id)) {
+        Button(action: action) {
             VStack(alignment: .leading, spacing: Theme.Space.xs) {
                 BreathShape(pattern: pattern, isLive: isSelected)
                     .frame(height: 44)
@@ -117,12 +132,13 @@ private struct JourneyRow: View {
     let journey: Journey
     let completed: Int
     let isSelected: Bool
+    var action: () -> Void
 
     private var hue: Color { Theme.prism[journey.hue % Theme.prism.count] }
     private var fraction: Double { Double(completed) / Double(max(journey.chapters.count, 1)) }
 
     var body: some View {
-        NavigationLink(value: SidebarItem.journey(journey.id)) {
+        Button(action: action) {
             HStack(spacing: Theme.Space.s) {
                 ZStack {
                     Circle().stroke(.white.opacity(0.12), lineWidth: 3)
@@ -175,10 +191,11 @@ private struct GatesRow: View {
     let collection: DharanaCollection
     let practiced: Int
     let isSelected: Bool
+    var action: () -> Void
 
     var body: some View {
-        let today = collection.dharanaOfTheDay()
-        NavigationLink(value: SidebarItem.gates) {
+        let today = collection.dharanaOfTheDay(practicedCount: practiced)
+        Button(action: action) {
             HStack(spacing: Theme.Space.s) {
                 ZStack {
                     Circle()
@@ -204,6 +221,83 @@ private struct GatesRow: View {
                             .font(Theme.Typography.caption)
                             .foregroundStyle(Theme.Palette.inkTertiary)
                     }
+                }
+            }
+            .padding(.vertical, Theme.Space.xxs)
+        }
+        .listRowBackground(
+            IceGlass(shape: RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous), frost: false)
+                .overlay {
+                    if isSelected {
+                        RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous)
+                            .strokeBorder(AngularGradient(colors: Theme.prism + [Theme.prism[0]], center: .center), lineWidth: 2)
+                    }
+                }
+                .padding(.vertical, 3)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+}
+
+/// Today: the day's starting point.
+private struct TodayRow: View {
+    let isSelected: Bool
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Label {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Today")
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(Theme.Palette.ink)
+                    Text(Date.now.formatted(.dateTime.weekday(.wide).month().day()))
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Palette.inkSecondary)
+                }
+            } icon: {
+                Image(systemName: "sun.horizon")
+                    .font(.title3)
+                    .foregroundStyle(Theme.prism[1])
+                    .frame(width: 44, height: 44)
+            }
+            .padding(.vertical, Theme.Space.xxs)
+        }
+        .listRowBackground(
+            IceGlass(shape: RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous), frost: false)
+                .overlay {
+                    if isSelected {
+                        RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous)
+                            .strokeBorder(AngularGradient(colors: Theme.prism + [Theme.prism[0]], center: .center), lineWidth: 2)
+                    }
+                }
+                .padding(.vertical, 3)
+        )
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+}
+
+/// Places: twenty little destinations, one step per breath.
+private struct PlacesRow: View {
+    let isSelected: Bool
+    var action: () -> Void
+
+    var body: some View {
+        let today = Place.placeOfTheDay()
+        Button(action: action) {
+            HStack(spacing: Theme.Space.s) {
+                PlaceCanvas(place: today, frame: .still(steps: today.steps, at: 0.6))
+                    .frame(width: 44, height: 44)
+                    .clipShape(Circle())
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Places")
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(Theme.Palette.ink)
+                    Text("Today: \(today.title)")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Palette.inkSecondary)
+                        .lineLimit(1)
                 }
             }
             .padding(.vertical, Theme.Space.xxs)

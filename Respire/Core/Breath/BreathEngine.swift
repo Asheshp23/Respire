@@ -122,6 +122,26 @@ final class BreathEngine {
         )
     }
 
+    /// Breaths so far, including the fraction of the current one: 2.4 means two complete
+    /// cycles and 40% of the third. Places advance one stage per breath with this.
+    func cycleProgress(at date: Date) -> Double {
+        switch state {
+        case .idle: return 0
+        case .finished: return Double(completedCycles)
+        case .running, .paused: break
+        }
+        let cycle = pattern.cycleDuration
+        guard cycle > 0 else { return Double(completedCycles) }
+        let snapshot = snapshot(at: date)
+        var elapsed = 0.0
+        for earlier in BreathPhase.allCases {
+            if earlier == phase { break }
+            elapsed += pattern.duration(of: earlier)
+        }
+        elapsed += snapshot.phaseProgress * pattern.duration(of: phase)
+        return Double(completedCycles) + min(elapsed / cycle, 1)
+    }
+
     /// Sinusoidal ease-in-out mirrors the natural acceleration/deceleration of airflow.
     nonisolated static func lungVolume(for phase: BreathPhase, progress: Double) -> Double {
         let eased = 0.5 - 0.5 * cos(.pi * progress)

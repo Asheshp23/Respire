@@ -28,11 +28,8 @@ struct DharanaLibraryView: View {
             }
         }
         .paperBackground()
-        .navigationTitle("112 Gates")
+        .navigationTitle("112 Practices")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: Int.self) { number in
-            DharanaDetailView(number: number)
-        }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button("Moments", systemImage: "bell") { isShowingMoments = true }
@@ -49,7 +46,7 @@ struct DharanaLibraryView: View {
             LazyVStack(alignment: .leading, spacing: Theme.Space.xl) {
                 header(collection)
 
-                if query.isEmpty, sectionFilter == nil, let today = collection.dharanaOfTheDay(),
+                if query.isEmpty, sectionFilter == nil, let today = library.gateOfTheDay(),
                    let section = collection.section(containing: today.number) {
                     TodayGateCard(dharana: today, section: section, hue: Theme.prism[section.hue(in: collection)])
                 }
@@ -319,6 +316,11 @@ private struct DharanaTile: View {
                 .lineLimit(3)
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 0)
+            if let level = dharana.level {
+                Label(level.title, systemImage: level.symbol)
+                    .font(Theme.Typography.caption.weight(.medium))
+                    .foregroundStyle(Theme.Palette.inkTertiary)
+            }
         }
         .padding(Theme.Space.m)
         .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
@@ -329,7 +331,7 @@ private struct DharanaTile: View {
         }
         .contentShape(shape)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Gate \(dharana.number), \(dharana.title)\(isPracticed ? ", practiced" : "")")
+        .accessibilityLabel("Gate \(dharana.number), \(dharana.title)\(dharana.level.map { ", \($0.title)" } ?? "")\(isPracticed ? ", practiced" : "")")
         .accessibilityHint(dharana.text)
     }
 }

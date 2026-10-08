@@ -117,7 +117,7 @@
       "title": "Sound in the Bones",
       "tagline": "Gate 56 · Resonance in the Bones",
       "gate": 56,
-      "world": "waterfall",
+      "world": "cymatics",
       "focus": "focus",
       "practice": {
         "inhale": 4,
@@ -125,14 +125,14 @@
         "exhale": 7,
         "holdEmpty": 1,
         "minutes": 5,
-        "guidance": "On each out-breath, feel sound move through your skull and chest."
+        "guidance": "On each out-breath, feel sound move through your skull and chest, the way it moves the water."
       },
       "cards": [
         {
           "kind": "image",
           "eyebrow": "An image",
-          "title": "Water through stone",
-          "body": "A waterfall isn't only heard; you feel it in the rock under your feet. Your own voice works the same way. When you speak or hum, sound travels through your jaw, your skull, your chest. You hear it from the inside before it ever reaches the air.",
+          "title": "Water that sings",
+          "body": "Set a bowl of water over one steady tone and its surface stands up into a pattern, rings and petals that only that note can make. It's called cymatics. Your body does something like it: when you hum, sound moves through your jaw, your skull, your chest. You hear it from the inside before it ever reaches the air.",
           "openness": 0.7
         },
         {
@@ -146,8 +146,8 @@
         {
           "kind": "practice",
           "eyebrow": "Today's practice",
-          "title": "Five minutes at Hidden Falls",
-          "body": "A long out-breath, made for humming. Let the falls' steady roar stand in for the sound in your bones on any breath you rest silently.",
+          "title": "Five minutes with Cymatics",
+          "body": "A long out-breath, made for humming. The water unfolds as you breathe in and settles at each turn. On any breath you rest silently, let the singing bowl stand in for the sound in your bones.",
           "openness": 0.6
         }
       ],
@@ -163,7 +163,7 @@
       "title": "Between the Syllables",
       "tagline": "Gate 57 · The Silence Between Syllables",
       "gate": 57,
-      "world": "wind",
+      "world": "cymatics",
       "focus": "focus",
       "practice": {
         "inhale": 4,
@@ -171,29 +171,29 @@
         "exhale": 6,
         "holdEmpty": 2,
         "minutes": 5,
-        "guidance": "Between gusts of wind, listen for the tiny quiet that follows."
+        "guidance": "In each pause, between sounds and between breaths, watch the water settle."
       },
       "cards": [
         {
           "kind": "image",
           "eyebrow": "An image",
-          "title": "Gaps in the gusts",
-          "body": "Wind across the grass comes in gusts, and between them there's a small, bright quiet. Speech is like that too: even a synthetic voice reading quickly leaves tiny gaps between words. Usually we listen for the meaning and skip the gaps. Today, the gaps are the point.",
+          "title": "The pattern in the pause",
+          "body": "While the breath moves, the singing water shimmers and shifts. In the pauses, at the top and bottom of each breath, it settles into its clearest shape. Speech has pauses too: even a synthetic voice reading quickly leaves tiny gaps between words. Usually we listen for the meaning and skip the gaps. Today, the gaps are the point.",
           "openness": 0.6
         },
         {
           "kind": "notice",
           "eyebrow": "What to notice",
           "title": "Listen for the gap",
-          "body": "Listen to whatever sound is around you, or to the wind. Rather than following each sound, wait for the moment just after it ends. That tiny pause is today's anchor. Each time you catch one, rest there for as long as it lasts, then wait for the next.",
+          "body": "Listen to whatever sound is around you, or to the singing bowl. Rather than following each sound, wait for the moment just after it ends. That tiny pause is today's anchor. Each time you catch one, rest there for as long as it lasts, then wait for the next.",
           "cue": "Sound… and the gap.",
           "openness": 0.4
         },
         {
           "kind": "practice",
           "eyebrow": "Today's practice",
-          "title": "Five minutes in Prairie Wind",
-          "body": "A rhythm with soft pauses at both ends. Let the breath's own pauses match the gaps between sounds.",
+          "title": "Five minutes with Cymatics",
+          "body": "A rhythm with soft pauses at both ends. In each pause the water settles into its clearest shape. Let the breath's pauses match the gaps between sounds.",
           "openness": 0.6
         }
       ],

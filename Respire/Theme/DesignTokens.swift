@@ -41,7 +41,7 @@ enum Theme {
         /// Supporting copy. ~7:1.
         static let inkSecondary = dynamic(light: 0x4E4E55, dark: 0xB4B4BC)
         /// Metadata, placeholders. ~4.6:1 on `paper`.
-        static let inkTertiary = dynamic(light: 0x68686F, dark: 0x8E8E96)
+        static let inkTertiary = dynamic(light: 0x68686F, dark: 0xA8A8B0)
         /// Text drawn on an ink fill (pill buttons).
         static let onInk = dynamic(light: 0xFFFFFF, dark: 0x111113)
         /// Hairline rules.

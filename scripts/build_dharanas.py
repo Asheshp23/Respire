@@ -5,7 +5,7 @@ in scripts/dharanas_source.txt (section headers like "I. Title (Dharanas 1–12)
 followed by "n. Title: practice" lines, numbered per section).
 
 Dharanas are renumbered 1–112 globally. Each section gets a world, focus, and
-rhythm for practicing in the app; a few gates get a gentle safety caution.
+rhythm for practicing in the app; every gate gets a level, and a few get a gentle safety caution.
 
 Run from the repository root:  python3 scripts/build_dharanas.py
 """
@@ -23,7 +23,7 @@ SECTIONS = {
     "II":   ("sensory-deprogramming", "Unlearning the screen and returning to raw sensation", "sakura", "focus", (4, 0, 6, 0), 3),
     "III":  ("digital-void", "The open space beneath thought, data, and prompts", "desert", "focus", (4, 1, 6, 2), 3),
     "IV":   ("emotion-and-dopamine", "Meeting urgency, outrage, and desire as sensation", "volcano", "calmAnxiety", (4, 0, 8, 0), 3),
-    "V":    ("inner-sound", "Sound and vibration as doorways to stillness", "rain", "calmAnxiety", (4, 0, 6, 0), 4),
+    "V":    ("inner-sound", "Sound and vibration as doorways to stillness", "cymatics", "calmAnxiety", (4, 0, 6, 0), 4),
     "VI":   ("somatic-grounding", "Coming back to weight, bone, breath, and skin", "wind", "calmAnxiety", (4, 1, 6, 1), 4),
     "VII":  ("consciousness-and-machine", "The awareness that watches all the processing", "thunder", "focus", (5, 2, 5, 2), 4),
     "VIII": ("sleep-and-transitions", "Thresholds of waking, sleeping, and switching", "ocean", "windDown", (4, 7, 8, 0), 5),
@@ -40,6 +40,16 @@ CAUTIONS = {
     85: "Practice somewhere safe to rest, never while driving or moving.",
     86: "Practice somewhere safe to rest, never while driving or moving.",
     94: "Lie somewhere safe and comfortable before you begin.",
+}
+
+# How much a gate asks: "foundation" (anyone, first day), "deepening" (some practice
+# behind you), or "nondual" (subtle, best after many gates). Section default, then overrides.
+SECTION_LEVELS = {"I": "foundation", "II": "foundation", "III": "deepening", "IV": "deepening",
+                  "V": "deepening", "VI": "foundation", "VII": "nondual", "VIII": "deepening", "IX": "nondual"}
+LEVEL_OVERRIDES = {
+    **{n: "deepening" for n in (2, 6, 10, 22, 49, 62, 63, 66, 71, 72)},
+    **{n: "foundation" for n in (85, 87, 90, 91, 92, 94)},
+    **{n: "nondual" for n in (36, 96)},
 }
 
 GLOSSARY = [
@@ -88,7 +98,8 @@ def build():
         item = re.match(r"^\d+\. (.+?): (.+)$", line)
         assert item and current is not None, f"unrecognized line: {line}"
         number += 1
-        dharana = {"number": number, "title": item.group(1), "text": item.group(2)}
+        level = LEVEL_OVERRIDES.get(number, SECTION_LEVELS[current["numeral"]])
+        dharana = {"number": number, "title": item.group(1), "text": item.group(2), "level": level}
         if number in CAUTIONS:
             dharana["caution"] = CAUTIONS[number]
         current["dharanas"].append(dharana)

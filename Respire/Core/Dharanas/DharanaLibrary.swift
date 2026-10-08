@@ -41,6 +41,11 @@ final class DharanaLibrary {
         practiced[dharana.number] != nil
     }
 
+    /// Today's gate, with beginners kept to the foundations until they've practiced a few.
+    func gateOfTheDay(for date: Date = .now) -> Dharana? {
+        collection?.dharanaOfTheDay(for: date, practicedCount: practiced.count)
+    }
+
     static func load(from bundle: Bundle) -> DharanaCollection? {
         let url = (bundle.urls(forResourcesWithExtension: "json", subdirectory: nil) ?? [])
             .first { $0.lastPathComponent.hasSuffix(".dharanas.json") }

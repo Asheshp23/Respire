@@ -23,6 +23,15 @@ nonisolated enum SessionFocus: String, CaseIterable, Identifiable, Sendable {
         }
     }
 
+    /// The rhythm that suits this focus: choosing a focus chooses how you breathe.
+    var recommendedPattern: BreathPattern {
+        switch self {
+        case .calmAnxiety: .calm
+        case .focus: .coherent
+        case .windDown: .unwind
+        }
+    }
+
     var symbol: String {
         switch self {
         case .calmAnxiety: "leaf"

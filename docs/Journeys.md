@@ -169,7 +169,7 @@ reinterpreted for the era of AI, digital saturation, and synthetic intelligence.
 | II. Sensory Deprogramming & Synthetic Perception | 13–24 | Sakura Moon | 4 · 6 | 3 |
 | III. The Digital Void & Cognitive Space | 25–36 | Desert Stars | 4 · 1 · 6 · 2 | 3 |
 | IV. Emotion, Dopamine & Algorithmic Freedom | 37–48 | Ember Peak | 4 · 8 (gate 3's doubled exhale) | 3 |
-| V. Inner Sound, Resonance & Vibration | 49–60 | Rain Pond | 4 · 6 | 4 |
+| V. Inner Sound, Resonance & Vibration | 49–60 | Cymatics | 4 · 6 | 4 |
 | VI. Somatic Grounding in the Machine Age | 61–72 | Prairie Wind | 4 · 1 · 6 · 1 | 4 |
 | VII. Consciousness vs. Machine Intelligence | 73–84 | Distant Storm | 5 · 2 · 5 · 2 | 4 |
 | VIII. Sleep, Transitions & Digital Twilight | 85–96 | Ocean Tide | 4 · 7 · 8 | 5 |
@@ -219,3 +219,60 @@ lung volume, so sound swells and settles with the picture and the haptics, and p
 Sound is off by default, uses the ambient audio session (it respects the silent switch and mixes
 with other audio), plays during the opening and the session, and fades out when either ends.
 The tones are offered as a listening experience in an old tuning tradition, not as treatment.
+
+## 11. Today and Places
+
+**Today** is the first screen. It shows a greeting, the Place of the day ("Breathe now"), the journey in progress, today's gate, and a nudge to set up moment reminders.
+
+**Places** are 21 illustrated destinations, such as Rain Station, Tea House, Moon Garden Gates and Singing Bowl Temple. You breathe your way through each one at in 4, out 6, and every breath moves you forward. A place progresses in one of three ways:
+
+- **Stages:** a trip with named stops. One breath takes you one step toward the next stop.
+- **Find:** one breath reveals one thing, such as a cup, a lantern or a firefly.
+- **Counter:** a quiet count of breaths.
+
+The Places grid lives under Explore in the sidebar. Each finished visit offers an after-pulse beside the baseline.
+
+## 12. Gentler defaults
+
+- **Focus picks the rhythm:** Calm anxiety → Calm (4·6), Focus → Coherent (5.5·5.5), Wind down → Unwind (4·8). This applies to free sessions only.
+- **Session length:** 1, 3, 5 or 10 minutes, or open-ended, with 3 minutes as the default. A finished free session shows a completion card with a pulse check.
+- **Openings on request:** the opening is off by default. "Begin with an opening" sits under Begin, and the Scene & Sound sheet has a setting to always begin with one.
+- **One sheet:** Scene & Sound combines the scene picker, guidance, haptics, the phase chime, nature sound and tone. Every toolbar tool has a text label.
+- **Gate levels:** each gate is Foundation (33), Deepening (49) or Nondual (30). Until 7 gates are practiced, the gate of the day comes from the foundations only.
+- **Calmer motion:** rain falls slower, and the world dims softly during holds.
+- **Phase chime:** an optional soft bell at the start of each phase: 528 Hz breathing in, 396 Hz breathing out, 440 Hz for holds.
+- **Onboarding:** three screens: what brings you here, one moment reminder, then openings and approximate location. Location is asked for up front so it never interrupts a breath.
+
+## 13. Cymatics
+
+Cymatics is the tenth world: sound made visible, as standing waves on water in a dark bowl seen from above. It is built for awe, meaning something vast, intricate and slowly revealed that is far richer than its simple cause.
+
+- **Breath:** the figure unfolds from the center to the rim and grows more intricate on the in-breath, then gathers back on the out-breath.
+- **Stillness:** at the turns of the breath and in holds, the lines draw fine and the grains settle. Mid-breath, they dance. Unlike other worlds, this one doesn't dim during holds, because a hold is when the figure is clearest.
+- **Tone:** the solfeggio tone chooses the figure, with nine symmetries from 174 to 963 Hz, warm to cool. Changing the tone morphs the water over about two seconds. With no tone set, the water holds the 528 Hz figure.
+- **Sound:** a singing bowl whose paired partials beat slowly and swell with the breath.
+- **Gates:** Section V (Inner Sound) is practiced here.
+- **Journey:** in Listening as an Anchor, Day 3 (Sound in the Bones, humming) and Day 4 (Between the Syllables, the gaps) are set here. Days 1, 2 and 5 keep rain, ocean and desert, so the journey still moves from sounds in the world, to sound in the body, to silence.
+- **Place:** Singing Bowl Temple. Seven bowls on an altar, low to high, one rung per out-breath, at in 4, out 7. Each rung bowl rings out and holds a small water figure with its own symmetry. In the round window above, each bowl adds a layer to one great mandala whose rings turn against each other. When all seven sing, the window fills with light. The sound is the Cymatics singing bowl.
+
+## 14. One thing at a time
+
+People couldn't tell where to start, and while breathing too much competed for their eyes. Five fixes:
+
+- **Today has one button.** "Start breathing" begins straight away, in the rhythm for your focus and at your chosen length. Under "Or" sit today's Place and your journey. The gate of the day and the reminder nudge left Today; both are still in Gates.
+- **Breathing has one thing to watch.** A soft circle grows as you breathe in and shrinks as you breathe out, with one word inside it: Breathe in, Hold or Breathe out. The world dims behind it, its own breathing light switches off, and the scene lines, countdown and toolbar disappear. Only pause and stop remain.
+- **Before breathing, one line of how-to:** "Follow the circle. Breathe in as it grows, and out as it shrinks." Free sessions offer only two choices, focus and length. Journeys and gates offer none.
+- **Places stay quiet while breathing.** The arrival and title step aside, leaving one short line such as "3 of 7 bowls" and the breath word.
+- **Openings are a setting, not a link.** Turn them on in Scene & Sound; the extra link under Begin is gone.
+
+## 15. Eyes closed
+
+Most people meditate with their eyes closed, so the guide is something you hear and feel, not something you watch.
+
+- **Breath tone (on by default):** a soft, warm note that rises a fifth as you breathe in, falls as you breathe out, and holds level in the pauses. It carries the length and shape of every breath, and fades when you pause.
+- **Spoken guidance (on by default):** a slow, quiet voice speaks the words for the first two breaths ("Close your eyes, and breathe in."), then falls silent. When a session finishes on its own, a bell sounds, then "That's it. Gently open your eyes."
+- **Haptics** keep swelling on the in-breath and fading on the out-breath, where the device supports them.
+- **The screen stays awake** while breathing, so auto-lock never pauses a session.
+- **Sound plays with the silent switch on**, because with eyes closed it is the guide. It still mixes with anything else playing.
+- **Before starting**, the screen says: "Close your eyes. Breathe in as the sound rises, and out as it falls. Or follow the circle."
+- **Switches:** Breath tone and Spoken guidance sit under "Eyes closed" in Scene & Sound.

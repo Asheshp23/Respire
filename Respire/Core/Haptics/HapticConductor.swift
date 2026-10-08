@@ -91,7 +91,13 @@ final class HapticConductor {
         var duration: TimeInterval
         var intensity: (from: Float, to: Float)
         var sharpness: (from: Float, to: Float)
+        /// A soft, rounded tap marking the turn into this phase, so the change can be felt
+        /// with eyes closed. `nil` for none.
+        var turn: Float? = nil
     }
+
+    /// The tap comes first; the phase's swell or release begins just after it.
+    private static let turnLead: TimeInterval = 0.06
 
     private static func pattern(for phase: BreathPhase, duration: TimeInterval) throws -> CHHapticPattern {
         switch phase {
@@ -100,7 +106,8 @@ final class HapticConductor {
             return try continuousPattern(Envelope(
                 duration: duration,
                 intensity: (0.08, 0.65),
-                sharpness: (0.05, 0.30)
+                sharpness: (0.05, 0.30),
+                turn: 0.32
             ))
 
         case .exhale:
@@ -108,7 +115,8 @@ final class HapticConductor {
             return try continuousPattern(Envelope(
                 duration: duration,
                 intensity: (0.50, 0.0),
-                sharpness: (0.20, 0.0)
+                sharpness: (0.20, 0.0),
+                turn: 0.28
             ))
 
         case .holdFull:
@@ -116,7 +124,8 @@ final class HapticConductor {
             return try continuousPattern(Envelope(
                 duration: min(duration, 1.5),
                 intensity: (0.22, 0.0),
-                sharpness: (0.05, 0.0)
+                sharpness: (0.05, 0.0),
+                turn: 0.2
             ))
 
         case .holdEmpty:
@@ -134,28 +143,43 @@ final class HapticConductor {
     }
 
     private static func continuousPattern(_ envelope: Envelope) throws -> CHHapticPattern {
+        // The turn's tap plays before the control curves begin, so they don't scale it down.
+        let lead = envelope.turn == nil ? 0 : min(turnLead, envelope.duration / 4)
+        let length = max(envelope.duration - lead, 0.05)
+
         // Base values of 1.0 / 0.0 let the control curves define the absolute shape:
         // intensity control multiplies the base; sharpness control is added to it.
-        let event = CHHapticEvent(
+        var events = [CHHapticEvent(
             eventType: .hapticContinuous,
             parameters: [
                 CHHapticEventParameter(parameterID: .hapticIntensity, value: 1.0),
                 CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.0)
             ],
-            relativeTime: 0,
-            duration: envelope.duration
-        )
+            relativeTime: lead,
+            duration: length
+        )]
+        if let turn = envelope.turn {
+            events.append(CHHapticEvent(
+                eventType: .hapticTransient,
+                parameters: [
+                    CHHapticEventParameter(parameterID: .hapticIntensity, value: turn),
+                    CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.12)
+                ],
+                relativeTime: 0
+            ))
+        }
 
         let curves = [
-            curve(.hapticIntensityControl, from: envelope.intensity.from, to: envelope.intensity.to, over: envelope.duration),
-            curve(.hapticSharpnessControl, from: envelope.sharpness.from, to: envelope.sharpness.to, over: envelope.duration)
+            curve(.hapticIntensityControl, from: envelope.intensity.from, to: envelope.intensity.to, over: length, startingAt: lead),
+            curve(.hapticSharpnessControl, from: envelope.sharpness.from, to: envelope.sharpness.to, over: length, startingAt: lead)
         ]
-        return try CHHapticPattern(events: [event], parameterCurves: curves)
+        return try CHHapticPattern(events: events, parameterCurves: curves)
     }
 
     /// Samples a sinusoidal ease-in-out between two values. CoreHaptics interpolates linearly
     /// between control points, so a dozen samples is plenty for a smooth, organic feel.
-    private static func curve(_ id: CHHapticDynamicParameter.ID, from start: Float, to end: Float, over duration: TimeInterval) -> CHHapticParameterCurve {
+    private static func curve(_ id: CHHapticDynamicParameter.ID, from start: Float, to end: Float, over duration: TimeInterval,
+                              startingAt offset: TimeInterval = 0) -> CHHapticParameterCurve {
         let points = (0...curveResolution).map { step -> CHHapticParameterCurve.ControlPoint in
             let t = Double(step) / Double(curveResolution)
             let eased = Float(0.5 - 0.5 * cos(.pi * t))
@@ -164,7 +188,7 @@ final class HapticConductor {
                 value: start + (end - start) * eased
             )
         }
-        return CHHapticParameterCurve(parameterID: id, controlPoints: points, relativeTime: 0)
+        return CHHapticParameterCurve(parameterID: id, controlPoints: points, relativeTime: offset)
     }
 
     // MARK: - Engine recovery

@@ -14,9 +14,15 @@
 //    Rain Pond      rain hiss and droplets, softening on the out-breath
 //    Prairie Wind   gusts that rise with the in-breath
 //    Distant Storm  rain, and thunder rolling every so often
+//    Cymatics       a singing bowl, its partials beating slowly, swelling with the breath
 //
 //  Under or instead of the world, an optional solfeggio tone: a soft sine at one of
 //  the nine traditional frequencies, swelling slightly with the breath.
+//
+//  And the breath sound, for practicing with eyes closed: soft air that swells while
+//  the breath moves and goes quiet in the pauses. It brightens as you breathe in and
+//  darkens as you breathe out, like hearing a slow breath close by. No pitch, so it
+//  never clashes with the world's sound or a tone.
 //
 //  In Respire the breath engine is the clock: `opennessTarget` follows its lung
 //  volume, so sound, picture, and haptics all breathe together, and pause together.
@@ -41,6 +47,15 @@ nonisolated final class AmbientSynth: @unchecked Sendable {
     /// The breath engine's lung volume (0 empty … 1 full), written ~30 times a second
     /// from the main actor. The render loop glides toward it, so updates never click.
     var opennessTarget: Float = 0.3
+    /// How much air is moving right now, 0 (a pause) … 1 (mid-breath). Written by the
+    /// soundscape from the breath engine; the render loop glides toward it.
+    var airTarget: Float = 0
+    /// A phase chime: bump the token to ring `cueFrequency` once, softly.
+    var cueFrequency: Double = 528
+    var cueToken = 0
+    private var lastCueToken = 0
+    private var cueEnvelope: Float = 0
+    private var cuePhase: Double = 0
 
     private var frame: Double = 0
     private var gain: Float = 0
@@ -66,6 +81,8 @@ nonisolated final class AmbientSynth: @unchecked Sendable {
     private var toneLevel: Float = 0
     private var tonePhase: Double = 0
     private var toneShimmer: Double = 0
+    private var airLevel: Float = 0
+    private var airLow: Float = 0, airHigh: Float = 0
 
 
     private func white() -> Float {
@@ -151,7 +168,7 @@ nonisolated final class AmbientSynth: @unchecked Sendable {
                 dropEnv *= 0.95
             case 7: // Wind: gusts rising with the in-breath.
                 s = lowpass(pink(w), &lp1, 180 + 1200 * o) * 0.9 * (0.25 + 0.75 * o)
-            default: // Storm: rain, and thunder rolling after each flash (every 11 s).
+            case 8: // Storm: rain, and thunder rolling after each flash (every 11 s).
                 let hiss = lowpass(w, &lp1, 6000) - lowpass(w, &lp2, 800)
                 s = hiss * 0.12
                 let slot = Int(t / 11)
@@ -161,6 +178,17 @@ nonisolated final class AmbientSynth: @unchecked Sendable {
                 }
                 s += lowpass(lowpass(brownNoise(w), &lp3, 90), &lp4, 90) * 2.2 * rumbleEnv
                 rumbleEnv *= 0.99996
+            default: // Cymatics: a singing bowl. Each partial is a close pair, so it beats like a real bowl.
+                let freqs: [Double] = [196.0, 196.0 * 1.004, 196.0 * 2.76, 196.0 * 2.76 * 1.003]
+                let levels: [Float] = [0.045, 0.045, 0.016, 0.016]
+                let swell = 0.4 + 0.6 * o
+                for k in 0..<4 {
+                    phases[k] += 2 * .pi * freqs[k] / sr
+                    if phases[k] > 2 * .pi { phases[k] -= 2 * .pi }
+                    s += Float(sin(phases[k])) * levels[k] * swell
+                }
+                // The faint lap of water in the bowl.
+                s += lowpass(pink(w), &lp1, 500) * 0.03 * swell
             }
 
             natureLevel += (natureTarget - natureLevel) * 0.0003
@@ -182,6 +210,28 @@ nonisolated final class AmbientSynth: @unchecked Sendable {
                 let swell = 0.7 + 0.3 * o
                 let shimmer = Float(0.92 + 0.08 * sin(toneShimmer))
                 s += Float(sin(tonePhase)) * loudness * swell * shimmer * toneLevel
+            }
+
+            // The breath sound: a band of soft noise, its top opening as the lungs fill.
+            airLevel += (airTarget - airLevel) * 0.0015
+            if airLevel > 0.0005 {
+                let top = lowpass(w, &airHigh, 350 + 1250 * o)
+                let floor = lowpass(w, &airLow, 120)
+                s += (top - floor) * 0.16 * airLevel
+            }
+
+            // The phase chime: a soft bell with a gentle overtone, fading over about a second.
+            if cueToken != lastCueToken {
+                lastCueToken = cueToken
+                cueEnvelope = 1
+                cuePhase = 0
+            }
+            if cueEnvelope > 0.0005 {
+                cuePhase += 2 * .pi * cueFrequency / sr
+                if cuePhase > 2 * .pi * 100 { cuePhase -= 2 * .pi * 100 }
+                let bell = Float(sin(cuePhase)) * 0.05 + Float(sin(cuePhase * 2)) * 0.012 + Float(sin(cuePhase * 3.01)) * 0.005
+                s += bell * cueEnvelope
+                cueEnvelope *= 0.99993
             }
 
             gain += (targetGain - gain) * 0.0004

@@ -151,7 +151,10 @@ private struct CardModifier: ViewModifier {
                             .padding(.horizontal, 10)
                             .offset(y: 8)
                     }
-                    IceGlass(shape: shape)
+                    // Cards hold text, so they carry no frost texture, and a charcoal scrim
+                    // keeps contrast at WCAG AA whatever bright world sits behind them.
+                    IceGlass(shape: shape, frost: false)
+                    shape.fill(Theme.Palette.card.opacity(0.82))
                     if let glow {
                         shape.fill(
                             RadialGradient(

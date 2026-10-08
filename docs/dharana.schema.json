@@ -42,7 +42,7 @@
           "numeral": { "type": "string", "pattern": "^[IVXLC]+$" },
           "title": { "type": "string" },
           "subtitle": { "type": "string", "maxLength": 90 },
-          "world": { "enum": ["aurora", "ocean", "sakura", "desert", "waterfall", "volcano", "rain", "wind", "thunder"] },
+          "world": { "enum": ["aurora", "ocean", "sakura", "desert", "waterfall", "volcano", "rain", "wind", "thunder", "cymatics"] },
           "focus": { "enum": ["calmAnxiety", "focus", "windDown"] },
           "practice": {
             "type": "object",
@@ -67,7 +67,8 @@
                 "number": { "type": "integer", "minimum": 1, "maximum": 112 },
                 "title": { "type": "string" },
                 "text": { "type": "string", "maxLength": 200, "description": "The practice, verbatim from the source synthesis." },
-                "caution": { "type": "string", "maxLength": 200 }
+                "caution": { "type": "string", "maxLength": 200 },
+                "level": { "enum": ["foundation", "deepening", "nondual"], "description": "How much the gate asks. Beginners are offered foundations first." }
               }
             }
           }

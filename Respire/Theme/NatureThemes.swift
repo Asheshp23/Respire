@@ -69,7 +69,8 @@ private func drawRain(_ context: inout GraphicsContext, size: CGSize, density: D
     for _ in 0..<count {
         let x0 = Double.random(in: -0.1...1.1, using: &rng) * size.width
         let offset = Double.random(in: 0...1, using: &rng)
-        let speed = Double.random(in: 700...1000, using: &rng)
+        // Unhurried rain: fast streaks read as agitation, not calm.
+        let speed = Double.random(in: 260...380, using: &rng)
         let length = Double.random(in: 10...20, using: &rng)
         let travel = size.height + 40
         let y = animated ? (time * speed + offset * travel).truncatingRemainder(dividingBy: travel) - 20 : offset * travel - 20

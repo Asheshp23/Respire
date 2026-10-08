@@ -57,6 +57,11 @@ struct DharanaDetailView: View {
                         .font(Theme.Typography.eyebrow)
                         .textCase(.uppercase)
                         .foregroundStyle(hue)
+                    if let level = dharana.level {
+                        Label(level.title, systemImage: level.symbol)
+                            .font(Theme.Typography.caption.weight(.medium))
+                            .foregroundStyle(Theme.Palette.inkSecondary)
+                    }
                     Text(dharana.title)
                         .font(.system(.largeTitle, design: .serif))
                         .foregroundStyle(Theme.Palette.ink)
@@ -203,6 +208,8 @@ struct DharanaPracticeView: View {
                             .foregroundStyle(Theme.Palette.ink)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                    PulseCheckRow()
+
                     Button(action: leave) {
                         Text("Return to the gate")
                             .frame(maxWidth: .infinity)

@@ -26,6 +26,7 @@ struct SceneThumbnail: View {
             case .rain: RainScene(openness: 0.6, time: 3)
             case .wind: WindScene(openness: 0.6, time: 3)
             case .thunder: ThunderScene(openness: 0.6, time: 3)
+            case .cymatics: CymaticsScene(openness: 0.7, time: 3)
             }
         }
         .allowsHitTesting(false)
@@ -41,25 +42,9 @@ struct SceneFocus: View {
     var time: Double
 
     var body: some View {
-        if theme == .aurora {
-            // The lotus keeps its faint rainbow orb.
-            GeometryReader { geo in
-                Rectangle()
-                    .colorEffect(
-                        ShaderLibrary.prismOrb(
-                            .float2(geo.size.width, geo.size.height),
-                            .float(openness),
-                            .float(time)
-                        )
-                    )
-                    .blendMode(.plusLighter)
-                    .opacity(0.25)
-            }
-        } else {
-            Canvas { context, size in
-                context.blendMode = .plusLighter
-                draw(in: &context, size: size)
-            }
+        Canvas { context, size in
+            context.blendMode = .plusLighter
+            draw(in: &context, size: size)
         }
     }
 
@@ -67,7 +52,9 @@ struct SceneFocus: View {
         let w = size.width, h = size.height
         let o = openness
         switch theme {
-        case .aurora:
+        case .aurora, .cymatics:
+            // The lotus opening is the guide, with no ring of light over it;
+            // Cymatics lights its own bowl.
             break
         case .ocean:
             // The setting sun swells, and its path of light widens across the sea.

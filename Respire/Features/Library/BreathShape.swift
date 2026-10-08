@@ -13,6 +13,8 @@ extension BreathPattern {
     /// Each rhythm takes a hue from the prism, so it's recognizable everywhere it appears.
     var hue: Color {
         switch id {
+        case BreathPattern.calm.id: Theme.prism[5]
+        case BreathPattern.unwind.id: Theme.prism[2]
         case BreathPattern.box.id: Theme.prism[4]
         case BreathPattern.relaxing478.id: Theme.prism[6]
         case BreathPattern.coherent.id: Theme.prism[3]
@@ -76,6 +78,34 @@ struct BreathShape: View {
                     context.fill(Path(ellipseIn: CGRect(x: dot.x - 3.5, y: dot.y - 3.5, width: 7, height: 7)), with: .color(.white))
                 }
             }
+        }
+        .accessibilityHidden(true)
+    }
+}
+
+/// A small dot that breathes at the rhythm's real pace: it swells for the in-breath,
+/// rests through a hold, and shrinks for the out-breath. Sits beside the timings so
+/// the numbers can be felt as well as read.
+struct BreathPulse: View {
+    let pattern: BreathPattern
+    var size: CGFloat = 14
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        TimelineView(.animation(paused: reduceMotion)) { timeline in
+            let cycle = max(pattern.cycleDuration, 0.1)
+            let t = timeline.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: cycle)
+            let openness = reduceMotion ? 0.6 : pattern.openness(at: t)
+            ZStack {
+                Circle()
+                    .fill(pattern.hue.opacity(0.25))
+                    .frame(width: size, height: size)
+                Circle()
+                    .fill(pattern.hue)
+                    .frame(width: size * (0.35 + 0.65 * openness), height: size * (0.35 + 0.65 * openness))
+            }
+            .frame(width: size, height: size)
         }
         .accessibilityHidden(true)
     }

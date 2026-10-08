@@ -117,64 +117,76 @@
         {
           "number": 1,
           "title": "The In-Between Breath",
-          "text": "Pause at the exact turning point between inhale and exhale before pressing send on a prompt or message."
+          "text": "Pause at the exact turning point between inhale and exhale before pressing send on a prompt or message.",
+          "level": "foundation"
         },
         {
           "number": 2,
           "title": "The Terminal Kumbhaka",
           "text": "Retain the breath at the top of an inhalation while staring at a blank screen; experience the quiet fullness before typing.",
+          "level": "deepening",
           "caution": "Hold only while it stays easy and the throat stays soft. Skip breath holds if you're pregnant or have heart, lung, or blood-pressure concerns."
         },
         {
           "number": 3,
           "title": "The Down-Step Exhale",
           "text": "Extend your exhale to double the length of your inhale to down-regulate your nervous system during high computational workloads.",
+          "level": "foundation",
           "caution": "Lengthen the exhale only as far as feels comfortable; there's no need to strain toward exactly double."
         },
         {
           "number": 4,
           "title": "Prana-Sensing the Palms",
-          "text": "Feel the subtle energetic tingling in your hands as they hover over the keyboard before touching any key."
+          "text": "Feel the subtle energetic tingling in your hands as they hover over the keyboard before touching any key.",
+          "level": "foundation"
         },
         {
           "number": 5,
           "title": "The Heart-Center Nexus",
-          "text": "Focus attention on the central space of your chest every time an AI response streams onto the screen."
+          "text": "Focus attention on the central space of your chest every time an AI response streams onto the screen.",
+          "level": "foundation"
         },
         {
           "number": 6,
           "title": "Subtle Spine Breathing",
-          "text": "Trace breath moving up and down the spinal column while sitting motionless at your workstation."
+          "text": "Trace breath moving up and down the spinal column while sitting motionless at your workstation.",
+          "level": "deepening"
         },
         {
           "number": 7,
           "title": "The Breath of Unprompted Silence",
-          "text": "Take three conscious breaths without generating a single thought, task, or search query."
+          "text": "Take three conscious breaths without generating a single thought, task, or search query.",
+          "level": "foundation"
         },
         {
           "number": 8,
           "title": "Micro-Pause Transition",
-          "text": "Take one full, silent breath every time you switch browser tabs or software applications."
+          "text": "Take one full, silent breath every time you switch browser tabs or software applications.",
+          "level": "foundation"
         },
         {
           "number": 9,
           "title": "The Solar Plexus Anchor",
-          "text": "Rest awareness in the navel center during fast-paced algorithmic news or media feeds."
+          "text": "Rest awareness in the navel center during fast-paced algorithmic news or media feeds.",
+          "level": "foundation"
         },
         {
           "number": 10,
           "title": "Luminous Inhalation",
-          "text": "Imagine inhaling pure light through the third eye, dissolving screen fatigue and cognitive overload."
+          "text": "Imagine inhaling pure light through the third eye, dissolving screen fatigue and cognitive overload.",
+          "level": "deepening"
         },
         {
           "number": 11,
           "title": "Dissolving Exhalation",
-          "text": "Exhale through every pore of your skin, releasing all mental momentum and data processing."
+          "text": "Exhale through every pore of your skin, releasing all mental momentum and data processing.",
+          "level": "foundation"
         },
         {
           "number": 12,
           "title": "The Unbroken Thread",
-          "text": "Observe the breath as a continuous, seamless flow beneath all digital interactions and machine speed."
+          "text": "Observe the breath as a continuous, seamless flow beneath all digital interactions and machine speed.",
+          "level": "foundation"
         }
       ]
     },
@@ -196,62 +208,74 @@
         {
           "number": 13,
           "title": "The Pixellated Gaze",
-          "text": "Soften your visual focus on high-definition screens until images blur into pure geometry and light."
+          "text": "Soften your visual focus on high-definition screens until images blur into pure geometry and light.",
+          "level": "foundation"
         },
         {
           "number": 14,
           "title": "Audio Noise De-filtering",
-          "text": "Listen to cooling fans or server noise, not as machine sound, but as raw vibration devoid of meaning."
+          "text": "Listen to cooling fans or server noise, not as machine sound, but as raw vibration devoid of meaning.",
+          "level": "foundation"
         },
         {
           "number": 15,
           "title": "Haptic Pure Feeling",
-          "text": "Touch a device or surface without naming the object; rest entirely in the tactile sensation itself."
+          "text": "Touch a device or surface without naming the object; rest entirely in the tactile sensation itself.",
+          "level": "foundation"
         },
         {
           "number": 16,
           "title": "Screen-Off Darkness",
-          "text": "Close your eyes after viewing a bright display and rest in the inner space behind the eyelids."
+          "text": "Close your eyes after viewing a bright display and rest in the inner space behind the eyelids.",
+          "level": "foundation"
         },
         {
           "number": 17,
           "title": "Eye-Socket Relaxation",
-          "text": "Release tension behind the eyes, feeling the optic nerves rest backward into the brain."
+          "text": "Release tension behind the eyes, feeling the optic nerves rest backward into the brain.",
+          "level": "foundation"
         },
         {
           "number": 18,
           "title": "Synthetic Voice Dissolution",
-          "text": "Listen to an AI-generated voice, ignoring semantic meaning to focus strictly on pitch and cadence."
+          "text": "Listen to an AI-generated voice, ignoring semantic meaning to focus strictly on pitch and cadence.",
+          "level": "foundation"
         },
         {
           "number": 19,
           "title": "Peripheral Expansion",
-          "text": "While looking at a screen, simultaneously expand visual awareness to the extreme left and right peripheries."
+          "text": "While looking at a screen, simultaneously expand visual awareness to the extreme left and right peripheries.",
+          "level": "foundation"
         },
         {
           "number": 20,
           "title": "The Unseen Smell",
-          "text": "Focus on the subtle smell of ambient air in your room, anchoring in physical reality over virtual space."
+          "text": "Focus on the subtle smell of ambient air in your room, anchoring in physical reality over virtual space.",
+          "level": "foundation"
         },
         {
           "number": 21,
           "title": "Taste of Pure Presence",
-          "text": "Savor a sip of water away from all digital devices, experiencing raw sensation without distraction."
+          "text": "Savor a sip of water away from all digital devices, experiencing raw sensation without distraction.",
+          "level": "foundation"
         },
         {
           "number": 22,
           "title": "The Void Behind the Eyes",
-          "text": "Direct attention backward toward the observer sitting behind your visual field."
+          "text": "Direct attention backward toward the observer sitting behind your visual field.",
+          "level": "deepening"
         },
         {
           "number": 23,
           "title": "Blinking as Reset",
-          "text": "Treat every eye blink as an absolute shutter closing on the past moment and opening to pure presence."
+          "text": "Treat every eye blink as an absolute shutter closing on the past moment and opening to pure presence.",
+          "level": "foundation"
         },
         {
           "number": 24,
           "title": "Multi-Sensory Convergence",
-          "text": "Merge sight, sound, and touch into a single unified field of raw awareness without labels."
+          "text": "Merge sight, sound, and touch into a single unified field of raw awareness without labels.",
+          "level": "foundation"
         }
       ]
     },
@@ -273,62 +297,74 @@
         {
           "number": 25,
           "title": "The Space Between Thoughts",
-          "text": "Notice the silent interval that exists between one thought and the next while drafting text."
+          "text": "Notice the silent interval that exists between one thought and the next while drafting text.",
+          "level": "deepening"
         },
         {
           "number": 26,
           "title": "The Unprompted Space",
-          "text": "Sit before an open AI prompt box without entering a query; rest in unmanifest potential."
+          "text": "Sit before an open AI prompt box without entering a query; rest in unmanifest potential.",
+          "level": "deepening"
         },
         {
           "number": 27,
           "title": "The Cognitive Cache Clear",
-          "text": "Imagine emptying the mind’s working memory as cleanly as clearing a browser history."
+          "text": "Imagine emptying the mind’s working memory as cleanly as clearing a browser history.",
+          "level": "deepening"
         },
         {
           "number": 28,
           "title": "The Void Within the Skull",
-          "text": "Feel the interior of your head as vast, hollow, and spacious like outer space."
+          "text": "Feel the interior of your head as vast, hollow, and spacious like outer space.",
+          "level": "deepening"
         },
         {
           "number": 29,
           "title": "The Unwritten Output",
-          "text": "Allow a thought to arise, peak, and dissolve into silence without turning it into a task or document."
+          "text": "Allow a thought to arise, peak, and dissolve into silence without turning it into a task or document.",
+          "level": "deepening"
         },
         {
           "number": 30,
           "title": "Infinite Sky Mind",
-          "text": "Expand your awareness beyond your physical body into the vast sky outside your room."
+          "text": "Expand your awareness beyond your physical body into the vast sky outside your room.",
+          "level": "deepening"
         },
         {
           "number": 31,
           "title": "The Gap in the Algorithm",
-          "text": "Recognize that no prediction model can predict the immediate, spontaneous present moment."
+          "text": "Recognize that no prediction model can predict the immediate, spontaneous present moment.",
+          "level": "deepening"
         },
         {
           "number": 32,
           "title": "The Silence After the Sound",
-          "text": "When a notification ping ends, track the fading tail of sound into absolute silence."
+          "text": "When a notification ping ends, track the fading tail of sound into absolute silence.",
+          "level": "deepening"
         },
         {
           "number": 33,
           "title": "The Non-Conceptual Screen",
-          "text": "View your display screen as photons illuminating a piece of glass."
+          "text": "View your display screen as photons illuminating a piece of glass.",
+          "level": "deepening"
         },
         {
           "number": 34,
           "title": "The Void of No-Data",
-          "text": "Spend 60 seconds resting in awareness without consuming, producing, or organizing information."
+          "text": "Spend 60 seconds resting in awareness without consuming, producing, or organizing information.",
+          "level": "deepening"
         },
         {
           "number": 35,
           "title": "The Unborn Thought",
-          "text": "Catch a thought at its absolute origin point before it crystallizes into language."
+          "text": "Catch a thought at its absolute origin point before it crystallizes into language.",
+          "level": "deepening"
         },
         {
           "number": 36,
           "title": "The Background Canvas",
-          "text": "Realize that all thoughts, code, and data appear on the unchanging screen of your own consciousness."
+          "text": "Realize that all thoughts, code, and data appear on the unchanging screen of your own consciousness.",
+          "level": "nondual"
         }
       ]
     },
@@ -350,62 +386,74 @@
         {
           "number": 37,
           "title": "Dopamine Spike Awareness",
-          "text": "Feel the exact physical sensation of urgency when reaching for a device, without acting on it."
+          "text": "Feel the exact physical sensation of urgency when reaching for a device, without acting on it.",
+          "level": "deepening"
         },
         {
           "number": 38,
           "title": "The Shock of the Sudden",
-          "text": "When an unexpected alert sounds, anchor in the raw flash of awareness before reacting."
+          "text": "When an unexpected alert sounds, anchor in the raw flash of awareness before reacting.",
+          "level": "deepening"
         },
         {
           "number": 39,
           "title": "Detaching Outrage",
-          "text": "Observe online controversy as pure neuro-chemical energy inside your body without taking a side."
+          "text": "Observe online controversy as pure neuro-chemical energy inside your body without taking a side.",
+          "level": "deepening"
         },
         {
           "number": 40,
           "title": "The Space of Infinite Delight",
-          "text": "When experiencing insight or joy online, rest in the joy itself rather than sharing it."
+          "text": "When experiencing insight or joy online, rest in the joy itself rather than sharing it.",
+          "level": "deepening"
         },
         {
           "number": 41,
           "title": "Fulfillment Beyond Feedback",
-          "text": "Experience inner satisfaction without needing external likes, comments, or validation."
+          "text": "Experience inner satisfaction without needing external likes, comments, or validation.",
+          "level": "deepening"
         },
         {
           "number": 42,
           "title": "The Dissolution of Urgency",
-          "text": "Trace the physical sensation of hurry in your chest until it softens and dissolves."
+          "text": "Trace the physical sensation of hurry in your chest until it softens and dissolves.",
+          "level": "deepening"
         },
         {
           "number": 43,
           "title": "Equanimity in the Feed",
-          "text": "Scroll through contrasting news while maintaining a steady, immovable heart center."
+          "text": "Scroll through contrasting news while maintaining a steady, immovable heart center.",
+          "level": "deepening"
         },
         {
           "number": 44,
           "title": "The Void of Desire",
-          "text": "Notice the quiet space that opens up immediately after a desire or task is satisfied."
+          "text": "Notice the quiet space that opens up immediately after a desire or task is satisfied.",
+          "level": "deepening"
         },
         {
           "number": 45,
           "title": "Neutralizing Curiosity",
-          "text": "Hold a burning question in mind for two minutes before searching or asking an AI, enjoying pure wondering."
+          "text": "Hold a burning question in mind for two minutes before searching or asking an AI, enjoying pure wondering.",
+          "level": "deepening"
         },
         {
           "number": 46,
           "title": "Sensing the Digital Persona",
-          "text": "Observe the avatar or online persona you project as an object separate from your true self."
+          "text": "Observe the avatar or online persona you project as an object separate from your true self.",
+          "level": "deepening"
         },
         {
           "number": 47,
           "title": "The Compassion Shift",
-          "text": "View every username or text generator on the web as an expression of the underlying life force."
+          "text": "View every username or text generator on the web as an expression of the underlying life force.",
+          "level": "deepening"
         },
         {
           "number": 48,
           "title": "Resting in Unknowing",
-          "text": "Embrace the feeling of \"not knowing\" an answer rather than instantly seeking algorithmic certainty."
+          "text": "Embrace the feeling of \"not knowing\" an answer rather than instantly seeking algorithmic certainty.",
+          "level": "deepening"
         }
       ]
     },
@@ -414,7 +462,7 @@
       "numeral": "V",
       "title": "Inner Sound, Resonance & Vibration",
       "subtitle": "Sound and vibration as doorways to stillness",
-      "world": "rain",
+      "world": "cymatics",
       "focus": "calmAnxiety",
       "practice": {
         "inhale": 4,
@@ -428,63 +476,75 @@
           "number": 49,
           "title": "The Inner Humming (Anahata)",
           "text": "Close your ears with your thumbs and listen to the subtle internal reverberation of your body.",
+          "level": "deepening",
           "caution": "Press the ear openings closed lightly, never into the ear canal, and stop if anything feels uncomfortable."
         },
         {
           "number": 50,
           "title": "Vowel Sound Resonance",
           "text": "Vocalize \"AUM\" or \"AH\" softly, feeling the vibration resonate through the center of your chest.",
+          "level": "deepening",
           "caution": "Keep the sound soft and let it end whenever the breath runs out."
         },
         {
           "number": 51,
           "title": "The Machine Fan Mantra",
-          "text": "Use the steady hum of computer fans or servers as an anchor to tune into inner silence."
+          "text": "Use the steady hum of computer fans or servers as an anchor to tune into inner silence.",
+          "level": "deepening"
         },
         {
           "number": 52,
           "title": "The Silent Name",
-          "text": "Repeat a sacred sound or mantra internally at the speed of your heartbeat, unaffected by external noise."
+          "text": "Repeat a sacred sound or mantra internally at the speed of your heartbeat, unaffected by external noise.",
+          "level": "deepening"
         },
         {
           "number": 53,
           "title": "The Origin of Speech",
-          "text": "Trace where inner monologue arises inside the throat and chest before it becomes words."
+          "text": "Trace where inner monologue arises inside the throat and chest before it becomes words.",
+          "level": "deepening"
         },
         {
           "number": 54,
           "title": "Subtle Ear Tone",
-          "text": "Focus on the natural high-frequency tone present in quiet rooms, using it as a bridge to pure awareness."
+          "text": "Focus on the natural high-frequency tone present in quiet rooms, using it as a bridge to pure awareness.",
+          "level": "deepening"
         },
         {
           "number": 55,
           "title": "The Unspoken Word",
-          "text": "Feel the energy of a sentence in your mind before you type or speak it aloud."
+          "text": "Feel the energy of a sentence in your mind before you type or speak it aloud.",
+          "level": "deepening"
         },
         {
           "number": 56,
           "title": "Resonance in the Bones",
-          "text": "Feel the sound of your own voice vibrating through your skull and jawbone during calls."
+          "text": "Feel the sound of your own voice vibrating through your skull and jawbone during calls.",
+          "level": "deepening"
         },
         {
           "number": 57,
           "title": "The Silence Between Syllables",
-          "text": "Pay attention to the tiny gaps of stillness between words spoken by voice synthesis models."
+          "text": "Pay attention to the tiny gaps of stillness between words spoken by voice synthesis models.",
+          "level": "deepening"
         },
         {
           "number": 58,
           "title": "The Cosmic Frequency",
-          "text": "Merge all environmental sound (traffic, typing, voices, ambient tech) into a single ocean of sound."
+          "text": "Merge all environmental sound (traffic, typing, voices, ambient tech) into a single ocean of sound.",
+          "level": "deepening"
         },
         {
           "number": 59,
           "title": "Dissolving Sound in Heart",
-          "text": "Bring the sound of audio into the center of your heart and let it dissolve there."
+          "text": "Bring the sound of audio into the center of your heart and let it dissolve there.",
+          "level": "deepening"
         },
         {
           "number": 60,
           "title": "The Acoustic Void",
-          "text": "Imagine your room becoming instantly silent, feeling the weight of absolute quiet."
+          "text": "Imagine your room becoming instantly silent, feeling the weight of absolute quiet.",
+          "level": "deepening"
         }
       ]
     },
@@ -506,63 +566,75 @@
         {
           "number": 61,
           "title": "Body-Weight Awareness",
-          "text": "Feel the gravitational pull pressing your body firmly into your chair or floor right now."
+          "text": "Feel the gravitational pull pressing your body firmly into your chair or floor right now.",
+          "level": "foundation"
         },
         {
           "number": 62,
           "title": "The Hollow Body",
-          "text": "Visualize your physical body as hollow, light, and transparent like a glass container."
+          "text": "Visualize your physical body as hollow, light, and transparent like a glass container.",
+          "level": "deepening"
         },
         {
           "number": 63,
           "title": "Spinal Energy Pillar",
-          "text": "Imagine a glowing column of light extending from the base of your spine up through the crown of your head."
+          "text": "Imagine a glowing column of light extending from the base of your spine up through the crown of your head.",
+          "level": "deepening"
         },
         {
           "number": 64,
           "title": "Skin Boundary Dissolution",
-          "text": "Soften awareness of where your skin ends and the surrounding air begins."
+          "text": "Soften awareness of where your skin ends and the surrounding air begins.",
+          "level": "foundation"
         },
         {
           "number": 65,
           "title": "Heartbeat Tracking",
-          "text": "Feel your pulse in your fingertips or chest without using a wearable or monitor."
+          "text": "Feel your pulse in your fingertips or chest without using a wearable or monitor.",
+          "level": "foundation"
         },
         {
           "number": 66,
           "title": "Weightlessness Simulation",
           "text": "Rest in the sensation of buoyancy, feeling as though your body is floating in zero gravity.",
+          "level": "deepening",
           "caution": "If floating sensations ever feel unsettling, open your eyes and feel your feet on the floor."
         },
         {
           "number": 67,
           "title": "Foot-to-Earth Contact",
-          "text": "Place both bare feet flat on the floor and feel connected to the physical earth beneath the building."
+          "text": "Place both bare feet flat on the floor and feel connected to the physical earth beneath the building.",
+          "level": "foundation"
         },
         {
           "number": 68,
           "title": "Heat & Energy Flow",
-          "text": "Feel the warmth in your hands, treating it as pure primal prana rather than physical temperature."
+          "text": "Feel the warmth in your hands, treating it as pure primal prana rather than physical temperature.",
+          "level": "foundation"
         },
         {
           "number": 69,
           "title": "Dissolving Stiffness",
-          "text": "Send breath directly into neck and shoulder tightness caused by desk work, letting muscle tension release."
+          "text": "Send breath directly into neck and shoulder tightness caused by desk work, letting muscle tension release.",
+          "level": "foundation"
         },
         {
           "number": 70,
           "title": "The Skeleton Framework",
-          "text": "Shift awareness away from skin and muscles to the strong, calm bone structure supporting you."
+          "text": "Shift awareness away from skin and muscles to the strong, calm bone structure supporting you.",
+          "level": "foundation"
         },
         {
           "number": 71,
           "title": "Pranic Electric Field",
-          "text": "Feel the subtle electromagnetic field surrounding your physical body like an energetic cocoon."
+          "text": "Feel the subtle electromagnetic field surrounding your physical body like an energetic cocoon.",
+          "level": "deepening"
         },
         {
           "number": 72,
           "title": "Total Body Presence",
-          "text": "Feel your entire body illuminated simultaneously as a single, glowing field of living awareness."
+          "text": "Feel your entire body illuminated simultaneously as a single, glowing field of living awareness.",
+          "level": "deepening"
         }
       ]
     },
@@ -584,62 +656,74 @@
         {
           "number": 73,
           "title": "The Observer of the AI",
-          "text": "Recognize that while AI processes data, you are the conscious subject observing the processing."
+          "text": "Recognize that while AI processes data, you are the conscious subject observing the processing.",
+          "level": "nondual"
         },
         {
           "number": 74,
           "title": "The Uncomputable Self",
-          "text": "Identify the aspect of your awareness that cannot be reduced to code, data, or logic."
+          "text": "Identify the aspect of your awareness that cannot be reduced to code, data, or logic.",
+          "level": "nondual"
         },
         {
           "number": 75,
           "title": "The Mirror Consciousness",
-          "text": "View your mind as a clean mirror; information reflects on it, but the mirror remains untouched."
+          "text": "View your mind as a clean mirror; information reflects on it, but the mirror remains untouched.",
+          "level": "nondual"
         },
         {
           "number": 76,
           "title": "The Unbroken Witness",
-          "text": "Realize that the awareness watching your screen today is the exact same awareness that watched your childhood."
+          "text": "Realize that the awareness watching your screen today is the exact same awareness that watched your childhood.",
+          "level": "nondual"
         },
         {
           "number": 77,
           "title": "Subject vs. Object Separation",
-          "text": "Distinguish between thoughts (objects) and the awareness perceiving them (subject)."
+          "text": "Distinguish between thoughts (objects) and the awareness perceiving them (subject).",
+          "level": "nondual"
         },
         {
           "number": 78,
           "title": "Synthetic vs. Living Awareness",
-          "text": "Feel the living warmth of human consciousness compared to cold computational output."
+          "text": "Feel the living warmth of human consciousness compared to cold computational output.",
+          "level": "nondual"
         },
         {
           "number": 79,
           "title": "The Self-Luminous Light",
-          "text": "Recognize that awareness illuminates itself without needing any external source of light or input."
+          "text": "Recognize that awareness illuminates itself without needing any external source of light or input.",
+          "level": "nondual"
         },
         {
           "number": 80,
           "title": "Awareness of Processing",
-          "text": "Observe your brain analyzing options in real-time, watching thoughts form like software running."
+          "text": "Observe your brain analyzing options in real-time, watching thoughts form like software running.",
+          "level": "nondual"
         },
         {
           "number": 81,
           "title": "The Non-Algorithmic Spark",
-          "text": "Value spontaneous intuition and flashes of creative insight that arise from inner silence."
+          "text": "Value spontaneous intuition and flashes of creative insight that arise from inner silence.",
+          "level": "nondual"
         },
         {
           "number": 82,
           "title": "The Universal Mind Field",
-          "text": "Contemplate individual consciousness as a node in an infinite ocean of universal mind."
+          "text": "Contemplate individual consciousness as a node in an infinite ocean of universal mind.",
+          "level": "nondual"
         },
         {
           "number": 83,
           "title": "De-Identifying from Content",
-          "text": "Remind yourself: \"I am not the data, I am not the feed; I am the space in which it appears.\""
+          "text": "Remind yourself: \"I am not the data, I am not the feed; I am the space in which it appears.\"",
+          "level": "nondual"
         },
         {
           "number": 84,
           "title": "The Source of Intelligence",
-          "text": "Direct your attention back to the origin from which intelligence itself arises."
+          "text": "Direct your attention back to the origin from which intelligence itself arises.",
+          "level": "nondual"
         }
       ]
     },
@@ -662,64 +746,76 @@
           "number": 85,
           "title": "Screen-to-Sleep Bridge",
           "text": "Put away devices 30 minutes before sleep and rest in the gradual darkening of mental activity.",
+          "level": "foundation",
           "caution": "Practice somewhere safe to rest, never while driving or moving."
         },
         {
           "number": 86,
           "title": "The Threshold of Sleep",
           "text": "Catch the exact moment consciousness slips from waking rational thought into dream states.",
+          "level": "deepening",
           "caution": "Practice somewhere safe to rest, never while driving or moving."
         },
         {
           "number": 87,
           "title": "The Waking Flash",
-          "text": "Capture the instant of pure awareness immediately upon waking, before checking notifications."
+          "text": "Capture the instant of pure awareness immediately upon waking, before checking notifications.",
+          "level": "foundation"
         },
         {
           "number": 88,
           "title": "The Dreamlike Nature of Media",
-          "text": "View virtual realities, videos, and feeds as waking dreams flowing through consciousness."
+          "text": "View virtual realities, videos, and feeds as waking dreams flowing through consciousness.",
+          "level": "deepening"
         },
         {
           "number": 89,
           "title": "Lucid Waking",
-          "text": "Move through your tech-infused environment with the light, spacious awareness of being in a dream."
+          "text": "Move through your tech-infused environment with the light, spacious awareness of being in a dream.",
+          "level": "deepening"
         },
         {
           "number": 90,
           "title": "The Pause Between Tasks",
-          "text": "When finishing one project and starting another, take 30 seconds of absolute stillness."
+          "text": "When finishing one project and starting another, take 30 seconds of absolute stillness.",
+          "level": "foundation"
         },
         {
           "number": 91,
           "title": "Entering the Digital Realm",
-          "text": "State your intention before opening an app or browser, remaining anchored in presence."
+          "text": "State your intention before opening an app or browser, remaining anchored in presence.",
+          "level": "foundation"
         },
         {
           "number": 92,
           "title": "Exiting the Digital Realm",
-          "text": "Close tabs consciously, visualizing pulling your attention back into your physical body."
+          "text": "Close tabs consciously, visualizing pulling your attention back into your physical body.",
+          "level": "foundation"
         },
         {
           "number": 93,
           "title": "The Midnight Silence",
-          "text": "Use nighttime quiet to experience the stillness underlying the global digital network."
+          "text": "Use nighttime quiet to experience the stillness underlying the global digital network.",
+          "level": "deepening"
         },
         {
           "number": 94,
           "title": "Dissolving Night Fatigue",
           "text": "Lie down flat, feeling all cognitive strain melt downward into the mattress.",
+          "level": "foundation",
           "caution": "Lie somewhere safe and comfortable before you begin."
         },
         {
           "number": 95,
           "title": "The State Between States",
-          "text": "Rest awareness in transitions—between waking and sleeping, typing and resting, action and inaction."
+          "text": "Rest awareness in transitions—between waking and sleeping, typing and resting, action and inaction.",
+          "level": "deepening"
         },
         {
           "number": 96,
           "title": "The Eternal Twilight",
-          "text": "Realize that pure consciousness neither wakes nor sleeps, but remains eternally present behind all states."
+          "text": "Realize that pure consciousness neither wakes nor sleeps, but remains eternally present behind all states.",
+          "level": "nondual"
         }
       ]
     },
@@ -741,82 +837,98 @@
         {
           "number": 97,
           "title": "Bhairava in the Binary",
-          "text": "Recognize the divine nondual consciousness expressed through every electron, circuit, and algorithm."
+          "text": "Recognize the divine nondual consciousness expressed through every electron, circuit, and algorithm.",
+          "level": "nondual"
         },
         {
           "number": 98,
           "title": "The World as Consciousness",
-          "text": "View your desk, computer, and body as condensations of the same unified field of awareness."
+          "text": "View your desk, computer, and body as condensations of the same unified field of awareness.",
+          "level": "nondual"
         },
         {
           "number": 99,
           "title": "Omnipresent Space",
-          "text": "Feel that the space inside your room, inside your screen, and inside your heart are one space."
+          "text": "Feel that the space inside your room, inside your screen, and inside your heart are one space.",
+          "level": "nondual"
         },
         {
           "number": 100,
           "title": "The Unmoving Center",
-          "text": "Remain rooted in your silent inner core while the hyper-fast digital world spins around you."
+          "text": "Remain rooted in your silent inner core while the hyper-fast digital world spins around you.",
+          "level": "nondual"
         },
         {
           "number": 101,
           "title": "Seeing Consciousness in Others",
-          "text": "Look at people across video calls and recognize the same spark of awareness glowing in them."
+          "text": "Look at people across video calls and recognize the same spark of awareness glowing in them.",
+          "level": "nondual"
         },
         {
           "number": 102,
           "title": "The Interconnected Mesh",
-          "text": "Contemplate the internet as a physical shadow of the deeper cosmic unity connecting all living beings."
+          "text": "Contemplate the internet as a physical shadow of the deeper cosmic unity connecting all living beings.",
+          "level": "nondual"
         },
         {
           "number": 103,
           "title": "Time-Space Collapse",
-          "text": "In the instant of awareness, realize that past, future, and physical distance dissolve into now."
+          "text": "In the instant of awareness, realize that past, future, and physical distance dissolve into now.",
+          "level": "nondual"
         },
         {
           "number": 104,
           "title": "The Divine Play (Lila)",
-          "text": "View the entire era of technology and AI as cosmic consciousness exploring itself in digital form."
+          "text": "View the entire era of technology and AI as cosmic consciousness exploring itself in digital form.",
+          "level": "nondual"
         },
         {
           "number": 105,
           "title": "Every Place as Sacred Space",
-          "text": "Realize that a messy workstation or server room is no less sacred than a mountain cave."
+          "text": "Realize that a messy workstation or server room is no less sacred than a mountain cave.",
+          "level": "nondual"
         },
         {
           "number": 106,
           "title": "Every Action as Svarupa",
-          "text": "Perform every click, keystroke, and code commit as an offering of presence to the Supreme Self."
+          "text": "Perform every click, keystroke, and code commit as an offering of presence to the Supreme Self.",
+          "level": "nondual"
         },
         {
           "number": 107,
           "title": "The Infinite Potential",
-          "text": "Rest in the unmanifest potential before any reality, text, or form is created."
+          "text": "Rest in the unmanifest potential before any reality, text, or form is created.",
+          "level": "nondual"
         },
         {
           "number": 108,
           "title": "Freedom from Outcomes",
-          "text": "Act, create, and prompt with full engagement while remaining completely detached from the result."
+          "text": "Act, create, and prompt with full engagement while remaining completely detached from the result.",
+          "level": "nondual"
         },
         {
           "number": 109,
           "title": "The Self Containing the Universe",
-          "text": "Feel that the entire digital cosmos and physical world exist inside your awareness, not outside."
+          "text": "Feel that the entire digital cosmos and physical world exist inside your awareness, not outside.",
+          "level": "nondual"
         },
         {
           "number": 110,
           "title": "Unbroken Joy (Ananda)",
-          "text": "Tap into the effortless bliss that arises simply from being, independent of external stimuli."
+          "text": "Tap into the effortless bliss that arises simply from being, independent of external stimuli.",
+          "level": "nondual"
         },
         {
           "number": 111,
           "title": "Dissolution into Light",
-          "text": "Visualize your physical and digital existence dissolving into pure, uncreated, radiant light."
+          "text": "Visualize your physical and digital existence dissolving into pure, uncreated, radiant light.",
+          "level": "nondual"
         },
         {
           "number": 112,
           "title": "The Ultimate Realization (Soham)",
-          "text": "Rest in the final truth of the Vijñāna Bhairava Tantra: \"I am not the machine, I am not the mind; I am the supreme, infinite Consciousness.\""
+          "text": "Rest in the final truth of the Vijñāna Bhairava Tantra: \"I am not the machine, I am not the mind; I am the supreme, infinite Consciousness.\"",
+          "level": "nondual"
         }
       ]
     }

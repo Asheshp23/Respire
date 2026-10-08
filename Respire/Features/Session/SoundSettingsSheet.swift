@@ -12,11 +12,17 @@ import SwiftUI
 
 struct SoundSettingsSheet: View {
     let theme: BreathTheme
+    /// The world to breathe in; `nil` when a Journey or gate has already chosen it.
+    var scene: Binding<BreathTheme>? = nil
     @Binding var natureSound: Bool
     @Binding var tone: SolfeggioTone
     @Binding var opensWithPersonalPrompt: Bool
     /// `nil` on devices without haptics.
     var haptics: Binding<Bool>?
+    @Binding var phaseCues: Bool
+
+    @AppStorage(Soundscape.guideKey) private var breathTone = true
+    @AppStorage(VoiceGuide.storageKey) private var spokenGuidance = true
 
     @Environment(\.dismiss) private var dismiss
 
@@ -26,12 +32,35 @@ struct SoundSettingsSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.Space.xl) {
+                    if let scene {
+                        section("Scene") {
+                            ScenePicker(theme: scene)
+                        }
+                    }
+
+                    section("Eyes closed") {
+                        VStack(spacing: Theme.Space.s) {
+                            toggle(
+                                "Breath tone",
+                                symbol: "waveform.path",
+                                detail: "A soft note that rises as you breathe in, falls as you breathe out, and holds level in the pauses.",
+                                isOn: $breathTone
+                            )
+                            toggle(
+                                "Spoken guidance",
+                                symbol: "person.wave.2",
+                                detail: "A voice for the first two breaths, then quiet. At the end, a bell and a word to open your eyes.",
+                                isOn: $spokenGuidance
+                            )
+                        }
+                    }
+
                     section("Guidance") {
                         VStack(spacing: Theme.Space.s) {
                             toggle(
-                                "Personal opening",
+                                "Always begin with an opening",
                                 symbol: "text.quote",
-                                detail: "Thirty seconds written on this device from the time, the weather, your pulse, and today's gate.",
+                                detail: "Thirty seconds written on this device from the time, the weather, your pulse, and today's gate, before you start breathing.",
                                 isOn: $opensWithPersonalPrompt
                             )
                             if let haptics {
@@ -42,6 +71,12 @@ struct SoundSettingsSheet: View {
                                     isOn: haptics
                                 )
                             }
+                            toggle(
+                                "Phase chime",
+                                symbol: "bell.and.waves.left.and.right",
+                                detail: "A soft chime as each phase begins, higher breathing in, lower breathing out. Follow along with your eyes closed.",
+                                isOn: $phaseCues
+                            )
                         }
                     }
 
@@ -50,7 +85,7 @@ struct SoundSettingsSheet: View {
                             VStack(alignment: .leading, spacing: Theme.Space.xxs) {
                                 Label("\(theme.title)", systemImage: theme.symbol)
                                     .font(.body.weight(.semibold))
-                                Text("\(theme.natureSound), rising and falling with your breath. Quiet when your device is on silent.")
+                                Text("\(theme.natureSound), rising and falling with your breath.")
                                     .font(Theme.Typography.caption)
                                     .foregroundStyle(.white.opacity(0.7))
                                     .fixedSize(horizontal: false, vertical: true)
@@ -81,7 +116,7 @@ struct SoundSettingsSheet: View {
                 .padding(Theme.Space.page)
             }
             .background(Theme.Palette.paper)
-            .navigationTitle("Sound & Guidance")
+            .navigationTitle(scene == nil ? "Sound & Guidance" : "Scene & Sound")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -184,6 +219,9 @@ struct SoundSettingsSheet: View {
     @Previewable @State var tone = SolfeggioTone.scene
     @Previewable @State var opening = true
     @Previewable @State var haptics = true
-    SoundSettingsSheet(theme: .rain, natureSound: $nature, tone: $tone, opensWithPersonalPrompt: $opening, haptics: $haptics)
+    @Previewable @State var cues = false
+    @Previewable @State var scene = BreathTheme.rain
+    SoundSettingsSheet(theme: scene, scene: $scene, natureSound: $nature, tone: $tone,
+                       opensWithPersonalPrompt: $opening, haptics: $haptics, phaseCues: $cues)
         .preferredColorScheme(.dark)
 }

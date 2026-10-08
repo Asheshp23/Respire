@@ -15,7 +15,8 @@
 //                  the in-breath and settles with the out-breath.
 //
 //  Five more live in NatureThemes.swift: Hidden Falls, Ember Peak, Rain Pond,
-//  Prairie Wind, and Distant Storm.
+//  Prairie Wind, and Distant Storm. Cymatics, sound made visible on water,
+//  lives in CymaticsScene.swift.
 //
 //  The chosen theme is remembered, and the app's quiet background takes on a
 //  still version of the same world (`ThemeBackdrop`). In Respire, `openness` is
@@ -27,7 +28,7 @@ import SwiftUI
 // MARK: - Theme
 
 enum BreathTheme: String, CaseIterable, Identifiable {
-    case aurora, ocean, sakura, desert, waterfall, volcano, rain, wind, thunder
+    case aurora, ocean, sakura, desert, waterfall, volcano, rain, wind, thunder, cymatics
 
     static let storageKey = "breath.theme"
 
@@ -44,6 +45,7 @@ enum BreathTheme: String, CaseIterable, Identifiable {
         case .rain: "Rain Pond"
         case .wind: "Prairie Wind"
         case .thunder: "Distant Storm"
+        case .cymatics: "Cymatics"
         }
     }
 
@@ -58,6 +60,7 @@ enum BreathTheme: String, CaseIterable, Identifiable {
         case .rain: "cloud.rain"
         case .wind: "wind"
         case .thunder: "cloud.bolt.rain"
+        case .cymatics: "circle.hexagongrid"
         }
     }
 
@@ -110,6 +113,11 @@ enum BreathTheme: String, CaseIterable, Identifiable {
         case (.thunder, .holdFull): "Let the thunder roll far away."
         case (.thunder, .exhale): "Breathe out, and let the storm pass."
         case (.thunder, .holdEmpty): "Rest in the shelter of your breath."
+        case (.cymatics, nil): "Sound, made visible. Watch the water."
+        case (.cymatics, .inhale): "Breathe in, and let the pattern unfold."
+        case (.cymatics, .holdFull): "Be still, and watch it settle into form."
+        case (.cymatics, .exhale): "Breathe out as it gathers to the center."
+        case (.cymatics, .holdEmpty): "Rest in the hum beneath everything."
         }
     }
 }
@@ -721,6 +729,9 @@ struct ThemeBackdrop: View {
                     ThunderDrawing.draw(in: &context, size: canvasSize, openness: 0.3, time: 0, animated: false, flashes: false)
                 }
                 .opacity(0.6)
+            case .cymatics:
+                CymaticsScene(openness: 0.4, time: 0)
+                    .opacity(0.5)
             }
         }
         .allowsHitTesting(false)

@@ -5,59 +5,57 @@
 
 import SwiftUI
 
-/// Adaptive shell: a sidebar + immersive detail on iPad, collapsing automatically into a
-/// push-navigation stack on iPhone and in compact iPad multitasking widths.
+/// Four tabs, as in any app: Today, Breathe, Courses, and Settings. A bottom tab bar on
+/// iPhone; on iPad a top tab bar that can open into a sidebar. Each tab keeps its own stack.
 struct RootView: View {
     @Environment(PatternLibrary.self) private var library
-    @Environment(JourneyLibrary.self) private var journeys
     @Environment(MomentReminders.self) private var reminders
     @Environment(SessionViewModel.self) private var session
     @Environment(\.scenePhase) private var scenePhase
 
-    @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
+    @AppStorage("onboarding.done") private var onboardingDone = false
 
     var body: some View {
         @Bindable var library = library
 
-        NavigationSplitView(columnVisibility: $columnVisibility) {
-            PatternListView()
-                .navigationSplitViewColumnWidth(min: 280, ideal: 320, max: 380)
-        } detail: {
-            if library.selection == .gates {
-                NavigationStack(path: $library.gatePath) {
-                    DharanaLibraryView()
-                }
-            } else if let journeyID = library.selectedJourneyID, let journey = journeys.journey(id: journeyID) {
-                // Journeys push their own practice sessions, so they get a stack of their own.
+        TabView(selection: $library.tab) {
+            Tab("Today", systemImage: "sun.horizon", value: AppTab.today) {
                 NavigationStack {
-                    JourneyMapView(journey: journey)
+                    TodayView()
                 }
-                .id(journey.id)
-            } else if library.selectedPattern != nil {
-                SessionView()
-            } else {
-                ContentUnavailableView("Choose a rhythm", systemImage: "wind", description: Text("Pick a breathing pattern or a journey to begin."))
-                    .paperBackground()
+            }
+            Tab("Breathe", systemImage: "wind", value: AppTab.breathe) {
+                NavigationStack(path: $library.breathePath) {
+                    BreatheView()
+                }
+            }
+            Tab("Courses", systemImage: "book", value: AppTab.courses) {
+                NavigationStack(path: $library.coursesPath) {
+                    CoursesView()
+                }
+            }
+            Tab("Settings", systemImage: "gearshape", value: AppTab.settings) {
+                NavigationStack {
+                    SettingsView()
+                }
             }
         }
-        .onChange(of: library.selectedPattern, initial: true) { _, pattern in
-            if let pattern { session.select(pattern) }
-        }
+        .tabViewStyle(.sidebarAdaptable)
         .onChange(of: session.engine.state) { _, state in
-            // Let the canvas take over the whole iPad screen while breathing.
-            withAnimation(.smooth) {
-                columnVisibility = state == .running ? .detailOnly : .automatic
-            }
+            // With eyes closed nobody touches the screen, so keep it from locking mid-session.
+            UIApplication.shared.isIdleTimerDisabled = state == .running || state == .paused
         }
-        // A tapped moment reminder opens its gate.
+        // A tapped moment reminder opens its practice.
         .onChange(of: reminders.openedGate) { _, gate in
             guard let gate else { return }
-            library.selection = .gates
-            library.gatePath = [gate]
+            library.openPractice(gate)
             reminders.openedGate = nil
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background { session.enterBackground() }
+        }
+        .fullScreenCover(isPresented: Binding(get: { !onboardingDone }, set: { onboardingDone = !$0 })) {
+            OnboardingView { onboardingDone = true }
         }
     }
 }
