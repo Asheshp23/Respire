@@ -10,6 +10,10 @@
 import SwiftUI
 
 enum Sketch {
+    /// Set while drawing a live Place whose rain and motes are simulated on the GPU,
+    /// so the drawing's own versions step aside rather than doubling up.
+    static var particlesOnGPU = false
+
     static func hex(_ value: UInt32, _ opacity: Double = 1) -> Color {
         Color(red: Double((value >> 16) & 0xFF) / 255,
               green: Double((value >> 8) & 0xFF) / 255,
@@ -107,6 +111,7 @@ enum Sketch {
     /// Soft, slanted rain. `density` 0…1; slow enough to stay calming.
     static func rain(_ c: inout GraphicsContext, _ s: CGSize, density: Double, time: Double, seed: UInt64 = 21,
                      color: Color = Color(red: 0.8, green: 0.88, blue: 1), opacity: Double = 0.3, region: CGRect? = nil) {
+        guard !particlesOnGPU else { return }
         let area = region ?? CGRect(origin: .zero, size: s)
         var rng = SeededGenerator(seed: seed)
         for _ in 0..<Int(220 * density) {
@@ -127,6 +132,7 @@ enum Sketch {
     /// Slow, drifting flakes or motes.
     static func drift(_ c: inout GraphicsContext, _ s: CGSize, count: Int, time: Double, seed: UInt64,
                       color: Color = .white, speed: ClosedRange<Double> = 10...26, size: ClosedRange<Double> = 1.2...3) {
+        guard !particlesOnGPU else { return }
         var rng = SeededGenerator(seed: seed)
         for _ in 0..<count {
             let x0 = Double.random(in: 0...s.width, using: &rng)

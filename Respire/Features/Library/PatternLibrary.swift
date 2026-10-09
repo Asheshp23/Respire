@@ -6,23 +6,20 @@
 import Observation
 import SwiftUI
 
-/// The app's four tabs.
+/// The three tabs: Breathe (the home, two zones), Library (everything else), Settings.
 enum AppTab: Hashable {
-    case today
     case breathe
-    case courses
+    case library
     case settings
 }
 
-/// What the Breathe tab can open.
-enum BreatheRoute: Hashable {
+/// Everywhere a stack can go. The 112 practices are pushed by number.
+enum ExploreRoute: Hashable {
+    case practice(Practice.ID)
+    case place(Place.ID)
+    case course(Journey.ID)
     case rhythm(BreathPattern.ID)
     case places
-}
-
-/// What the Courses tab can open. Practices in the library are pushed by number.
-enum CoursesRoute: Hashable {
-    case course(Journey.ID)
     case practices
 }
 
@@ -32,9 +29,11 @@ final class PatternLibrary {
     let presets: [BreathPattern] = BreathPattern.presets
     var custom: BreathPattern = .customDefault
 
-    var tab: AppTab = .today
-    var breathePath = NavigationPath()
-    var coursesPath = NavigationPath()
+    var tab: AppTab = .breathe
+    /// The home's stack: sessions started with one tap.
+    var homePath = NavigationPath()
+    /// The library's stack: everything browsed.
+    var libraryPath = NavigationPath()
 
     var allPatterns: [BreathPattern] { presets + [custom] }
 
@@ -42,29 +41,44 @@ final class PatternLibrary {
         allPatterns.first { $0.id == id }
     }
 
-    /// Opens a rhythm in the Breathe tab; `beginsAtOnce` starts breathing as it appears.
+    /// Starts something from the home with one tap: it opens already beginning.
+    func start(_ route: ExploreRoute, in session: SessionViewModel) {
+        if case .rhythm(let id) = route, let pattern = pattern(id: id) { session.select(pattern) }
+        session.beginsOnArrival = true
+        homePath.append(route)
+    }
+
+    /// Opens a rhythm in the Library; `beginsAtOnce` starts breathing as it appears.
     func open(_ pattern: BreathPattern, beginsAtOnce: Bool = false, in session: SessionViewModel) {
         session.select(pattern)
         session.beginsOnArrival = beginsAtOnce
-        var path = NavigationPath()
-        path.append(BreatheRoute.rhythm(pattern.id))
-        breathePath = path
-        tab = .breathe
+        show(.rhythm(pattern.id))
     }
 
     func openCourse(_ id: Journey.ID) {
-        var path = NavigationPath()
-        path.append(CoursesRoute.course(id))
-        coursesPath = path
-        tab = .courses
+        show(.course(id))
     }
 
     /// Opens one of the 112 practices, inside the library.
     func openPractice(_ number: Int) {
         var path = NavigationPath()
-        path.append(CoursesRoute.practices)
+        path.append(ExploreRoute.practices)
         path.append(number)
-        coursesPath = path
-        tab = .courses
+        libraryPath = path
+        tab = .library
+    }
+
+    /// Shows a route on its own in the Library.
+    func show(_ route: ExploreRoute) {
+        var path = NavigationPath()
+        path.append(route)
+        libraryPath = path
+        tab = .library
+    }
+
+    /// Back to the home.
+    func goHome() {
+        homePath = NavigationPath()
+        tab = .breathe
     }
 }

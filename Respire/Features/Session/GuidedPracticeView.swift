@@ -21,6 +21,8 @@ struct GuidedPracticeView<Completion: View>: View {
     var gate: Dharana? = nil
     /// False for quick sessions that begin breathing straight away.
     var allowsOpening = true
+    /// A persona's guided practice, with its own script.
+    var practice: Practice? = nil
     var onComplete: () -> Void
     /// The card shown once the session finishes; it receives an action that leaves the practice.
     @ViewBuilder var completion: (_ leave: @escaping () -> Void) -> Completion
@@ -31,7 +33,8 @@ struct GuidedPracticeView<Completion: View>: View {
     @State private var isComplete = false
 
     var body: some View {
-        SessionView(world: world, focus: focus, title: title, guidance: guidance, gate: gate, allowsOpening: allowsOpening)
+        SessionView(world: world, focus: focus, title: title, guidance: guidance, gate: gate,
+                    allowsOpening: allowsOpening, practice: practice)
             .overlay {
                 if isComplete {
                     ZStack(alignment: .bottom) {

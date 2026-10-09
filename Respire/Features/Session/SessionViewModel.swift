@@ -23,6 +23,8 @@ final class SessionViewModel {
     @ObservationIgnored let soundscape: Soundscape
     /// The spoken script, for eyes-closed practice.
     @ObservationIgnored let voice: VoiceGuide
+    /// Finished sessions, for the You tab.
+    let history = SessionHistory()
 
     var hapticsEnabled = true {
         didSet { haptics.isEnabled = hapticsEnabled }
@@ -87,6 +89,8 @@ final class SessionViewModel {
     /// Finished on its own: a bell, the closing words, then the sound fades. With eyes
     /// closed, that's how you know it's over.
     private func closeSession() {
+        history.record(title: engine.pattern.name,
+                       seconds: Double(engine.completedCycles) * engine.pattern.cycleDuration)
         soundscape.ringEnd()
         closingTask?.cancel()
         closingTask = Task { [weak self] in

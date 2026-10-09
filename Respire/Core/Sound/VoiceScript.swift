@@ -68,6 +68,11 @@ enum VoiceScript {
         }
     }
 
+    /// "And let go of the rush of today."
+    static func letGo(of item: String) -> String {
+        "And let go of \(item.prefix(1).lowercased() + item.dropFirst())."
+    }
+
     static let lastBreathIn = "One last breath in."
     static let lastBreathOut = "And let it go."
 

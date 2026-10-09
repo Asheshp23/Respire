@@ -5,8 +5,8 @@
 //  The immersive session. The chosen breath world fills the whole canvas (iPhone
 //  or full-screen iPad) and breathes with the engine. Before breathing, a short line
 //  says what to do, with focus and length on a pane of glass. While breathing, the
-//  world itself is the guide: its lotus, tide, or flame breathes with you, and one
-//  word sits quietly above it. Everything else steps aside.
+//  world itself is the guide: its lotus, tide, or flame breathes with you, with no
+//  words on screen. Everything else steps aside.
 //
 //  With spoken guidance on, Begin first plays a short spoken settling-in (posture,
 //  eyes closed, what the session is), then breathing starts. The written opening
@@ -28,12 +28,15 @@ struct SessionView: View {
     private let allowsOpening: Bool
     /// The rhythm to breathe, when opened from the Breathe list.
     private let rhythm: BreathPattern?
+    /// A guided practice, which brings its own spoken script and, sometimes, a hum.
+    private let practice: Practice?
 
     @Environment(SessionViewModel.self) private var session
     @Environment(PatternLibrary.self) private var library
     @Environment(DharanaLibrary.self) private var gates
     @AppStorage(BreathTheme.storageKey) private var savedTheme: BreathTheme = .aurora
     @AppStorage(SessionFocus.storageKey) private var savedFocus: SessionFocus = .calmAnxiety
+    @AppStorage(Persona.storageKey) private var persona: Persona = .adults
     // Openings are offered, not imposed: off until the person asks for them every time.
     @AppStorage("opening.enabled") private var opensWithPersonalPrompt = false
     // Off until chosen: calm senses by default.
@@ -64,8 +67,9 @@ struct SessionView: View {
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
 
     init(rhythm: BreathPattern? = nil, world: BreathTheme? = nil, focus: SessionFocus? = nil, title: String? = nil,
-         guidance: String? = nil, gate: Dharana? = nil, allowsOpening: Bool = true) {
+         guidance: String? = nil, gate: Dharana? = nil, allowsOpening: Bool = true, practice: Practice? = nil) {
         self.rhythm = rhythm
+        self.practice = practice
         worldOverride = world
         focusOverride = focus
         titleOverride = title
@@ -81,7 +85,11 @@ struct SessionView: View {
         }
     }
 
-    private var theme: BreathTheme { worldOverride ?? savedTheme }
+    /// The chosen scene, unless it isn't one for whoever's breathing (a storm, for a child).
+    private var theme: BreathTheme {
+        if let worldOverride { return worldOverride }
+        return savedTheme.personas.contains(persona) ? savedTheme : .aurora
+    }
     private var focus: SessionFocus { focusOverride ?? savedFocus }
     /// A session started from Today or the Breathe list, rather than a course day or a
     /// practice, which bring their own length and completion card.
@@ -101,11 +109,18 @@ struct SessionView: View {
         ZStack {
             // Laid out in the visible detail area so its focal point stays centered
             // beside the sidebar; the extension effect mirrors it underneath the sidebar.
-            BreathWorldView(theme: theme, engine: session.engine)
-                .id(theme)
-                .transition(.opacity)
-                .ignoresSafeArea(edges: .vertical)
-                .backgroundExtensionEffect()
+            // A guided practice has a scene of its own, drawn for its technique.
+            Group {
+                if let practice {
+                    PracticeScene(practice: practice, engine: session.engine)
+                } else {
+                    BreathWorldView(theme: theme, engine: session.engine)
+                        .id(theme)
+                        .transition(.opacity)
+                }
+            }
+            .ignoresSafeArea(edges: .vertical)
+            .backgroundExtensionEffect()
 
             // A soft floor of shade so the words and glass read over bright worlds.
             LinearGradient(colors: [.clear, .black.opacity(0.55)], startPoint: .center, endPoint: .bottom)
@@ -188,10 +203,11 @@ struct SessionView: View {
         .animation(.easeInOut(duration: 0.8), value: settling == nil)
         .onAppear {
             if let rhythm, session.engine.state == .idle { session.select(rhythm) }
-            // Started from Today's one button: breathe straight away.
-            if isFree, session.beginsOnArrival {
+            // Started with one tap from Now: begin straight away. A moment's wait lets a
+            // guided practice set its rhythm and length first.
+            if session.beginsOnArrival {
                 session.beginsOnArrival = false
-                begin()
+                Task { begin() }
             }
         }
         .onDisappear {
@@ -320,6 +336,7 @@ extension SessionView {
             cues: phaseCues,
             guide: breathTone,
             voice: spokenGuidance,
+            hum: practice?.hums ?? false,
             following: session.engine
         )
     }
@@ -338,9 +355,14 @@ extension SessionView {
             let cycle = max(session.engine.pattern.cycleDuration, 1)
             session.engine.targetCycles = minutes > 0 ? max(1, Int((Double(minutes * 60) / cycle).rounded())) : nil
         }
-        let writtenOpening = opensWithPersonalPrompt && allowsOpening
+        // A practice has its own spoken settling-in, so the written opening steps aside.
+        let writtenOpening = opensWithPersonalPrompt && allowsOpening && practice == nil
         let spokenIntro = spokenGuidance && !writtenOpening && allowsOpening
-        session.voice.prepare(focus: focus, withIntro: spokenIntro)
+        if let practice {
+            session.voice.prepare(practice: practice, withIntro: spokenIntro)
+        } else {
+            session.voice.prepare(focus: focus, withIntro: spokenIntro)
+        }
 
         if spokenIntro {
             settle()
@@ -478,8 +500,8 @@ private struct PhaseGuide: View {
 
 // MARK: - Word
 
-/// The one word for now, high above the world's breathing heart, fading from each
-/// phase into the next.
+/// The phase, for VoiceOver only. Nothing is drawn: the scene, the breath sound,
+/// touch, and the voice are the guide, so there are no words to read while breathing.
 private struct BreathWord: View {
     let engine: BreathEngine
 
@@ -488,23 +510,11 @@ private struct BreathWord: View {
     }
 
     var body: some View {
-        VStack {
-            ZStack {
-                Text(word)
-                    .id(word)
-                    .font(Theme.Typography.instruction)
-                    .foregroundStyle(.white)
-                    .shadow(color: .black.opacity(0.6), radius: 12)
-                    .transition(.opacity)
-            }
-            .animation(.easeInOut(duration: 0.8), value: word)
-            .padding(.top, Theme.Space.xxl)
-            Spacer()
-        }
-        .allowsHitTesting(false)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(word)
-        .accessibilityAddTraits(.updatesFrequently)
+        Color.clear
+            .allowsHitTesting(false)
+            .accessibilityElement()
+            .accessibilityLabel(word)
+            .accessibilityAddTraits(.updatesFrequently)
     }
 }
 

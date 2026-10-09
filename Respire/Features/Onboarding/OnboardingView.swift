@@ -16,6 +16,7 @@ struct OnboardingView: View {
     @Environment(DharanaLibrary.self) private var gates
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage(SessionFocus.storageKey) private var focus: SessionFocus = .calmAnxiety
+    @AppStorage(Persona.storageKey) private var persona: Persona = .adults
     @AppStorage(VoiceGuide.storageKey) private var spokenGuidance = true
     @AppStorage(Soundscape.guideKey) private var breathSound = true
 
@@ -23,7 +24,7 @@ struct OnboardingView: View {
     @State private var moment: Moment?
     @State private var start = Date.now
 
-    private static let pageCount = 3
+    private static let pageCount = 4
 
     var body: some View {
         ZStack {
@@ -43,8 +44,9 @@ struct OnboardingView: View {
                 Spacer(minLength: 0)
                 Group {
                     switch page {
-                    case 0: focusPage
-                    case 1: eyesClosedPage
+                    case 0: personaPage
+                    case 1: focusPage
+                    case 2: eyesClosedPage
                     default: reminderPage
                     }
                 }
@@ -63,10 +65,23 @@ struct OnboardingView: View {
 
     // MARK: - Pages
 
+    private var personaPage: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.m) {
+            heading("Welcome to Respire. Who's breathing?",
+                    "Short guided breathing, made for each age: its sessions, its pace, and its voice. You can change this any time.")
+            VStack(spacing: Theme.Space.xs) {
+                ForEach(Persona.allCases) { option in
+                    choice(option.title, detail: option.subtitle, symbol: option.symbol,
+                           isSelected: option == persona) { persona = option }
+                }
+            }
+        }
+    }
+
     private var focusPage: some View {
         VStack(alignment: .leading, spacing: Theme.Space.m) {
-            heading("Welcome to Respire.",
-                    "Short guided breathing and meditation. What would you like help with?")
+            heading("What would you like help with?",
+                    "This sets the rhythm of a quick session. Guided sessions have their own.")
             VStack(spacing: Theme.Space.xs) {
                 ForEach(SessionFocus.allCases) { option in
                     choice(option.title, detail: option.recommendedPattern.summary, symbol: option.symbol,
@@ -122,7 +137,7 @@ struct OnboardingView: View {
     }
 
     private func advance() {
-        if page == 2, let moment {
+        if page == 3, let moment {
             let gate = gates.collection?.dharana(number: moment.gate)
             Task { await reminders.setEnabled(true, for: moment, gate: gate) }
         }

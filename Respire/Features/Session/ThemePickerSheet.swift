@@ -11,11 +11,12 @@ import SwiftUI
 
 struct ScenePicker: View {
     @Binding var theme: BreathTheme
+    @AppStorage(Persona.storageKey) private var persona: Persona = .adults
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: Theme.Space.s) {
-                ForEach(BreathTheme.allCases) { option in
+                ForEach(BreathTheme.scenes(for: persona)) { option in
                     tile(option)
                 }
             }

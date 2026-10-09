@@ -35,6 +35,8 @@ final class Soundscape {
     private var cuesEnabled = false
     /// Whether the breath sound plays while breathing.
     private var guideEnabled = false
+    /// Whether a soft hum plays on each out-breath, to hum along with.
+    private var humEnabled = false
 
     /// The breath sound's setting; on unless turned off.
     static let guideKey = "sound.guide"
@@ -42,13 +44,14 @@ final class Soundscape {
     /// Plays `theme`'s soundscape following `breathEngine`, or fades out when there's nothing to hear.
     /// `cues`, `guide`, and `voice` keep the engine running even with nature and tone off.
     func play(theme: BreathTheme, nature: Bool, toneHz: Double, cues: Bool = false, guide: Bool = false,
-              voice: Bool = false, following breathEngine: BreathEngine) {
+              voice: Bool = false, hum: Bool = false, following breathEngine: BreathEngine) {
+        humEnabled = hum
         synth.theme = BreathTheme.allCases.firstIndex(of: theme) ?? 0
         synth.natureTarget = nature ? 1 : 0
         synth.toneTarget = toneHz
         cuesEnabled = cues
         guideEnabled = guide
-        guard nature || toneHz > 0 || cues || guide || voice else {
+        guard nature || toneHz > 0 || cues || guide || voice || hum else {
             stop()
             return
         }
@@ -84,6 +87,7 @@ final class Soundscape {
         isPlaying = false
         synth.targetGain = 0
         synth.airTarget = 0
+        synth.humTarget = 0
         followTask?.cancel()
         followTask = nil
         stopTask?.cancel()
@@ -248,8 +252,15 @@ final class Soundscape {
                 case .idle, .finished:
                     openness = 0.3 + 0.1 * sin(now.timeIntervalSince(start) * 0.5)
                 }
+                // The hum swells in quickly at the start of each out-breath and fades at its end.
+                var hum = 0.0
+                if breathEngine.state == .running, self?.humEnabled == true {
+                    let snapshot = breathEngine.snapshot(at: now)
+                    if snapshot.phase == .exhale { hum = pow(sin(.pi * snapshot.phaseProgress), 0.35) }
+                }
                 synth.opennessTarget = Float(openness)
                 synth.airTarget = Float(air)
+                synth.humTarget = Float(hum)
                 try? await Task.sleep(for: .milliseconds(33))
             }
         }

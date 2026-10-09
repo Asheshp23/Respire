@@ -107,6 +107,14 @@ final class BreathEngine {
         if wasActive { start() }
     }
 
+    /// Adjusts the rhythm without restarting: the phase underway keeps its length and
+    /// later phases use the new one. For gently lengthening the out-breath mid-session;
+    /// call it as an in-breath begins, so the cycle's progress stays continuous.
+    func retune(_ newPattern: BreathPattern) {
+        guard newPattern.isValid else { return }
+        pattern = newPattern
+    }
+
     // MARK: - Sampling
 
     func snapshot(at date: Date) -> BreathSnapshot {

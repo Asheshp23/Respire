@@ -5,8 +5,8 @@
 
 import SwiftUI
 
-/// Four tabs, as in any app: Today, Breathe, Courses, and Settings. A bottom tab bar on
-/// iPhone; on iPad a top tab bar that can open into a sidebar. Each tab keeps its own stack.
+/// Three tabs. Breathe is the home: one session for right now and three one-tap
+/// reliefs, nothing else. Library holds everything to browse; Settings, the rest.
 struct RootView: View {
     @Environment(PatternLibrary.self) private var library
     @Environment(MomentReminders.self) private var reminders
@@ -19,19 +19,14 @@ struct RootView: View {
         @Bindable var library = library
 
         TabView(selection: $library.tab) {
-            Tab("Today", systemImage: "sun.horizon", value: AppTab.today) {
-                NavigationStack {
+            Tab("Breathe", systemImage: "wind", value: AppTab.breathe) {
+                NavigationStack(path: $library.homePath) {
                     TodayView()
                 }
             }
-            Tab("Breathe", systemImage: "wind", value: AppTab.breathe) {
-                NavigationStack(path: $library.breathePath) {
-                    BreatheView()
-                }
-            }
-            Tab("Courses", systemImage: "book", value: AppTab.courses) {
-                NavigationStack(path: $library.coursesPath) {
-                    CoursesView()
+            Tab("Library", systemImage: "books.vertical", value: AppTab.library) {
+                NavigationStack(path: $library.libraryPath) {
+                    ExploreView()
                 }
             }
             Tab("Settings", systemImage: "gearshape", value: AppTab.settings) {

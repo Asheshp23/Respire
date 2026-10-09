@@ -2,22 +2,26 @@
 //  PlaceSessionView.swift
 //  Respire
 //
-//  Visiting a Place: the drawing fills the screen and moves one step with each
-//  breath. Above it, the arrival ("You are now arriving at… Rain Station") and the
-//  quiet progress: a list of stages, what's been found, or the time kept. Below,
-//  the breath and a single control. It ends with "You have arrived."
+//  Visiting a Place: the scene fills the screen and moves one step with each breath.
+//  Before you arrive, only its name and what it's for. Once you're breathing there are
+//  no words at all; the scene, the breath sound, touch, and the voice guide you, and the
+//  two quiet controls fade away until a tap brings them back. It ends with "You have arrived."
 //
 
 import SwiftUI
 
-/// A Place drawing for one frame.
+/// A Place drawing for one frame. `isLive` hands its rain and motes to the GPU.
 struct PlaceCanvas: View {
     let place: Place
     var frame: PlaceFrame
+    var isLive = false
 
     var body: some View {
+        let handsOff = isLive && place.environment.particles?.replacesSketch == true
         Canvas { context, size in
+            Sketch.particlesOnGPU = handsOff
             PlaceArt.draw(place.id, &context, size, frame)
+            Sketch.particlesOnGPU = false
         }
         .accessibilityHidden(true)
     }
@@ -43,16 +47,36 @@ struct PlaceSessionView: View {
     @AppStorage(VoiceGuide.storageKey) private var spokenGuidance = true
 
     @State private var start = Date.now
+    /// While breathing, the controls fade back after a few still seconds; a tap brings them back.
+    @State private var controlsResting = false
+    @State private var restTask: Task<Void, Never>?
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
 
     private var engine: BreathEngine { session.engine }
+    private let environment: PlaceEnvironment
+
+    init(place: Place) {
+        self.place = place
+        environment = place.environment
+    }
     private var ink: Color { place.hasLightGround ? Sketch.hex(0x2A1A10) : .white }
 
     var body: some View {
         ZStack {
+            // The drawing, lit by the scene's own light: bloom, shafts, vignette, grain.
             TimelineView(.animation(paused: reduceMotion)) { timeline in
-                PlaceCanvas(place: place, frame: frame(at: timeline.date))
+                let current = frame(at: timeline.date)
+                PlaceCanvas(place: place, frame: current, isLive: !reduceMotion)
+                    .placeLighting(environment.light, breath: current.openness, time: current.time)
             }
             .ignoresSafeArea()
+
+            // The living air, simulated on the GPU.
+            if !reduceMotion, let particles = environment.particles {
+                PlaceParticles(particles: particles) { particleInputs() }
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+            }
 
             VStack(spacing: Theme.Space.l) {
                 header
@@ -62,13 +86,18 @@ struct PlaceSessionView: View {
             .padding(Theme.Space.page)
             .frame(maxWidth: 560)
         }
+        // A tap anywhere brings the resting controls back.
+        .contentShape(Rectangle())
+        .onTapGesture { wakeControls() }
         .toolbarBackgroundVisibility(.hidden, for: .navigationBar)
+        .toolbar(engine.state == .running ? .hidden : .automatic, for: .navigationBar)
         .toolbar(.hidden, for: .tabBar)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             // A short visit: no settling-in, a word for the first breaths, and a brief closing.
-            session.voice.prepare(focus: nil, withIntro: false)
+            // Places that let go of something name each thing on its out-breath instead.
+            session.voice.prepare(focus: nil, withIntro: false, exhaleLines: releaseLines)
             session.select(place.pattern)
             engine.targetCycles = place.steps
             start = .now
@@ -79,8 +108,37 @@ struct PlaceSessionView: View {
             engine.targetCycles = nil
             session.soundscape.stop()
         }
-        .onChange(of: engine.state) { _, _ in syncSound() }
+        .onChange(of: engine.state) { _, state in
+            syncSound()
+            if state == .running {
+                wakeControls()
+            } else {
+                restTask?.cancel()
+                withAnimation(.easeInOut(duration: 0.4)) { controlsResting = false }
+            }
+        }
+        // Adaptive places lengthen the out-breath a little as each new breath begins.
+        .onChange(of: engine.phase) { _, phase in
+            guard place.isAdaptive, phase == .inhale, engine.state == .running else { return }
+            engine.retune(place.pattern(atBreath: engine.completedCycles))
+        }
         .sensoryFeedback(.success, trigger: engine.state == .finished) { _, done in done }
+    }
+
+    /// Read by the GPU particles every frame.
+    private func particleInputs() -> PlaceParticleInputs {
+        let now = Date.now
+        let progress: Double = switch engine.state {
+        case .idle: 0
+        case .finished: Double(place.steps)
+        case .running, .paused: engine.cycleProgress(at: now)
+        }
+        let breath = engine.state == .running || engine.state == .paused
+            ? engine.snapshot(at: now).lungVolume
+            : 0.4 + 0.1 * sin(now.timeIntervalSince(start) * 0.5)
+        let steps = max(place.steps, 1)
+        return PlaceParticleInputs(breath: breath, stage: min(Int(progress), steps - 1),
+                                   progress: min(progress / Double(steps), 1))
     }
 
     private func frame(at date: Date) -> PlaceFrame {
@@ -100,11 +158,11 @@ struct PlaceSessionView: View {
 
     private var isBreathing: Bool { engine.state == .running || engine.state == .paused }
 
-    /// The arrival and the full progress before and after; while breathing, one quiet line,
-    /// so the breath word below is the only thing to read.
+    /// Before arriving: the place's name and what it's for. Nothing once you're breathing.
+    @ViewBuilder
     private var header: some View {
-        VStack(spacing: Theme.Space.s) {
-            if !isBreathing {
+        if engine.state == .idle {
+            VStack(spacing: Theme.Space.s) {
                 Text(place.arrival)
                     .font(.system(.title3, design: .serif).italic())
                     .foregroundStyle(ink.opacity(0.85))
@@ -114,86 +172,43 @@ struct PlaceSessionView: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(ink)
                     .accessibilityAddTraits(.isHeader)
+                Text(place.psychologicalGoal)
+                    .font(.system(.subheadline, design: .serif))
+                    .foregroundStyle(ink.opacity(0.75))
             }
-
-            TimelineView(.periodic(from: .now, by: 0.25)) { timeline in
-                if isBreathing {
-                    quietProgress(at: timeline.date)
-                } else {
-                    progressView(at: timeline.date)
+            .shadow(color: place.hasLightGround ? .clear : .black.opacity(0.7), radius: 10)
+            // A soft, blurred shade behind the words, so they read over a bright tower or sky.
+            .background {
+                if !place.hasLightGround {
+                    Ellipse()
+                        .fill(.black.opacity(0.28))
+                        .padding(-Theme.Space.xl)
+                        .blur(radius: 44)
+                        .allowsHitTesting(false)
                 }
             }
+            .padding(.top, Theme.Space.s)
+            .transition(.opacity)
         }
-        .shadow(color: place.hasLightGround ? .clear : .black.opacity(0.7), radius: 10)
-        .padding(.top, Theme.Space.s)
-        .animation(.easeInOut(duration: 0.5), value: isBreathing)
     }
 
-    /// Where you are, in a few words: "Steady rain · 2 of 4", "3 of 7 bowls", "30 seconds".
-    private func quietProgress(at date: Date) -> some View {
-        let progress = engine.cycleProgress(at: date)
-        let done = min(Int(progress), place.steps)
-        let current = min(done, place.steps - 1)
-        let text: String = switch place.mechanic {
-        case .stages(let names): "\(names[current]) · \(current + 1) of \(names.count)"
-        case .find(let count, _, let noun): "\(done) of \(count) \(noun)"
-        case .counter: "\(Int(progress * (place.inhale + place.exhale))) seconds"
-        }
-        return Text(text)
-            .font(.system(.subheadline, design: .serif))
-            .monospacedDigit()
-            .foregroundStyle(ink.opacity(0.8))
-            .contentTransition(.numericText())
-            .animation(.easeInOut, value: text)
+    /// What each out-breath lets go of, spoken, for places that release.
+    private var releaseLines: [String] {
+        guard case .release(let items) = place.mechanic(for: .current) else { return [] }
+        return items.map { VoiceScript.letGo(of: $0) }
     }
 
-    @ViewBuilder
-    private func progressView(at date: Date) -> some View {
-        let progress = engine.state == .idle ? 0 : (engine.state == .finished ? Double(place.steps) : engine.cycleProgress(at: date))
-        let done = min(Int(progress), place.steps)
-        let current = min(done, place.steps - 1)
-
-        switch place.mechanic {
-        case .stages(let names):
-            VStack(spacing: Theme.Space.xxs) {
-                ForEach(Array(names.enumerated()), id: \.offset) { index, name in
-                    let isNow = index == current && engine.state != .idle && engine.state != .finished
-                    HStack(spacing: Theme.Space.xs) {
-                        Text("\(index + 1)")
-                            .monospacedDigit()
-                        Text(name)
-                    }
-                    .font(.system(isNow ? .headline : .subheadline, design: .serif))
-                    .foregroundStyle(ink.opacity(isNow ? 1 : (index < done ? 0.55 : 0.35)))
-                    .overlay(alignment: .bottom) {
-                        if isNow {
-                            Capsule().fill(ink.opacity(0.8)).frame(height: 1.5).offset(y: 3)
-                        }
-                    }
-                }
-            }
-            .padding(.top, Theme.Space.xs)
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(engine.state == .idle ? "\(names.count) stages" : "Stage \(current + 1): \(names[current])")
-        case .find(let count, let verb, let noun):
-            Text("You have now \(verb) \(done)/\(count) \(noun)")
-                .font(.system(.title3, design: .serif))
-                .monospacedDigit()
-                .foregroundStyle(ink)
-                .contentTransition(.numericText())
-                .animation(.easeInOut, value: done)
-        case .counter:
-            let seconds = Int(progress * (place.inhale + place.exhale))
-            VStack(spacing: 2) {
-                Text("You have been here for…")
-                    .font(.system(.subheadline, design: .serif).italic())
-                Text("\(seconds) seconds")
-                    .font(.system(.title2, design: .serif))
-                    .monospacedDigit()
-                    .contentTransition(.numericText())
-            }
-            .foregroundStyle(ink)
-            .animation(.easeInOut, value: seconds)
+    /// Shows the controls, then lets them rest after a few still seconds while breathing.
+    private func wakeControls() {
+        restTask?.cancel()
+        if controlsResting {
+            withAnimation(.easeInOut(duration: 0.3)) { controlsResting = false }
+        }
+        guard engine.state == .running, !voiceOverEnabled else { return }
+        restTask = Task {
+            try? await Task.sleep(for: .seconds(3))
+            guard !Task.isCancelled, engine.state == .running else { return }
+            withAnimation(.easeInOut(duration: 1.2)) { controlsResting = true }
         }
     }
 
@@ -212,18 +227,16 @@ struct PlaceSessionView: View {
                 }
                 .buttonStyle(.pill)
                 .spectralEdge()
-                Text("\(place.durationLabel) · in for \(Int(place.inhale)), out for \(Int(place.exhale))")
-                    .font(Theme.Typography.meta)
-                    .foregroundStyle(ink.opacity(0.75))
+                .accessibilityHint("\(place.durationLabel), \(place.rhythmDescription)")
             }
         case .running, .paused:
             VStack(spacing: Theme.Space.s) {
-                Text(engine.state == .paused ? "Paused" : engine.phase.instruction)
-                    .font(.system(.title2, design: .serif))
-                    .foregroundStyle(ink)
-                    .contentTransition(.opacity)
-                    .animation(.easeInOut(duration: 0.5), value: engine.phase)
-                    .shadow(color: place.hasLightGround ? .clear : .black.opacity(0.7), radius: 10)
+                // No words on screen; the phase is still announced to VoiceOver.
+                Color.clear
+                    .frame(height: 1)
+                    .accessibilityElement()
+                    .accessibilityLabel(engine.state == .paused ? "Paused" : engine.phase.instruction)
+                    .accessibilityAddTraits(.updatesFrequently)
                 HStack(spacing: Theme.Space.s) {
                     Button {
                         session.togglePlayback()
@@ -240,6 +253,8 @@ struct PlaceSessionView: View {
                     .buttonStyle(.tool)
                     .accessibilityLabel("Leave")
                 }
+                .opacity(controlsResting && engine.state == .running ? 0.04 : 1)
+                .allowsHitTesting(!(controlsResting && engine.state == .running))
             }
         case .finished:
             CompletionCard(eyebrow: place.durationLabel, hue: place.tint, title: "You have arrived.") {
@@ -252,6 +267,8 @@ struct PlaceSessionView: View {
                     Button("Visit again") {
                         start = .now
                         session.stop()
+                        // Back to the starting rhythm; an adaptive visit lengthens from there.
+                        session.select(place.pattern)
                         session.togglePlayback()
                     }
                     .fontWeight(.semibold)
@@ -274,6 +291,7 @@ struct PlaceSessionView: View {
         case .stages(let names): "You breathed your way to \(names.last ?? place.title)."
         case .find(let count, let verb, let noun): "You \(verb) all \(count) \(noun), one breath at a time."
         case .counter: "You were here for \(Int(place.duration)) seconds, and that was enough."
+        case .release(let items): "You let go of \(items.count) things, one out-breath at a time."
         }
     }
 

@@ -25,6 +25,14 @@ final class VoiceGuide {
     private var remindersSaid = 0
     private var lastReminderCycle = 0
     private var isOnLastBreath = false
+    /// Words for each out-breath in turn, in place of the usual ones: what a Place lets go of.
+    private var exhaleLines: [String] = []
+    /// A guided practice with its own script, in place of the usual one.
+    private var practice: Practice?
+    /// The imagery chosen for this session of the practice, spoken along the way.
+    private var imagery: [String] = []
+    /// Whose pace and pitch the voice takes.
+    private var persona: Persona = .adults
 
     init(soundscape: Soundscape) {
         self.soundscape = soundscape
@@ -54,9 +62,25 @@ final class VoiceGuide {
     // MARK: - Session
 
     /// Sets up the script for the next session.
-    func prepare(focus: SessionFocus?, withIntro: Bool) {
+    func prepare(focus: SessionFocus?, withIntro: Bool, exhaleLines: [String] = []) {
         self.focus = focus
         hadIntro = withIntro
+        self.exhaleLines = exhaleLines
+        practice = nil
+        imagery = []
+        persona = .current
+    }
+
+    /// Sets up a guided practice's own script, in the voice of its persona.
+    func prepare(practice: Practice, withIntro: Bool) {
+        self.practice = practice
+        focus = practice.focus
+        hadIntro = withIntro
+        exhaleLines = []
+        // A different imagery set each time, so it stays fresh.
+        imagery = practice.imagery.randomElement() ?? []
+        let saved = Persona.current
+        persona = practice.personas.contains(saved) ? saved : (practice.personas.first ?? saved)
     }
 
     /// Breathing is starting over.
@@ -70,6 +94,10 @@ final class VoiceGuide {
     /// The settling-in, line by line. Returns when it's done, or as soon as it's skipped.
     func intro(minutes: Int?, guidance: String?, breathSound: Bool) async {
         guard isEnabled else { return }
+        if let practice {
+            await speak(practice.intro)
+            return
+        }
         let lines = VoiceScript.intro(focus: focus ?? .calmAnxiety, minutes: minutes, guidance: guidance, breathSound: breathSound)
         await speak(lines)
     }
@@ -78,6 +106,32 @@ final class VoiceGuide {
     func phaseBegan(_ phase: BreathPhase, completedCycles: Int, targetCycles: Int?) {
         guard isEnabled else { return }
         if phase == .inhale { breaths += 1 }
+
+        // A practice speaks its own words for its first breaths (or every breath, in turn).
+        if let practice {
+            let index = breaths - 1
+            let cue: BreathCue? = if index >= 0, index < practice.cues.count {
+                practice.cues[index]
+            } else if practice.repeatsCues, !practice.cues.isEmpty, index >= 0 {
+                practice.cues[index % practice.cues.count]
+            } else {
+                nil
+            }
+            if let text = cue?.text(for: phase) {
+                say(text)
+                return
+            }
+        }
+
+        // A Place that lets go of something names it on each out-breath, and says nothing else.
+        if !exhaleLines.isEmpty {
+            if phase == .exhale, breaths >= 1, breaths <= exhaleLines.count {
+                say(exhaleLines[breaths - 1])
+            } else if phase == .inhale, breaths == 1, !hadIntro {
+                say(VoiceScript.phase(.inhale, breath: 1, hadIntro: false))
+            }
+            return
+        }
 
         // The last breath, called out so the end doesn't arrive as a surprise.
         if let targetCycles, targetCycles >= 3 {
@@ -99,10 +153,11 @@ final class VoiceGuide {
 
         // A reminder, at the start of an out-breath, when nothing else is being said.
         guard phase == .exhale, !soundscape.isSpeaking else { return }
-        let reminders = VoiceScript.reminders(for: focus)
+        let reminders = practice == nil ? VoiceScript.reminders(for: focus) : imagery
+        guard !reminders.isEmpty else { return }
         if let targetCycles {
             let marks = [0.3, 0.55, 0.8]
-            guard remindersSaid < marks.count,
+            guard remindersSaid < min(marks.count, reminders.count),
                   Double(completedCycles) / Double(targetCycles) >= marks[remindersSaid],
                   completedCycles < targetCycles - 1 else { return }
             say(reminders[remindersSaid])
@@ -118,7 +173,7 @@ final class VoiceGuide {
     /// The closing, after the bell.
     func closing() async {
         guard isEnabled else { return }
-        await speak(VoiceScript.closing(for: focus))
+        await speak(practice?.closing ?? VoiceScript.closing(for: focus))
     }
 
     /// A few lines to hear what the voice sounds like, from Settings.
@@ -155,8 +210,8 @@ final class VoiceGuide {
     private func utterance(_ text: String) -> AVSpeechUtterance {
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = voice
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.8
-        utterance.pitchMultiplier = 0.92
+        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * persona.voiceRate
+        utterance.pitchMultiplier = persona.voicePitch
         utterance.volume = 0.9
         return utterance
     }

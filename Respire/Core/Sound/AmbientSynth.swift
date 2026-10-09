@@ -50,6 +50,8 @@ nonisolated final class AmbientSynth: @unchecked Sendable {
     /// How much air is moving right now, 0 (a pause) … 1 (mid-breath). Written by the
     /// soundscape from the breath engine; the render loop glides toward it.
     var airTarget: Float = 0
+    /// A soft, low hum to hum along with on the out-breath (Bhramari, Bumble Bee), 0…1.
+    var humTarget: Float = 0
     /// A phase chime: bump the token to ring `cueFrequency` once, softly.
     var cueFrequency: Double = 528
     var cueToken = 0
@@ -83,6 +85,10 @@ nonisolated final class AmbientSynth: @unchecked Sendable {
     private var toneShimmer: Double = 0
     private var airLevel: Float = 0
     private var airLow: Float = 0, airHigh: Float = 0
+    private var humLevel: Float = 0
+    private var humPhase: Double = 0
+    private var humVibrato: Double = 0
+    private var humFilter: Float = 0
 
 
     private func white() -> Float {
@@ -218,6 +224,20 @@ nonisolated final class AmbientSynth: @unchecked Sendable {
                 let top = lowpass(w, &airHigh, 350 + 1250 * o)
                 let floor = lowpass(w, &airLow, 120)
                 s += (top - floor) * 0.16 * airLevel
+            }
+
+            // The hum: a closed-mouth "mmm" around A2, its overtones softened as a hum's are,
+            // with a slow, slight waver so it sounds sung rather than synthesized.
+            humLevel += (humTarget - humLevel) * 0.0008
+            if humLevel > 0.0005 {
+                humVibrato += 2 * .pi * 4.8 / sr
+                let hertz = 110 * (1 + 0.004 * sin(humVibrato))
+                humPhase += 2 * .pi * hertz / sr
+                if humPhase > 2 * .pi * 64 { humPhase -= 2 * .pi * 64 }
+                // Unrolled, so nothing is allocated on the audio thread.
+                let voice = Float(sin(humPhase)) + 0.55 * Float(sin(humPhase * 2)) + 0.32 * Float(sin(humPhase * 3))
+                    + 0.18 * Float(sin(humPhase * 4)) + 0.1 * Float(sin(humPhase * 5)) + 0.06 * Float(sin(humPhase * 6))
+                s += lowpass(voice, &humFilter, 700) * 0.035 * humLevel
             }
 
             // The phase chime: a soft bell with a gentle overtone, fading over about a second.

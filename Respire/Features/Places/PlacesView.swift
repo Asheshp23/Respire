@@ -9,13 +9,17 @@
 import SwiftUI
 
 struct PlacesView: View {
+    @AppStorage(Persona.storageKey) private var persona: Persona = .adults
+
+    private var places: [Place] { Place.places(for: persona) }
+
     private let columns = [GridItem(.adaptive(minimum: 160, maximum: 240), spacing: Theme.Space.s)]
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.Space.l) {
                 VStack(alignment: .leading, spacing: Theme.Space.xs) {
-                    Text("\(Place.all.count) places · about a minute each")
+                    Text("\(places.count) places · about a minute each")
                         .font(Theme.Typography.eyebrow)
                         .textCase(.uppercase)
                         .foregroundStyle(Theme.prism[1])
@@ -31,9 +35,9 @@ struct PlacesView: View {
                 .frame(maxWidth: 680, alignment: .leading)
 
                 LazyVGrid(columns: columns, spacing: Theme.Space.s) {
-                    ForEach(Place.all) { place in
+                    ForEach(places) { place in
                         NavigationLink(value: place) {
-                            PlaceTile(place: place, isToday: place == Place.placeOfTheDay())
+                            PlaceTile(place: place, isToday: place == Place.placeOfTheDay(persona: persona))
                         }
                         .buttonStyle(.plain)
                     }

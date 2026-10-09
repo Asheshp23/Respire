@@ -2,82 +2,51 @@
 //  TodayView.swift
 //  Respire
 //
-//  The day's starting point, and where the app opens. One big button that starts
-//  breathing straight away. Beneath it, quietly, two other ways in: today's Place
-//  and the journey in progress. Nothing else, so there's never a question of where to begin.
+//  The home, made for someone who's stressed: two zones and nothing else.
+//
+//  1. The primary card. One session chosen for this hour and whoever's breathing,
+//     its scene gently breathing. The whole card is the button: one tap, and the
+//     session begins.
+//  2. The relief bar. Calm, Sleep, Focus: one word each, one tap each, straight into
+//     the right session.
+//
+//  Courses, rhythms, places, and the library live in the Library tab.
 //
 
 import SwiftUI
 
 struct TodayView: View {
     @Environment(PatternLibrary.self) private var library
-    @Environment(JourneyLibrary.self) private var journeys
-    @Environment(JourneyProgressStore.self) private var progress
     @Environment(SessionViewModel.self) private var session
-    @AppStorage(SessionFocus.storageKey) private var focus: SessionFocus = .calmAnxiety
-
-    @State private var breathingPlace: Place?
-
-    private let columns = [GridItem(.adaptive(minimum: 300), spacing: Theme.Space.m, alignment: .top)]
+    @AppStorage(Persona.storageKey) private var persona: Persona = .adults
 
     var body: some View {
         TimelineView(.everyMinute) { timeline in
             ScrollView {
-                VStack(alignment: .leading, spacing: Theme.Space.l) {
-                    greeting(at: timeline.date)
-                    StartBreathingCard(action: startBreathing)
-
-                    Text("Or")
-                        .font(Theme.Typography.eyebrow)
-                        .textCase(.uppercase)
-                        .foregroundStyle(Theme.Palette.inkTertiary)
-                        .padding(.top, Theme.Space.s)
-
-                    LazyVGrid(columns: columns, alignment: .leading, spacing: Theme.Space.m) {
-                        PlaceOfTheDayCard(place: Place.placeOfTheDay(for: timeline.date)) {
-                            breathingPlace = Place.placeOfTheDay(for: timeline.date)
+                VStack(spacing: Theme.Space.l) {
+                    // Zone 1: one unmissable session for right now.
+                    if let practice = Practice.suggestion(at: timeline.date, persona: persona) {
+                        PrimaryCard(practice: practice, moment: Self.salutation(at: timeline.date)) {
+                            library.start(.practice(practice.id), in: session)
                         }
-                        if let journey = currentJourney {
-                            ContinueJourneyCard(journey: journey, now: timeline.date) {
-                                library.openCourse(journey.id)
-                            }
-                        }
+                        .containerRelativeFrame(.vertical) { height, _ in height * 0.66 }
+                    }
+
+                    // Zone 2: instant relief, by how you feel.
+                    ReliefBar(persona: persona) { practice in
+                        library.start(.practice(practice.id), in: session)
                     }
                 }
-                .padding(Theme.Space.page)
-                .frame(maxWidth: 760)
+                .padding(.horizontal, Theme.Space.page)
+                .padding(.vertical, Theme.Space.m)
+                .frame(maxWidth: 640)
                 .frame(maxWidth: .infinity)
             }
+            .scrollBounceBehavior(.basedOnSize)
         }
         .paperBackground()
-        .navigationTitle("Today")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(item: $breathingPlace) { place in
-            PlaceSessionView(place: place)
-        }
-    }
-
-    /// Opens a free session in the rhythm that suits the person's focus, already starting.
-    private func startBreathing() {
-        library.open(focus.recommendedPattern, beginsAtOnce: true, in: session)
-    }
-
-    // MARK: - Greeting
-
-    private func greeting(at date: Date) -> some View {
-        VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-            Text(date.formatted(.dateTime.weekday(.wide).month().day()))
-                .font(Theme.Typography.eyebrow)
-                .textCase(.uppercase)
-                .foregroundStyle(Theme.Palette.inkTertiary)
-            Text(Self.salutation(at: date))
-                .font(.system(.largeTitle, design: .serif))
-                .foregroundStyle(Theme.Palette.ink)
-                .accessibilityAddTraits(.isHeader)
-            Text("Tap start, close your eyes, and follow the sound.")
-                .font(Theme.Typography.note)
-                .foregroundStyle(Theme.Palette.inkSecondary)
-        }
+        .toolbar(.hidden, for: .navigationBar)
+        .respireDestinations()
     }
 
     static func salutation(at date: Date) -> String {
@@ -88,156 +57,118 @@ struct TodayView: View {
         default: "A quiet night"
         }
     }
-
-    // MARK: - Journey
-
-    /// The journey in progress; else the first one not yet finished; else the first.
-    private var currentJourney: Journey? {
-        let all = journeys.journeys
-        return all.first { progress.completedCount(in: $0) > 0 && progress.nextChapter(in: $0) != nil }
-            ?? all.first { progress.nextChapter(in: $0) != nil }
-            ?? all.first
-    }
 }
 
-// MARK: - Cards
+// MARK: - Zone 1
 
-/// The one obvious first step: breathing starts the moment it's tapped. It shows the
-/// chosen world you'll breathe in.
-private struct StartBreathingCard: View {
+/// The one session to begin with. Its scene breathes slowly while it waits; the whole
+/// card is a single button.
+private struct PrimaryCard: View {
+    let practice: Practice
+    let moment: String
     var action: () -> Void
 
-    @AppStorage(BreathTheme.storageKey) private var theme: BreathTheme = .aurora
-    @AppStorage(SessionFocus.storageKey) private var focus: SessionFocus = .calmAnxiety
-    @AppStorage("session.minutes") private var minutes = 3
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var start = Date.now
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Theme.Radius.large, style: .continuous)
-        let length = minutes > 0 ? "\(minutes) min" : "As long as you like"
 
         Button(action: action) {
-            ZStack {
-                BreathWorldScene(theme: theme, openness: 0.5, time: 3)
-                    .allowsHitTesting(false)
-                LinearGradient(colors: [.clear, .black.opacity(0.6)], startPoint: .top, endPoint: .bottom)
+            ZStack(alignment: .bottomLeading) {
+                // The scene, breathing at an easy resting pace while it waits.
+                TimelineView(.animation(paused: reduceMotion)) { timeline in
+                    let t = timeline.date.timeIntervalSince(start)
+                    PracticeCanvas(practice: practice, frame: PlaceFrame(
+                        progress: 2.4, steps: practice.breaths,
+                        openness: reduceMotion ? 0.6 : 0.5 + 0.3 * sin(t * 2 * .pi / 10),
+                        time: reduceMotion ? 3 : t))
+                }
+                LinearGradient(colors: [.clear, .black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
 
-                VStack(spacing: Theme.Space.s) {
+                HStack(alignment: .bottom, spacing: Theme.Space.m) {
+                    VStack(alignment: .leading, spacing: Theme.Space.xs) {
+                        Text("\(moment) · \(practice.lengthLabel)")
+                            .font(Theme.Typography.eyebrow)
+                            .textCase(.uppercase)
+                            .foregroundStyle(.white.opacity(0.8))
+                        Text(practice.title)
+                            .font(.system(.largeTitle, design: .serif))
+                            .foregroundStyle(.white)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     Spacer(minLength: 0)
-                    Label("Start breathing", systemImage: "play.fill")
-                        .font(.title3.weight(.semibold))
+                    Image(systemName: "play.fill")
+                        .font(.title2)
                         .foregroundStyle(Theme.Palette.onInk)
-                        .padding(.horizontal, Theme.Space.l)
-                        .frame(minHeight: Theme.minTapTarget + 8)
-                        .background(Theme.Palette.ink, in: Capsule())
+                        .frame(width: 64, height: 64)
+                        .background(Theme.Palette.ink, in: Circle())
                         .spectralEdge()
-                    Text("\(length) · \(focus.title)")
-                        .font(Theme.Typography.meta)
-                        .foregroundStyle(.white.opacity(0.85))
                 }
                 .padding(Theme.Space.l)
             }
-            .frame(height: 300)
             .clipShape(shape)
             .overlay { shape.strokeBorder(.white.opacity(0.12), lineWidth: 1) }
             .contentShape(shape)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(PressableCardStyle())
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Start breathing, \(length), \(focus.title)")
-        .accessibilityHint("Starts right away. Close your eyes: breathe in as the sound rises, out as it falls.")
+        .accessibilityLabel("\(practice.title), \(practice.lengthLabel)")
+        .accessibilityHint("Begins right away. \(practice.summary)")
         .accessibilityAddTraits(.isButton)
     }
 }
 
-/// Today's Place, offered quietly as another way in.
-private struct PlaceOfTheDayCard: View {
-    let place: Place
+/// A soft press: the card sinks a little under the finger.
+private struct PressableCardStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+    }
+}
+
+// MARK: - Zone 2
+
+/// Calm, Sleep, Focus: three equal buttons, one word each, each starting the right
+/// session for whoever's breathing.
+private struct ReliefBar: View {
+    let persona: Persona
+    var start: (Practice) -> Void
+
+    var body: some View {
+        HStack(spacing: Theme.Space.s) {
+            ForEach(Need.relief) { need in
+                if let practice = Practice.recommended(for: need, persona: persona) {
+                    ReliefButton(need: need) { start(practice) }
+                        .accessibilityHint("Begins \(practice.title)")
+                }
+            }
+        }
+    }
+}
+
+private struct ReliefButton: View {
+    let need: Need
     var action: () -> Void
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous)
-
         Button(action: action) {
-            ZStack(alignment: .bottomLeading) {
-                PlaceCanvas(place: place, frame: .still(steps: place.steps, at: 0.6))
-                    .allowsHitTesting(false)
-                LinearGradient(colors: [.clear, .black.opacity(0.75)], startPoint: .top, endPoint: .bottom)
-                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-                    Text("Today's place")
-                        .font(Theme.Typography.eyebrow)
-                        .textCase(.uppercase)
-                        .foregroundStyle(.white.opacity(0.8))
-                    Text(place.title)
-                        .font(.system(.title3, design: .serif))
-                        .foregroundStyle(.white)
-                    Text(place.durationLabel)
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(.white.opacity(0.85))
-                }
-                .padding(Theme.Space.m)
+            VStack(spacing: Theme.Space.xs) {
+                // A fixed box, so every word sits on the same line whatever the icon's shape.
+                Image(systemName: need.symbol)
+                    .font(.title3)
+                    .frame(height: 28)
+                Text(need.word)
+                    .font(Theme.Typography.label)
             }
-            .frame(height: 120)
-            .clipShape(shape)
-            .overlay { shape.strokeBorder(.white.opacity(0.12), lineWidth: 1) }
+            .foregroundStyle(Theme.Palette.ink)
+            .frame(maxWidth: .infinity, minHeight: 76)
+            .background { IceGlass(shape: shape, frost: false) }
             .contentShape(shape)
         }
-        .buttonStyle(.plain)
-        .accessibilityElement(children: .combine)
-        .accessibilityHint("A short visit where each breath moves you one step")
-    }
-}
-
-private struct ContinueJourneyCard: View {
-    let journey: Journey
-    let now: Date
-    var action: () -> Void
-
-    @Environment(JourneyProgressStore.self) private var progress
-
-    var body: some View {
-        let next = progress.nextChapter(in: journey)
-        let chapter = next ?? journey.chapters[journey.chapters.count - 1]
-        let index = journey.chapters.firstIndex(of: chapter) ?? 0
-        let state = progress.state(of: chapter, in: journey, now: now)
-        let completed = progress.completedCount(in: journey)
-
-        Button(action: action) {
-            HStack(alignment: .top, spacing: Theme.Space.m) {
-                JourneyNode(day: chapter.day, state: state, hue: JourneyPathView.hue(for: index, in: journey))
-                VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-                    Text(completed == 0 ? "Begin a journey" : (next == nil ? "Journey complete" : "Continue"))
-                        .font(Theme.Typography.eyebrow)
-                        .textCase(.uppercase)
-                        .foregroundStyle(JourneyPathView.hue(for: index, in: journey))
-                    Text(journey.title)
-                        .font(.system(.title3, design: .serif))
-                        .foregroundStyle(Theme.Palette.ink)
-                    Text("Day \(chapter.day) · \(chapter.title)")
-                        .font(Theme.Typography.label)
-                        .foregroundStyle(Theme.Palette.inkSecondary)
-                    Text(stateText(state, isFinished: next == nil))
-                        .font(Theme.Typography.caption)
-                        .foregroundStyle(Theme.Palette.inkSecondary)
-                }
-                Spacer(minLength: 0)
-            }
-            .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
-            .card(padding: Theme.Space.m)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityElement(children: .combine)
-        .accessibilityHint("Opens the journey map")
-    }
-
-    private func stateText(_ state: ChapterState, isFinished: Bool) -> String {
-        if isFinished { return "Every day stays open to practice again" }
-        switch state {
-        case .available: return "Open now"
-        case .opensTomorrow: return "Opens tomorrow"
-        case .locked: return "Waiting"
-        case .completed: return "Done"
-        }
+        .buttonStyle(PressableCardStyle())
     }
 }
 
@@ -247,9 +178,8 @@ private struct ContinueJourneyCard: View {
     }
     .environment(PatternLibrary())
     .environment(JourneyLibrary())
-    .environment(JourneyProgressStore(defaults: UserDefaults(suiteName: "preview.today")!))
+    .environment(JourneyProgressStore())
     .environment(DharanaLibrary())
-    .environment(MomentReminders(defaults: UserDefaults(suiteName: "preview.today.moments")!))
     .environment(SessionViewModel())
     .preferredColorScheme(.dark)
 }

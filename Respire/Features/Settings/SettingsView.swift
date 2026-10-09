@@ -18,6 +18,7 @@ struct SettingsView: View {
     @AppStorage(SolfeggioTone.storageKey) private var tone: SolfeggioTone = .off
     @AppStorage(BreathTheme.storageKey) private var scene: BreathTheme = .aurora
     @AppStorage(SessionFocus.storageKey) private var focus: SessionFocus = .calmAnxiety
+    @AppStorage(Persona.storageKey) private var persona: Persona = .adults
     @AppStorage("session.minutes") private var minutes = 3
     @AppStorage("opening.enabled") private var writtenOpening = false
     @AppStorage("onboarding.done") private var onboardingDone = true
@@ -48,7 +49,12 @@ struct SettingsView: View {
                 Text(guidanceFooter)
             }
 
-            Section("Sessions") {
+            Section {
+                Picker("Who's breathing", selection: $persona) {
+                    ForEach(Persona.allCases) { option in
+                        Text(option.title).tag(option)
+                    }
+                }
                 Picker("Focus", selection: $focus) {
                     ForEach(SessionFocus.allCases) { option in
                         Text(option.title).tag(option)
@@ -59,11 +65,15 @@ struct SettingsView: View {
                         Text(option > 0 ? "\(option) min" : "Open-ended").tag(option)
                     }
                 }
+            } header: {
+                Text("Sessions")
+            } footer: {
+                Text("\(persona.subtitle) The voice's pace and the guided sessions follow who's breathing.")
             }
 
             Section {
                 Picker("Scene", selection: $scene) {
-                    ForEach(BreathTheme.allCases) { option in
+                    ForEach(BreathTheme.scenes(for: persona)) { option in
                         Text(option.title).tag(option)
                     }
                 }

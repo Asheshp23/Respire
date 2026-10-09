@@ -110,3 +110,17 @@ struct BreathPulse: View {
         .accessibilityHidden(true)
     }
 }
+
+/// The rhythm in plain timings, with a dot breathing at its pace.
+struct RhythmTiming: View {
+    let pattern: BreathPattern
+
+    var body: some View {
+        HStack(spacing: Theme.Space.xs) {
+            BreathPulse(pattern: pattern, size: 12)
+            Text(pattern.timingLabel)
+                .font(.caption.monospacedDigit())
+                .foregroundStyle(Theme.Palette.inkSecondary)
+        }
+    }
+}

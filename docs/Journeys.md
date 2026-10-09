@@ -276,3 +276,24 @@ Most people meditate with their eyes closed, so the guide is something you hear 
 - **Sound plays with the silent switch on**, because with eyes closed it is the guide. It still mixes with anything else playing.
 - **Before starting**, the screen says: "Close your eyes. Breathe in as the sound rises, and out as it falls. Or follow the circle."
 - **Switches:** Breath tone and Spoken guidance sit under "Eyes closed" in Scene & Sound.
+
+## 16. Personas and guided sessions
+
+Who's breathing sets the sessions, the pace, and the voice. It's chosen first in onboarding, in Settings, and at the top of the Breathe tab.
+
+| Persona | Who | Voice | Limits |
+|---|---|---|---|
+| Kids | 5 to 11 | a little brighter, unhurried | short sessions, no breath holds |
+| Teens | 12 to 17 | natural | — |
+| Adults | | slow and a little low | — |
+| Wise | 60 and over | slowest | seated, no breath holds |
+
+There are 13 guided sessions, each with a full hand-written spoken script: a settling-in, words for the first breaths, an imagery set that changes from session to session, and a closing. All the words are in `Core/Practices/PracticeCatalog.swift`.
+
+- **Kids:** Bumble Bee Breath (with a soft hum to hum along to), Balloon Belly, Sleepy Starfish.
+- **Teens:** Box Breathing for Stress, Sleep Sanctuary, Before a Test.
+- **Adults, connection:** Space Before You Speak, Cool the Argument, Boundary Breath.
+- **Pranayama, adults and Wise:** Bhramari (humming), and Nadi Shodhana, where the voice names the nostril on every breath.
+- **Wise:** Gentle Chair Breath, Evening Gratitude.
+
+Agnisar is left out on purpose: forceful abdominal work shouldn't be taught by voice alone. The scripts are hand-written rather than generated, so they stay calm and specific. The on-device model could later vary them lightly within the same structure.
