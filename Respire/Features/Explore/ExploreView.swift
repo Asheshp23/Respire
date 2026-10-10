@@ -28,12 +28,6 @@ struct HomeShelves: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.xl) {
-            NavigationLink(value: ExploreRoute.prescribe) {
-                MakeSessionCard()
-            }
-            .buttonStyle(.plain)
-            .padding(.horizontal, Theme.Space.page)
-
             Shelf(title: "Anchors", subtitle: "A minute away from the screen, with something real.") {
                 ForEach(Anchor.all) { anchor in
                     NavigationLink(value: ExploreRoute.anchor(anchor.id)) {
@@ -269,35 +263,6 @@ private struct PracticeCard: View {
         .contentShape(cardShape)
         .accessibilityElement(children: .combine)
         .accessibilityHint(practice.summary)
-    }
-}
-
-/// The way into a session made for how you feel right now.
-private struct MakeSessionCard: View {
-    var body: some View {
-        HStack(spacing: Theme.Space.m) {
-            Image(systemName: "wand.and.sparkles")
-                .font(.title2)
-                .foregroundStyle(Theme.prism[3])
-                .frame(width: 44, height: 44)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Make my session")
-                    .font(.system(.headline, design: .serif))
-                    .foregroundStyle(Theme.Palette.ink)
-                Text("A few quick questions, safety first, then a session made for how you feel.")
-                    .font(Theme.Typography.caption)
-                    .foregroundStyle(Theme.Palette.inkSecondary)
-                    .multilineTextAlignment(.leading)
-            }
-            Spacer(minLength: 0)
-            Image(systemName: "chevron.right")
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(Theme.Palette.inkTertiary)
-        }
-        .padding(Theme.Space.m)
-        .background { IceGlass(shape: cardShape, frost: false) }
-        .contentShape(cardShape)
-        .accessibilityElement(children: .combine)
     }
 }
 

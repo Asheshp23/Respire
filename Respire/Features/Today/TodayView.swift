@@ -31,23 +31,22 @@ struct TodayView: View {
                                moment: Self.salutation(at: timeline.date)) {
                         library.visit(.anchor(anchor.id))
                     }
-                    .containerRelativeFrame(.vertical) { height, _ in height * 0.62 }
+                    .containerRelativeFrame(.vertical) { height, _ in height * 0.52 }
+
+                    // A session made for how you feel right now.
+                    MakeSessionCard {
+                        library.visit(.prescribe)
+                    }
 
                     // Zone 2: instant relief, by how you feel, in the order this hour calls for.
                     ReliefBar(persona: persona, date: timeline.date) { practice in
                         library.start(.practice(practice.id), in: session)
                     }
 
-                    // Made for how you feel, or the quickest way in: one minute, breathing at once.
-                    HStack(spacing: Theme.Space.s) {
-                        QuietButton(title: "Make my session", systemImage: "wand.and.sparkles",
-                                    hint: "A few questions, then a session made for how you feel") {
-                            library.visit(.prescribe)
-                        }
-                        QuietButton(title: "One minute", systemImage: "timer",
-                                    hint: "Begins one minute of calm breathing right away") {
-                            library.start(.oneMinute, in: session)
-                        }
+                    // The quickest way in: one minute, breathing at once.
+                    QuietButton(title: "Just one minute", systemImage: "timer",
+                                hint: "Begins one minute of calm breathing right away") {
+                        library.start(.oneMinute, in: session)
                     }
                 }
                 .padding(.horizontal, Theme.Space.page)
@@ -214,7 +213,46 @@ private struct ReliefButton: View {
     }
 }
 
-/// A quiet capsule on the home: a session made for you, or one minute of breathing.
+/// "Tell me how you feel": the way into a session made for this moment.
+private struct MakeSessionCard: View {
+    var action: () -> Void
+
+    var body: some View {
+        let shape = RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous)
+        Button(action: action) {
+            HStack(spacing: Theme.Space.m) {
+                Image(systemName: "wand.and.sparkles")
+                    .font(.title2)
+                    .foregroundStyle(Theme.prism[3])
+                    .frame(width: 44, height: 44)
+                    .background(.white.opacity(0.1), in: Circle())
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Make my session")
+                        .font(.system(.headline, design: .serif))
+                        .foregroundStyle(Theme.Palette.ink)
+                    Text("Tell me how you feel, and get a session made for you")
+                        .font(Theme.Typography.caption)
+                        .foregroundStyle(Theme.Palette.inkSecondary)
+                        .multilineTextAlignment(.leading)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(Theme.Palette.inkTertiary)
+            }
+            .padding(Theme.Space.m)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background { IceGlass(shape: shape, frost: false) }
+            .overlay { shape.strokeBorder(AngularGradient(colors: Theme.prism + [Theme.prism[0]], center: .center), lineWidth: 1).opacity(0.5) }
+            .contentShape(shape)
+        }
+        .buttonStyle(PressableCardStyle())
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("A few quick questions, safety first, then a session made for how you feel")
+    }
+}
+
+/// A quiet capsule on the home: one minute of breathing.
 private struct QuietButton: View {
     let title: String
     let systemImage: String
