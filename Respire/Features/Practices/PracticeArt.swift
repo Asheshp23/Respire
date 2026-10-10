@@ -259,14 +259,50 @@ enum PracticeArt {
 
     // MARK: - Box Breathing
 
+    /// A window at night, rain and moonlit hills outside; a light travels its wooden frame.
     private static func boxBreathing(_ c: inout GraphicsContext, _ s: CGSize, _ f: PlaceFrame) {
         let w = s.width, h = s.height, m = min(w, h)
-        sky(&c, s, 0x0C1628, 0x1C2C48)
-        Sketch.rain(&c, s, density: 0.25, time: f.time, seed: 301, opacity: 0.18)
-        let side = m * 0.56
-        let box = CGRect(x: w / 2 - side / 2, y: h * 0.48 - side / 2, width: side, height: side)
-        c.stroke(Path(roundedRect: box, cornerRadius: side * 0.04), with: .color(.white.opacity(0.18)), lineWidth: 2)
-        // A light travels the box: up the left as you breathe in, across the top as you
+        // The room: a warm, dim wall.
+        c.fill(Path(CGRect(origin: .zero, size: s)), with: .linearGradient(
+            Gradient(colors: [Sketch.hex(0x2A2230), Sketch.hex(0x1A1620)]), startPoint: .zero, endPoint: CGPoint(x: 0, y: h)))
+        let side = m * 0.58
+        let box = CGRect(x: w / 2 - side / 2, y: h * 0.46 - side / 2, width: side, height: side)
+
+        // Outside: night hills under a hazy moon, in soft rain.
+        var outside = c
+        outside.clip(to: Path(box))
+        Sketch.night(&outside, s, top: Sketch.hex(0x101C36), bottom: Sketch.hex(0x2A3A5A), stars: 30, starsTo: 0.4, time: f.time)
+        let moon = CGPoint(x: box.minX + side * 0.7, y: box.minY + side * 0.28)
+        Sketch.glow(&outside, at: moon, radius: side * 0.35, color: Sketch.hex(0xD8E0FF), opacity: 0.35)
+        outside.fill(Path(ellipseIn: CGRect(x: moon.x - side * 0.06, y: moon.y - side * 0.06, width: side * 0.12, height: side * 0.12)),
+                     with: .color(Sketch.hex(0xEEEAD8)))
+        for (k, color) in [(0, 0x26324E), (1, 0x1A2238)] as [(Int, UInt32)] {
+            var ridge = Path()
+            let base = box.minY + side * (0.62 + 0.14 * Double(k))
+            ridge.move(to: CGPoint(x: box.minX, y: box.maxY))
+            for x in stride(from: box.minX, through: box.maxX, by: 6) {
+                let t = (x - box.minX) / side
+                ridge.addLine(to: CGPoint(x: x, y: base - sin(t * 5 + Double(k) * 2) * side * 0.05 - sin(t * 13) * side * 0.012))
+            }
+            ridge.addLine(to: CGPoint(x: box.maxX, y: box.maxY))
+            ridge.closeSubpath()
+            outside.fill(ridge, with: .color(Sketch.hex(color)))
+        }
+        Sketch.rain(&outside, s, density: 0.4, time: f.time, seed: 301, opacity: 0.22, region: box)
+
+        // The wooden frame, a sill, and the crossbars.
+        let wood = Sketch.hex(0x6A4A34)
+        c.stroke(Path(box), with: .color(wood), lineWidth: m * 0.03)
+        c.fill(Path(roundedRect: CGRect(x: box.minX - m * 0.05, y: box.maxY + m * 0.012, width: side + m * 0.1, height: m * 0.03), cornerRadius: 3),
+               with: .color(Sketch.hex(0x7A5A40)))
+        var bars = Path()
+        bars.move(to: CGPoint(x: box.midX, y: box.minY)); bars.addLine(to: CGPoint(x: box.midX, y: box.maxY))
+        bars.move(to: CGPoint(x: box.minX, y: box.midY)); bars.addLine(to: CGPoint(x: box.maxX, y: box.midY))
+        c.stroke(bars, with: .color(wood), lineWidth: m * 0.012)
+        // Warm lamplight from inside, on the wall below.
+        Sketch.glow(&c, at: CGPoint(x: w * 0.5, y: h * 0.95), radius: m * 0.5, color: Sketch.hex(0xFFB060), opacity: 0.18)
+
+        // A light travels the frame: up the left as you breathe in, across the top as you
         // hold, down the right as you breathe out, back along the bottom as you rest.
         let fraction = f.progress - floor(f.progress)
         func point(_ t: Double) -> CGPoint {
@@ -282,10 +318,10 @@ enum PracticeArt {
         let start = max(fraction - 0.18, 0)
         trail.move(to: point(start))
         for k in 1...24 { trail.addLine(to: point(start + (fraction - start) * Double(k) / 24)) }
-        c.stroke(trail, with: .color(Sketch.hex(0x8AD0FF, 0.7)), style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+        c.stroke(trail, with: .color(Sketch.hex(0xFFD8A0, 0.75)), style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
         let dot = point(fraction)
-        Sketch.glow(&c, at: dot, radius: m * 0.08, color: Sketch.hex(0x8AD0FF), opacity: 0.7)
-        c.fill(Path(ellipseIn: CGRect(x: dot.x - 5, y: dot.y - 5, width: 10, height: 10)), with: .color(.white))
+        Sketch.glow(&c, at: dot, radius: m * 0.08, color: Sketch.hex(0xFFD8A0), opacity: 0.7)
+        c.fill(Path(ellipseIn: CGRect(x: dot.x - 5, y: dot.y - 5, width: 10, height: 10)), with: .color(Sketch.hex(0xFFF6E8)))
     }
 
     // MARK: - Sleep Sanctuary
@@ -319,15 +355,50 @@ enum PracticeArt {
             curtain.closeSubpath()
             c.fill(curtain, with: .color(Sketch.hex(0x4A3A6A, 0.9)))
         }
-        // A bedside lamp that dims as the session goes on, and the bed.
-        let lamp = CGPoint(x: w * 0.16, y: h * 0.62)
-        Sketch.glow(&c, at: lamp, radius: m * 0.3, color: Sketch.hex(0xFFB868), opacity: 0.45 * (1 - 0.7 * f.fraction))
-        c.fill(Path(ellipseIn: CGRect(x: lamp.x - m * 0.04, y: lamp.y - m * 0.03, width: m * 0.08, height: m * 0.06)),
-               with: .color(Sketch.hex(0xF0C890, 0.9 - 0.5 * f.fraction)))
-        let bed = CGRect(x: w * 0.12, y: h * 0.7, width: w * 0.9, height: h * 0.3)
-        c.fill(Path(roundedRect: bed, cornerRadius: 24), with: .color(Sketch.hex(0x2E3260)))
-        c.fill(Path(roundedRect: CGRect(x: bed.minX + 10, y: bed.minY + 10, width: w * 0.22, height: h * 0.06), cornerRadius: 14),
-               with: .color(Sketch.hex(0x5A5E90)))
+        // The floor, a bedside table with a lamp that dims as the session goes on, and the bed.
+        c.fill(Path(CGRect(x: 0, y: h * 0.9, width: w, height: h * 0.1)), with: .color(Sketch.hex(0x101224)))
+        let table = CGRect(x: w * 0.04, y: h * 0.66, width: w * 0.2, height: h * 0.24)
+        c.fill(Path(roundedRect: table, cornerRadius: 4), with: .color(Sketch.hex(0x3A2E40)))
+        c.fill(Path(CGRect(x: table.minX + 6, y: table.minY + table.height * 0.4, width: table.width - 12, height: 2)),
+               with: .color(Sketch.hex(0x2A2030)))
+        let glowing = 1 - 0.7 * f.fraction
+        let lamp = CGPoint(x: table.midX, y: table.minY - m * 0.09)
+        Sketch.glow(&c, at: lamp, radius: m * 0.32, color: Sketch.hex(0xFFB868), opacity: 0.45 * glowing)
+        c.fill(Path(CGRect(x: lamp.x - 1.5, y: lamp.y, width: 3, height: m * 0.09)), with: .color(Sketch.hex(0x5A4A50)))
+        c.fill(Path(ellipseIn: CGRect(x: lamp.x - m * 0.035, y: table.minY - m * 0.012, width: m * 0.07, height: m * 0.02)),
+               with: .color(Sketch.hex(0x5A4A50)))
+        var shade = Path()
+        shade.move(to: CGPoint(x: lamp.x - m * 0.035, y: lamp.y - m * 0.05))
+        shade.addLine(to: CGPoint(x: lamp.x + m * 0.035, y: lamp.y - m * 0.05))
+        shade.addLine(to: CGPoint(x: lamp.x + m * 0.06, y: lamp.y + m * 0.01))
+        shade.addLine(to: CGPoint(x: lamp.x - m * 0.06, y: lamp.y + m * 0.01))
+        shade.closeSubpath()
+        c.fill(shade, with: .color(Sketch.hex(0xF0C890, 0.6 + 0.35 * glowing)))
+
+        // The headboard, mattress, pillow, and a blanket that rises softly with the breath.
+        let headboard = CGRect(x: w * 0.28, y: h * 0.6, width: w * 0.05, height: h * 0.3)
+        c.fill(Path(roundedRect: headboard, cornerRadius: 6), with: .color(Sketch.hex(0x4A3A5A)))
+        let mattress = CGRect(x: headboard.maxX - 2, y: h * 0.76, width: w * 0.72, height: h * 0.1)
+        c.fill(Path(roundedRect: mattress, cornerRadius: 10), with: .color(Sketch.hex(0x3A3E6A)))
+        c.fill(Path(CGRect(x: mattress.minX + 4, y: mattress.maxY, width: 5, height: h * 0.04)), with: .color(Sketch.hex(0x2A2240)))
+        c.fill(Path(roundedRect: CGRect(x: headboard.maxX + w * 0.01, y: mattress.minY - h * 0.045, width: w * 0.16, height: h * 0.06), cornerRadius: 12),
+               with: .color(Sketch.hex(0x8A8EC0)))
+        let rise = h * 0.012 * f.openness
+        var blanket = Path()
+        let left = headboard.maxX + w * 0.16
+        blanket.move(to: CGPoint(x: left, y: mattress.maxY))
+        blanket.addLine(to: CGPoint(x: left, y: mattress.minY - h * 0.01))
+        blanket.addCurve(to: CGPoint(x: w * 1.02, y: mattress.minY + h * 0.005),
+                         control1: CGPoint(x: left + w * 0.12, y: mattress.minY - h * 0.06 - rise),
+                         control2: CGPoint(x: left + w * 0.3, y: mattress.minY - h * 0.03 - rise * 0.5))
+        blanket.addLine(to: CGPoint(x: w * 1.02, y: mattress.maxY + h * 0.02))
+        blanket.addLine(to: CGPoint(x: left, y: mattress.maxY + h * 0.02))
+        blanket.closeSubpath()
+        c.fill(blanket, with: .color(Sketch.hex(0x5A4E8A)))
+        var fold = Path()
+        fold.move(to: CGPoint(x: left + w * 0.015, y: mattress.minY - h * 0.005))
+        fold.addLine(to: CGPoint(x: left + w * 0.015, y: mattress.maxY + h * 0.015))
+        c.stroke(fold, with: .color(Sketch.hex(0x7A70AA)), lineWidth: 3)
     }
 
     // MARK: - Before a Test
@@ -504,27 +575,62 @@ enum PracticeArt {
         hill(&c, s, y: h * 0.3, amplitude: h * 0.04, phase: 0.3, color: Sketch.hex(0xA8B8C8))
         hill(&c, s, y: h * 0.42, amplitude: h * 0.03, phase: 2.2, color: Sketch.hex(0x8EA894))
         c.fill(Path(CGRect(x: 0, y: h * 0.5, width: w, height: h * 0.5)), with: .color(Sketch.hex(0x7E9A80)))
-        // Two streams, cool and warm, take turns with the breath and meet in one pool.
+        // Two streams, cool and warm, take turns with the breath and meet in one pond.
         let breath = Int(f.progress)
         let leftActive = breath % 2 == 0
-        let pool = CGPoint(x: w / 2, y: h * 0.82)
+        let pool = CGPoint(x: w / 2, y: h * 0.8)
         for (index, side) in [-1.0, 1.0].enumerated() {
             let active = (index == 0) == leftActive
+            let p0 = CGPoint(x: w / 2 + side * w * 0.42, y: h * 0.38)
+            let p1 = CGPoint(x: w / 2 + side * w * 0.1, y: h * 0.5)
+            let p2 = CGPoint(x: w / 2 + side * w * 0.32, y: h * 0.7)
+            let p3 = CGPoint(x: pool.x + side * m * 0.08, y: pool.y)
+            func along(_ t: Double) -> CGPoint {
+                let u = 1 - t
+                return CGPoint(x: u * u * u * p0.x + 3 * u * u * t * p1.x + 3 * u * t * t * p2.x + t * t * t * p3.x,
+                               y: u * u * u * p0.y + 3 * u * u * t * p1.y + 3 * u * t * t * p2.y + t * t * t * p3.y)
+            }
             var stream = Path()
-            let top = CGPoint(x: w / 2 + side * w * 0.42, y: h * 0.36)
-            stream.move(to: top)
-            stream.addCurve(to: pool,
-                            control1: CGPoint(x: w / 2 + side * w * 0.1, y: h * 0.48),
-                            control2: CGPoint(x: w / 2 + side * w * 0.35, y: h * 0.7))
-            let color = index == 0 ? Sketch.hex(0x5AA8D8) : Sketch.hex(0xE8B04A)
-            let glow = active ? 0.55 + 0.45 * f.openness : 0.35
-            c.stroke(stream, with: .color(color.opacity(glow)), style: StrokeStyle(lineWidth: m * (active ? 0.05 : 0.035), lineCap: .round))
-            c.stroke(stream, with: .color(.white.opacity(active ? 0.35 : 0.15)),
-                     style: StrokeStyle(lineWidth: 1.5, lineCap: .round, dash: [6, 10], dashPhase: -f.time * 30))
+            stream.move(to: p0)
+            stream.addCurve(to: p3, control1: p1, control2: p2)
+            let color = index == 0 ? Sketch.hex(0x5AA8D8) : Sketch.hex(0xD8A85A)
+            let strength = active ? 0.6 + 0.4 * f.openness : 0.4
+            // Banks, water, and a pale sheen down the middle.
+            c.stroke(stream, with: .color(Sketch.hex(0x5E7A60)), style: StrokeStyle(lineWidth: m * 0.07, lineCap: .round))
+            c.stroke(stream, with: .color(color.opacity(strength)), style: StrokeStyle(lineWidth: m * (active ? 0.05 : 0.04), lineCap: .round))
+            c.stroke(stream, with: .color(.white.opacity(active ? 0.28 : 0.12)), style: StrokeStyle(lineWidth: m * 0.008, lineCap: .round))
+            // Glints carried downstream, quicker on the side that's breathing.
+            for k in 0..<6 {
+                let t = (Double(k) / 6 + f.time * (active ? 0.08 : 0.03)).truncatingRemainder(dividingBy: 1)
+                let p = along(t)
+                c.fill(Path(ellipseIn: CGRect(x: p.x - 2, y: p.y - 1, width: 4, height: 2)),
+                       with: .color(.white.opacity((active ? 0.7 : 0.3) * sin(t * .pi))))
+            }
         }
-        c.fill(Path(ellipseIn: CGRect(x: pool.x - m * 0.2, y: pool.y - m * 0.05, width: m * 0.4, height: m * 0.1)),
-               with: .radialGradient(Gradient(colors: [Sketch.mix(Sketch.hex(0x5AA8D8), Sketch.hex(0xE8B04A), 0.5), Sketch.hex(0x4A7A6A)]),
-                                     center: pool, startRadius: 0, endRadius: m * 0.2))
+        // The pond, with reeds and stones on its edge.
+        let pond = CGRect(x: pool.x - m * 0.28, y: pool.y - m * 0.07, width: m * 0.56, height: m * 0.16)
+        c.fill(Path(ellipseIn: pond.insetBy(dx: -m * 0.015, dy: -m * 0.012)), with: .color(Sketch.hex(0x5E7A60)))
+        c.fill(Path(ellipseIn: pond), with: .linearGradient(
+            Gradient(colors: [Sketch.mix(Sketch.hex(0x5AA8D8), Sketch.hex(0xD8A85A), 0.5), Sketch.hex(0x4A7E92)]),
+            startPoint: CGPoint(x: 0, y: pond.minY), endPoint: CGPoint(x: 0, y: pond.maxY)))
+        for k in 0..<2 {
+            let grow = (f.time * 0.2 + Double(k) / 2).truncatingRemainder(dividingBy: 1)
+            c.stroke(Path(ellipseIn: CGRect(x: pool.x - pond.width * 0.4 * grow, y: pool.y + pond.height * 0.1 - pond.height * 0.3 * grow,
+                                             width: pond.width * 0.8 * grow, height: pond.height * 0.6 * grow)),
+                     with: .color(.white.opacity(0.35 * (1 - grow))), lineWidth: 1)
+        }
+        for (x, r) in [(-0.3, 0.025), (-0.24, 0.018), (0.29, 0.022)] {
+            c.fill(Path(ellipseIn: CGRect(x: pool.x + m * x - m * r, y: pond.maxY - m * r * 0.8, width: m * r * 2, height: m * r * 1.2)),
+                   with: .color(Sketch.hex(0x8A8A7A)))
+        }
+        for k in 0..<7 {
+            let x = pond.maxX - m * 0.06 + Double(k) * m * 0.012
+            var reed = Path()
+            reed.move(to: CGPoint(x: x, y: pond.midY + m * 0.02))
+            reed.addQuadCurve(to: CGPoint(x: x + sin(f.time * 0.8 + Double(k)) * 3, y: pond.midY - m * (0.1 + 0.02 * Double(k % 3))),
+                              control: CGPoint(x: x - 2, y: pond.midY - m * 0.04))
+            c.stroke(reed, with: .color(Sketch.hex(0x4E6A44)), lineWidth: 1.5)
+        }
     }
 
     // MARK: - Gentle Chair Breath
@@ -548,14 +654,24 @@ enum PracticeArt {
                                            startPoint: CGPoint(x: window.midX, y: window.minY), endPoint: CGPoint(x: w * 0.3, y: h)))
         let floor = h * 0.78
         c.fill(Path(CGRect(x: 0, y: floor, width: w, height: h - floor)), with: .color(Sketch.hex(0x9A7A5A)))
-        // The armchair.
-        let chair = CGRect(x: w * 0.12, y: h * 0.5, width: w * 0.4, height: h * 0.3)
-        c.fill(Path(roundedRect: CGRect(x: chair.minX + chair.width * 0.1, y: chair.minY, width: chair.width * 0.8, height: chair.height * 0.6), cornerRadius: 18),
-               with: .color(Sketch.hex(0x7A9A8A)))
-        c.fill(Path(roundedRect: CGRect(x: chair.minX, y: chair.minY + chair.height * 0.35, width: chair.width, height: chair.height * 0.45), cornerRadius: 16),
-               with: .color(Sketch.hex(0x6A8A7A)))
-        for x in [chair.minX + 10, chair.maxX - 16] {
-            c.fill(Path(CGRect(x: x, y: chair.maxY - chair.height * 0.2, width: 6, height: chair.height * 0.2 + 4)), with: .color(Sketch.hex(0x5A3A24)))
+        // The armchair: a tall back, two arms, a deep seat, and short turned legs.
+        // Sized from the shorter side, so it stays an armchair on wide screens, not a sofa.
+        let chairWidth = m * 0.46, chairHeight = m * 0.52
+        let chair = CGRect(x: w * 0.12, y: floor + m * 0.03 - chairHeight, width: chairWidth, height: chairHeight)
+        let fabric = Sketch.hex(0x6E8E7E), shadow = Sketch.hex(0x5A7A6A)
+        c.fill(Path(roundedRect: CGRect(x: chair.minX + chair.width * 0.12, y: chair.minY, width: chair.width * 0.76, height: chair.height * 0.6),
+                    cornerRadius: chair.width * 0.18), with: .color(fabric))
+        c.fill(Path(roundedRect: CGRect(x: chair.minX + chair.width * 0.14, y: chair.minY + chair.height * 0.5, width: chair.width * 0.72, height: chair.height * 0.22),
+                    cornerRadius: 12), with: .color(Sketch.hex(0x7E9E8E)))
+        for x in [chair.minX, chair.maxX - chair.width * 0.2] {
+            c.fill(Path(roundedRect: CGRect(x: x, y: chair.minY + chair.height * 0.38, width: chair.width * 0.2, height: chair.height * 0.42),
+                        cornerRadius: chair.width * 0.08), with: .color(shadow))
+        }
+        c.fill(Path(roundedRect: CGRect(x: chair.minX + chair.width * 0.06, y: chair.minY + chair.height * 0.7, width: chair.width * 0.88, height: chair.height * 0.14),
+                    cornerRadius: 6), with: .color(shadow))
+        for x in [chair.minX + chair.width * 0.1, chair.maxX - chair.width * 0.14] {
+            c.fill(Path(roundedRect: CGRect(x: x, y: chair.minY + chair.height * 0.84, width: chair.width * 0.04, height: chair.height * 0.1), cornerRadius: 2),
+                   with: .color(Sketch.hex(0x5A3A24)))
         }
         // A plant by the window, its leaves moving in the air.
         let pot = CGRect(x: w * 0.7, y: floor - m * 0.12, width: m * 0.12, height: m * 0.12)
@@ -564,7 +680,10 @@ enum PracticeArt {
             c.fill(Sketch.leaf(at: CGPoint(x: pot.midX, y: pot.minY), size: m * 0.13, angle: angle), with: .color(Sketch.hex(0x4E8A4A)))
         }
         c.fill(Path(roundedRect: pot, cornerRadius: 4), with: .color(Sketch.hex(0xC0704A)))
-        Sketch.drift(&c, s, count: 24, time: f.time, seed: 331, color: Sketch.hex(0xFFF4D8), speed: 2...5, size: 1...2)
+        // Dust turning slowly in the sunbeam, and only there.
+        var inBeam = c
+        inBeam.clip(to: beam)
+        Sketch.drift(&inBeam, s, count: 30, time: f.time, seed: 331, color: Sketch.hex(0xFFF0C8), speed: 1...3, size: 0.8...1.6)
     }
 
     // MARK: - Evening Gratitude

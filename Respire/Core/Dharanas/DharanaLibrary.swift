@@ -11,7 +11,16 @@ import os
 
 @Observable
 final class DharanaLibrary {
+    /// The gates as written, before any persona shapes them.
+    private(set) var source: DharanaCollection?
+    /// Who's breathing; set from the persona setting.
+    var persona: Persona = .current {
+        didSet { if persona != oldValue { adapt() } }
+    }
+    /// The persona's gates, in their words and at their rhythm: what the library shows.
     private(set) var collection: DharanaCollection?
+    /// Every gate, reworded and re-paced for the persona, for gates named directly.
+    private(set) var everyGate: DharanaCollection?
     /// Gate number → when it was last practiced to completion.
     private(set) var practiced: [Int: Date]
 
@@ -21,13 +30,31 @@ final class DharanaLibrary {
 
     init(bundle: Bundle = .main, defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        collection = Self.load(from: bundle)
+        source = Self.load(from: bundle)
         if let data = defaults.data(forKey: Self.storageKey),
            let stored = try? JSONDecoder().decode([Int: Date].self, from: data) {
             practiced = stored
         } else {
             practiced = [:]
         }
+        adapt()
+    }
+
+    private func adapt() {
+        collection = source?.adapted(for: persona)
+        everyGate = source?.adapted(for: persona, keepingAll: true)
+    }
+
+    /// What one is called: a "practice" for children, a "gate" for everyone else.
+    var gateWord: String { persona == .kids ? "Practice" : "Gate" }
+
+    /// A gate by number, even one the persona's library leaves out (reminders, courses).
+    func dharana(number: Int) -> Dharana? {
+        everyGate?.dharana(number: number)
+    }
+
+    func section(containing number: Int) -> DharanaSection? {
+        everyGate?.section(containing: number)
     }
 
     func markPracticed(_ dharana: Dharana, at date: Date = .now) {
@@ -41,7 +68,8 @@ final class DharanaLibrary {
         practiced[dharana.number] != nil
     }
 
-    /// Today's gate, with beginners kept to the foundations until they've practiced a few.
+    /// Today's gate from the persona's library, with beginners kept to the foundations
+    /// until they've practiced a few.
     func gateOfTheDay(for date: Date = .now) -> Dharana? {
         collection?.dharanaOfTheDay(for: date, practicedCount: practiced.count)
     }

@@ -98,6 +98,7 @@ struct BreathWorldScene: View {
         case .wind: WindScene(openness: openness, time: time)
         case .thunder: ThunderScene(openness: openness, time: time)
         case .cymatics: CymaticsScene(openness: openness, time: time, stillness: stillness)
+        case .meadow, .alpine, .seaside, .garden, .forest, .lake: DaylightScene(theme: theme, openness: openness, time: time)
         }
     }
 }

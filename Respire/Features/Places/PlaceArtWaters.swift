@@ -18,18 +18,37 @@ extension PlaceArt {
             Gradient(colors: [Sketch.hex(0x2A2A5A), Sketch.hex(0xC0708A), Sketch.hex(0xF0B08A)]),
             startPoint: .zero, endPoint: CGPoint(x: 0, y: h * 0.45)))
         let horizon = h * 0.42
-        // Houses lining both banks, shrinking toward the horizon.
+        // Houses lining both banks, shrinking toward the horizon: pitched roofs, a chimney
+        // here and there, and rows of lit windows.
+        var rng = SeededGenerator(seed: 161)
         for side in [-1.0, 1.0] {
-            for k in 0..<6 {
+            for k in (0..<6).reversed() {
                 let t = Double(k) / 6
-                let height = h * (0.3 - 0.22 * t)
+                let height = h * (0.24 - 0.17 * t) * Double.random(in: 0.85...1.15, using: &rng)
                 let width = w * (0.2 - 0.13 * t)
                 let x = w / 2 + side * (w * 0.5 - t * w * 0.4) - (side > 0 ? width : 0)
-                let rect = CGRect(x: x, y: horizon + h * 0.05 * (1 - t) - height + h * 0.08 * (1 - t), width: width, height: height)
-                c.fill(Path(rect), with: .color(Sketch.mix(Sketch.hex(0x3A2A4A), Sketch.hex(0x8A6A8A), t)))
-                // A lit window or two.
-                let window = CGRect(x: rect.midX - width * 0.12, y: rect.minY + height * 0.25, width: width * 0.24, height: height * 0.16)
-                c.fill(Path(window), with: .color(Sketch.hex(0xFFD08A, 0.8 - 0.4 * t)))
+                let base = horizon + h * 0.13 * (1 - t)
+                let rect = CGRect(x: x, y: base - height, width: width, height: height)
+                let wall = Sketch.mix(Sketch.hex(0x4A3450), Sketch.hex(0x9A7A90), t)
+                c.fill(Path(rect), with: .color(wall))
+                var roof = Path()
+                roof.move(to: CGPoint(x: rect.minX - width * 0.04, y: rect.minY))
+                roof.addLine(to: CGPoint(x: rect.midX, y: rect.minY - height * 0.28))
+                roof.addLine(to: CGPoint(x: rect.maxX + width * 0.04, y: rect.minY))
+                roof.closeSubpath()
+                c.fill(roof, with: .color(Sketch.mix(wall, .black, 0.3)))
+                if k % 2 == 0 {
+                    c.fill(Path(CGRect(x: rect.minX + width * 0.68, y: rect.minY - height * 0.24, width: width * 0.1, height: height * 0.16)),
+                           with: .color(Sketch.mix(wall, .black, 0.35)))
+                }
+                for row in 0..<2 {
+                    for col in 0..<2 {
+                        guard Double.random(in: 0...1, using: &rng) > 0.3 else { continue }
+                        let window = CGRect(x: rect.minX + width * (0.2 + 0.38 * Double(col)), y: rect.minY + height * (0.18 + 0.36 * Double(row)),
+                                            width: width * 0.22, height: height * 0.18)
+                        c.fill(Path(roundedRect: window, cornerRadius: 1.5), with: .color(Sketch.hex(0xFFD08A, 0.85 - 0.45 * t)))
+                    }
+                }
             }
         }
         // The canal: a trapezoid of water narrowing to the horizon.

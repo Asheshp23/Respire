@@ -33,6 +33,14 @@ enum PlaceArt {
         case "moon-gates": moonGates(&c, s, f)
         case "ocean-postbox": oceanPostbox(&c, s, f)
         case "bowl-temple": bowlTemple(&c, s, f)
+        case "kite-hill": kiteHill(&c, s, f)
+        case "rainbow-pond": rainbowPond(&c, s, f)
+        case "rooftop-sunrise": rooftopSunrise(&c, s, f)
+        case "forest-trail": forestTrail(&c, s, f)
+        case "morning-dock": morningDock(&c, s, f)
+        case "alpine-lake": alpineLake(&c, s, f)
+        case "garden-bench": gardenBench(&c, s, f)
+        case "seaside-promenade": seasidePromenade(&c, s, f)
         default: c.fill(Path(CGRect(origin: .zero, size: s)), with: .color(.black))
         }
     }
@@ -173,6 +181,8 @@ enum PlaceArt {
         Sketch.ink(&c, archway, ink, width: 2)
 
         let house = CGRect(x: w * 0.14, y: h * 0.2, width: w * 0.72, height: h * 0.6)
+        // A plain plaster wall, so the bricks stay outside.
+        c.fill(Path(house), with: .color(Sketch.hex(0xF0D2B2)))
         Sketch.ink(&c, Path(house), ink, width: 2.2)
         let rows = 3, cols = 2
         for r in 0..<rows {
@@ -191,19 +201,36 @@ enum PlaceArt {
             }
         }
 
-        // The water: in from the left, then down the middle, a floor further each breath.
+        // The water: from a spout under the roof, straight down the channel between the
+        // rooms, a floor further each breath, splashing where it meets each ledge.
         let teal = Sketch.hex(0x5FA898)
-        let reach = house.minY + house.height * (0.2 + 0.8 * f.fraction)
-        var stream = Path()
-        stream.move(to: CGPoint(x: 0, y: house.minY + house.height * 0.24))
-        stream.addQuadCurve(to: CGPoint(x: w * 0.5, y: house.minY + house.height * 0.3), control: CGPoint(x: w * 0.3, y: house.minY + house.height * 0.22))
-        stream.addLine(to: CGPoint(x: w * 0.5 + 6, y: reach))
-        c.stroke(stream, with: .color(teal), style: StrokeStyle(lineWidth: w * 0.07, lineCap: .round, lineJoin: .round))
-        // Speckles glinting in the water.
-        for i in 0..<40 {
-            let t = (Double(i) / 40 + f.time * 0.08).truncatingRemainder(dividingBy: 1)
-            let y = house.minY + house.height * 0.3 + t * (reach - house.minY - house.height * 0.3)
-            c.fill(Path(ellipseIn: CGRect(x: w * 0.5 + Double(i % 5) * 3 - 6, y: y, width: 2, height: 2)), with: .color(.white.opacity(0.7)))
+        let channel = CGRect(x: house.midX - house.width * 0.025, y: house.minY, width: house.width * 0.05, height: house.height)
+        c.fill(Path(channel), with: .color(Sketch.hex(0xD8B694)))
+        let spout = CGRect(x: house.midX - house.width * 0.06, y: house.minY - h * 0.02, width: house.width * 0.12, height: h * 0.03)
+        c.fill(Path(roundedRect: spout, cornerRadius: 3), with: .color(Sketch.hex(0x8A6A4A)))
+        Sketch.ink(&c, Path(roundedRect: spout, cornerRadius: 3), ink, width: 1.2)
+        let reach = house.minY + house.height * (0.08 + 0.92 * f.fraction)
+        let sheet = CGRect(x: channel.minX + 2, y: spout.maxY, width: channel.width - 4, height: max(reach - spout.maxY, 0))
+        c.fill(Path(roundedRect: sheet, cornerRadius: 3), with: .color(teal))
+        // Light streaks sliding down the falling water.
+        var water = c
+        water.clip(to: Path(sheet))
+        for i in 0..<12 {
+            let y = sheet.minY + (Double(i) / 12 * sheet.height + f.time * 40).truncatingRemainder(dividingBy: max(sheet.height, 1))
+            water.fill(Path(CGRect(x: sheet.minX + Double(i % 3) * sheet.width / 3 + 1, y: y, width: 1.5, height: 10)),
+                       with: .color(.white.opacity(0.55)))
+        }
+        // A small splash at each floor the water has reached.
+        for r in 1..<rows {
+            let ledge = house.minY + house.height * 0.34 * Double(r)
+            guard ledge < reach else { continue }
+            for k in 0..<5 {
+                let t = (f.time * 0.9 + Double(k) / 5).truncatingRemainder(dividingBy: 1)
+                let dx = (Double(k) - 2) * channel.width * 0.6 * t
+                c.fill(Path(ellipseIn: CGRect(x: house.midX + dx - 1.5, y: ledge - 6 * sin(t * .pi) - 1.5, width: 3, height: 3)),
+                       with: .color(teal.opacity(1 - t)))
+            }
+            Sketch.ink(&c, Path(CGRect(x: channel.minX - 4, y: ledge, width: channel.width + 8, height: 2)), ink, width: 1)
         }
         // The pool grows as the house fills.
         let pool = CGRect(x: w * (0.5 - 0.45 * f.fraction), y: house.maxY - 6, width: w * 0.9 * f.fraction, height: h * 0.1)
@@ -217,15 +244,21 @@ enum PlaceArt {
         let w = s.width, h = s.height
         Sketch.paper(&c, s, Sketch.hex(0xC48A5E), seed: 5)
         let ink = Sketch.hex(0x1E140C)
-        // Cliffs.
+        // Cliffs: solid rock either side of the falls, darker toward the water.
         for side in [-1.0, 1.0] {
             var cliff = Path()
-            let x0 = w / 2 + side * w * 0.12
-            cliff.move(to: CGPoint(x: x0, y: h * 0.18))
+            let inner = w / 2 + side * w * 0.09
+            cliff.move(to: CGPoint(x: inner, y: h * 0.58))
+            cliff.addLine(to: CGPoint(x: inner, y: h * 0.17))
             for k in 1...8 {
-                cliff.addLine(to: CGPoint(x: x0 + side * Double(k) * w * 0.05, y: h * (0.18 + Double(k % 2) * 0.03 + Double(k) * 0.02)))
+                cliff.addLine(to: CGPoint(x: inner + side * Double(k) * w * 0.07,
+                                          y: h * (0.17 + Double(k % 2) * 0.025 + Double(k) * 0.018)))
             }
-            Sketch.ink(&c, cliff, ink, width: 1.4)
+            cliff.addLine(to: CGPoint(x: side < 0 ? 0 : w, y: h * 0.58))
+            cliff.closeSubpath()
+            c.fill(cliff, with: .linearGradient(Gradient(colors: [Sketch.hex(0x9A6A44), Sketch.hex(0x6A4428)]),
+                                                startPoint: CGPoint(x: 0, y: h * 0.17), endPoint: CGPoint(x: 0, y: h * 0.58)))
+            Sketch.ink(&c, cliff, ink.opacity(0.7), width: 1.2)
         }
         // The falls: a teal sheet with scallops sliding down.
         let falls = CGRect(x: w * 0.42, y: h * 0.17, width: w * 0.18, height: h * 0.4)
@@ -252,13 +285,21 @@ enum PlaceArt {
         for (x, height) in [(0.2, 0.2), (0.27, 0.15), (0.74, 0.22), (0.8, 0.17)] {
             c.fill(Sketch.pine(base: CGPoint(x: w * x, y: h * 0.58), height: h * height), with: .color(ink.opacity(0.85)))
         }
-        let cabin = CGRect(x: w * 0.25, y: h * 0.49, width: w * 0.2, height: h * 0.07)
+        // The cabin: timber walls, a lit window, a door, and a dark roof.
+        let cabin = CGRect(x: w * 0.22, y: h * 0.5, width: w * 0.16, height: h * 0.07)
+        c.fill(Path(cabin), with: .color(Sketch.hex(0x7A4A2E)))
+        c.fill(Path(CGRect(x: cabin.minX + cabin.width * 0.15, y: cabin.minY + cabin.height * 0.25, width: cabin.width * 0.25, height: cabin.height * 0.35)),
+               with: .color(Sketch.hex(0xFFD08A)))
+        c.fill(Path(CGRect(x: cabin.maxX - cabin.width * 0.3, y: cabin.minY + cabin.height * 0.3, width: cabin.width * 0.16, height: cabin.height * 0.7)),
+               with: .color(Sketch.hex(0x3A2418)))
         Sketch.ink(&c, Path(cabin), ink, width: 1.4)
         var roof = Path()
         roof.move(to: CGPoint(x: cabin.minX - 6, y: cabin.minY))
-        roof.addLine(to: CGPoint(x: cabin.midX, y: cabin.minY - h * 0.04))
+        roof.addLine(to: CGPoint(x: cabin.midX, y: cabin.minY - h * 0.045))
         roof.addLine(to: CGPoint(x: cabin.maxX + 6, y: cabin.minY))
-        Sketch.ink(&c, roof, ink, width: 1.6)
+        roof.closeSubpath()
+        c.fill(roof, with: .color(Sketch.hex(0x3A2418)))
+        Sketch.ink(&c, roof, ink, width: 1.4)
         // The pool, with rings spreading from the foot of the falls.
         let pool = CGRect(x: w * 0.12, y: h * 0.56, width: w * 0.66, height: h * 0.07)
         c.fill(Path(ellipseIn: pool), with: .color(Sketch.hex(0x5E9C8A)))

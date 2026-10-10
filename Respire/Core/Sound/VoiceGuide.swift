@@ -45,7 +45,24 @@ final class VoiceGuide {
     /// The best installed voice for the person's language: premium, then enhanced, then default.
     private lazy var voice: AVSpeechSynthesisVoice? = Self.bestVoice()
 
+    /// Asking the system for its voices is slow and logs noisily, so the answer is kept
+    /// until the installed voices change (say, after downloading an enhanced one).
+    private static var cachedVoice: AVSpeechSynthesisVoice??
+    private static let voicesChanged = NotificationCenter.default.addObserver(
+        forName: AVSpeechSynthesizer.availableVoicesDidChangeNotification, object: nil, queue: .main
+    ) { _ in
+        MainActor.assumeIsolated { cachedVoice = nil }
+    }
+
     static func bestVoice() -> AVSpeechSynthesisVoice? {
+        _ = voicesChanged
+        if let cachedVoice { return cachedVoice }
+        let voice = lookUpBestVoice()
+        cachedVoice = .some(voice)
+        return voice
+    }
+
+    private static func lookUpBestVoice() -> AVSpeechSynthesisVoice? {
         let language = AVSpeechSynthesisVoice.currentLanguageCode()
         let voices = AVSpeechSynthesisVoice.speechVoices().filter { $0.language == language }
         return voices.first { $0.quality == .premium }

@@ -28,7 +28,7 @@ struct DharanaLibraryView: View {
             }
         }
         .paperBackground()
-        .navigationTitle("112 Practices")
+        .navigationTitle("Practices")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
@@ -80,7 +80,7 @@ struct DharanaLibraryView: View {
             .frame(maxWidth: 1200)
             .frame(maxWidth: .infinity)
         }
-        .searchable(text: $query, prompt: "Search the 112 gates")
+        .searchable(text: $query, prompt: library.persona == .kids ? "Search" : "Search the gates")
     }
 
     // MARK: - Header
@@ -88,7 +88,7 @@ struct DharanaLibraryView: View {
     private func header(_ collection: DharanaCollection) -> some View {
         let practiced = library.practiced.count
         return VStack(alignment: .leading, spacing: Theme.Space.s) {
-            Text("\(collection.allDharanas.count) dharanas · \(practiced) practiced")
+            Text("\(collection.allDharanas.count) \(library.persona == .kids ? "practices" : "dharanas") · \(practiced) practiced")
                 .font(Theme.Typography.eyebrow)
                 .textCase(.uppercase)
                 .foregroundStyle(Theme.prism[4])
@@ -100,25 +100,28 @@ struct DharanaLibraryView: View {
                 .font(Theme.Typography.note)
                 .foregroundStyle(Theme.Palette.inkSecondary)
 
-            Button {
-                withAnimation(.easeInOut(duration: 0.3)) { showsAttribution.toggle() }
-            } label: {
-                Label("About this synthesis", systemImage: showsAttribution ? "chevron.down" : "chevron.right")
-                    .font(Theme.Typography.label)
-                    .foregroundStyle(Theme.Palette.accent)
-                    .frame(minHeight: Theme.minTapTarget)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
+            // Where the gates come from is for grown-ups; children just practice.
+            if library.persona != .kids {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.3)) { showsAttribution.toggle() }
+                } label: {
+                    Label("About this synthesis", systemImage: showsAttribution ? "chevron.down" : "chevron.right")
+                        .font(Theme.Typography.label)
+                        .foregroundStyle(Theme.Palette.accent)
+                        .frame(minHeight: Theme.minTapTarget)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
 
-            if showsAttribution {
-                Text(collection.attribution)
-                    .font(Theme.Typography.meta)
-                    .lineSpacing(3)
-                    .foregroundStyle(Theme.Palette.inkSecondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .card(padding: Theme.Space.m)
-                    .transition(.opacity.combined(with: .move(edge: .top)))
+                if showsAttribution {
+                    Text(collection.attribution)
+                        .font(Theme.Typography.meta)
+                        .lineSpacing(3)
+                        .foregroundStyle(Theme.Palette.inkSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .card(padding: Theme.Space.m)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                }
             }
         }
         .frame(maxWidth: 720, alignment: .leading)
@@ -191,6 +194,9 @@ private struct TodayGateCard: View {
     let section: DharanaSection
     let hue: Color
 
+    @Environment(DharanaLibrary.self) private var library
+    private var word: String { library.gateWord }
+
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Theme.Radius.large, style: .continuous)
 
@@ -215,7 +221,7 @@ private struct TodayGateCard: View {
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Today's gate, number \(dharana.number): \(dharana.title). \(dharana.text)")
+        .accessibilityLabel("Today's \(word.lowercased()), number \(dharana.number): \(dharana.title). \(dharana.text)")
     }
 
     private var art: some View {
@@ -227,7 +233,7 @@ private struct TodayGateCard: View {
 
     private var words: some View {
         VStack(alignment: .leading, spacing: Theme.Space.xs) {
-            Text("Today's gate · \(dharana.number) of 112")
+            Text(library.persona == .kids ? "Today's practice" : "Today's \(word.lowercased()) · \(dharana.number)")
                 .font(Theme.Typography.eyebrow)
                 .textCase(.uppercase)
                 .foregroundStyle(hue)
@@ -251,10 +257,15 @@ private struct SectionHeader: View {
     let section: DharanaSection
     let hue: Color
 
+    @Environment(DharanaLibrary.self) private var library
+    private var persona: Persona { library.persona }
+
     var body: some View {
         let pattern = section.pattern(for: section.dharanas[0])
         VStack(alignment: .leading, spacing: Theme.Space.xxs) {
-            Text("\(section.numeral) · Gates \(section.range.lowerBound)–\(section.range.upperBound)")
+            Text(persona == .kids
+                 ? "\(section.dharanas.count) practices"
+                 : "\(section.numeral) · Gates \(section.range.lowerBound)–\(section.range.upperBound)")
                 .font(Theme.Typography.eyebrow)
                 .textCase(.uppercase)
                 .foregroundStyle(hue)
@@ -283,6 +294,8 @@ private struct DharanaTile: View {
     let dharana: Dharana
     let hue: Color
     let isPracticed: Bool
+
+    @Environment(DharanaLibrary.self) private var library
 
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous)
@@ -331,7 +344,7 @@ private struct DharanaTile: View {
         }
         .contentShape(shape)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Gate \(dharana.number), \(dharana.title)\(dharana.level.map { ", \($0.title)" } ?? "")\(isPracticed ? ", practiced" : "")")
+        .accessibilityLabel("\(library.gateWord) \(dharana.number), \(dharana.title)\(dharana.level.map { ", \($0.title)" } ?? "")\(isPracticed ? ", practiced" : "")")
         .accessibilityHint(dharana.text)
     }
 }
@@ -341,6 +354,28 @@ private struct DharanaTile: View {
         DharanaLibraryView()
     }
     .environment(DharanaLibrary())
+    .environment(MomentReminders())
+    .preferredColorScheme(.dark)
+}
+
+#Preview("For kids") {
+    let gates = DharanaLibrary()
+    gates.persona = .kids
+    return NavigationStack {
+        DharanaLibraryView()
+    }
+    .environment(gates)
+    .environment(MomentReminders())
+    .preferredColorScheme(.dark)
+}
+
+#Preview("For the Wise") {
+    let gates = DharanaLibrary()
+    gates.persona = .wise
+    return NavigationStack {
+        DharanaLibraryView()
+    }
+    .environment(gates)
     .environment(MomentReminders())
     .preferredColorScheme(.dark)
 }

@@ -230,6 +230,36 @@ extension Place {
         case "bowl-temple":
             return .init(light: L(point: CGPoint(x: 0.5, y: 0.47), color: Color(red: 1, green: 0.95, blue: 0.85), rays: 0.7),
                          particles: .embers(count: 50, region: CGRect(x: 0.12, y: 0.8, width: 0.76, height: 0.02)))
+        // Daylight: soft, so the bright sky doesn't bloom; only the sun and its shafts shine.
+        case "kite-hill":
+            return .init(light: L(point: CGPoint(x: 0.82, y: 0.12), color: .white, rays: 0.25, bloom: 0.2, threshold: 0.92),
+                         particles: .motes(count: 40, region: CGRect(x: 0, y: 0.3, width: 1, height: 0.5),
+                                           color: .white.opacity(0.7), replacesSketch: false))
+        case "rainbow-pond":
+            return .init(light: L(point: CGPoint(x: 0.5, y: 0.1), color: .white, rays: 0, bloom: 0.2, threshold: 0.93),
+                         particles: nil)
+        case "rooftop-sunrise":
+            return .init(light: L(point: CGPoint(x: 0.62, y: 0.5), color: Color(red: 1, green: 0.8, blue: 0.55),
+                                  rays: 0.5, bloom: 0.45, threshold: 0.8),
+                         particles: nil)
+        case "forest-trail":
+            // Shafts of sun through the pines, with pollen hanging in them.
+            return .init(light: L(point: CGPoint(x: 0.75, y: 0.05), color: Color(red: 1, green: 0.95, blue: 0.8),
+                                  rays: 0.8, bloom: 0.25, threshold: 0.88),
+                         particles: .motes(count: 70, region: CGRect(x: 0.1, y: 0.3, width: 0.8, height: 0.5),
+                                           color: Color(red: 1, green: 0.95, blue: 0.7).opacity(0.6), replacesSketch: false))
+        case "morning-dock":
+            return .init(light: L(point: CGPoint(x: 0.32, y: 0.36), color: Color(red: 1, green: 0.88, blue: 0.7),
+                                  rays: 0.35, bloom: 0.3, threshold: 0.9),
+                         particles: nil)
+        case "alpine-lake", "seaside-promenade":
+            return .init(light: L(point: CGPoint(x: 0.72, y: 0.1), color: .white, rays: 0.15, bloom: 0.2, threshold: 0.93),
+                         particles: nil)
+        case "garden-bench":
+            return .init(light: L(point: CGPoint(x: 0.8, y: 0.1), color: Color(red: 1, green: 0.95, blue: 0.8),
+                                  rays: 0.4, bloom: 0.2, threshold: 0.92),
+                         particles: .motes(count: 40, region: CGRect(x: 0, y: 0.4, width: 1, height: 0.4),
+                                           color: Color(red: 1, green: 0.95, blue: 0.7).opacity(0.6), replacesSketch: false))
         default:
             return .init(light: nil, particles: nil)
         }

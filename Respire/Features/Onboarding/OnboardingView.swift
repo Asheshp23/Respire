@@ -80,14 +80,29 @@ struct OnboardingView: View {
 
     private var focusPage: some View {
         VStack(alignment: .leading, spacing: Theme.Space.m) {
-            heading("What would you like help with?",
-                    "This sets the rhythm of a quick session. Guided sessions have their own.")
+            if persona == .kids {
+                heading("What would you like help with?", "Pick one. You can change it later.")
+            } else {
+                heading("What would you like help with?",
+                        "This sets the rhythm of a quick session. Guided sessions have their own.")
+            }
             VStack(spacing: Theme.Space.xs) {
                 ForEach(SessionFocus.allCases) { option in
-                    choice(option.title, detail: option.recommendedPattern.summary, symbol: option.symbol,
+                    let words = Self.words(for: option, persona: persona)
+                    choice(words.title, detail: words.detail, symbol: option.symbol,
                            isSelected: option == focus) { focus = option }
                 }
             }
+        }
+    }
+
+    /// Children get plain words; everyone else the rhythm it sets.
+    private static func words(for focus: SessionFocus, persona: Persona) -> (title: String, detail: String) {
+        guard persona == .kids else { return (focus.title, focus.recommendedPattern.summary) }
+        return switch focus {
+        case .calmAnxiety: ("Feel calm", "When you feel worried or wobbly")
+        case .focus: ("Pay attention", "Before homework or a test")
+        case .windDown: ("Get sleepy", "At bedtime")
         }
     }
 
@@ -138,7 +153,7 @@ struct OnboardingView: View {
 
     private func advance() {
         if page == 3, let moment {
-            let gate = gates.collection?.dharana(number: moment.gate)
+            let gate = gates.dharana(number: moment.gate)
             Task { await reminders.setEnabled(true, for: moment, gate: gate) }
         }
         if page < Self.pageCount - 1 {

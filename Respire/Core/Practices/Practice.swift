@@ -143,6 +143,25 @@ enum Need: String, CaseIterable, Identifiable {
     /// The three on the home: the states people most often open the app in.
     static let relief: [Need] = [.calm, .sleep, .focus]
 
+    /// The three, in the order this hour calls for: what's most likely needed first.
+    static func relief(at date: Date, calendar: Calendar = .current) -> [Need] {
+        switch calendar.component(.hour, from: date) {
+        case 5..<11: [.focus, .calm, .sleep]
+        case 11..<18: [.calm, .focus, .sleep]
+        default: [.sleep, .calm, .focus]
+        }
+    }
+
+    /// The kinds of session that also answer this need.
+    var categories: [Practice.Category] {
+        switch self {
+        case .calm: [.calm, .pranayama]
+        case .sleep: [.sleep]
+        case .focus: [.focus, .pranayama]
+        case .connect: [.connection]
+        }
+    }
+
     /// The sessions that answer this need, best first; the first one the persona has wins.
     var preferred: [Practice.ID] {
         switch self {
@@ -168,10 +187,31 @@ extension Practice {
         need.preferred.lazy.compactMap { practice(id: $0) }.first { $0.personas.contains(persona) }
     }
 
-    /// The session to offer right now, for this hour and this persona.
+    /// Every session that answers a need for this persona: the preferred ones first, then
+    /// the rest of its kind.
+    static func candidates(for need: Need, persona: Persona) -> [Practice] {
+        let preferred = need.preferred.compactMap { practice(id: $0) }
+        let kind = practices(for: persona).filter { need.categories.contains($0.category) }
+        var seen = Set<Practice.ID>()
+        return (preferred + kind).filter { $0.personas.contains(persona) && seen.insert($0.id).inserted }
+    }
+
+    /// A session for a need that changes from day to day, avoiding `excluded` when there's
+    /// another to offer.
+    static func recommended(for need: Need, persona: Persona, on date: Date,
+                            excluding excluded: Set<Practice.ID> = [], calendar: Calendar = .current) -> Practice? {
+        let all = candidates(for: need, persona: persona)
+        let others = all.filter { !excluded.contains($0.id) }
+        let pool = others.isEmpty ? all : others
+        guard !pool.isEmpty else { return nil }
+        let day = calendar.ordinality(of: .day, in: .era, for: date) ?? 0
+        return pool[day % pool.count]
+    }
+
+    /// The session to offer right now, for this hour and this persona, a different one each day.
     static func suggestion(at date: Date, persona: Persona) -> Practice? {
-        recommended(for: Need.likely(at: date), persona: persona)
-            ?? recommended(for: .calm, persona: persona)
+        recommended(for: Need.likely(at: date), persona: persona, on: date)
+            ?? recommended(for: .calm, persona: persona, on: date)
             ?? practices(for: persona).first
     }
 }

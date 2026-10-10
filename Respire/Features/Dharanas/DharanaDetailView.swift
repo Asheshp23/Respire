@@ -23,15 +23,15 @@ struct DharanaDetailView: View {
     var body: some View {
         Group {
             if let collection = library.collection,
-               let dharana = collection.dharana(number: number),
-               let section = collection.section(containing: number) {
+               let dharana = library.dharana(number: number),
+               let section = library.section(containing: number) {
                 content(collection: collection, dharana: dharana, section: section)
             } else {
                 ContentUnavailableView("Gate not found", systemImage: "questionmark.circle")
             }
         }
         .paperBackground()
-        .navigationTitle("Gate \(number)")
+        .navigationTitle("\(library.gateWord) \(number)")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(item: $practicing) { number in
             DharanaPracticeView(number: number)
@@ -53,7 +53,7 @@ struct DharanaDetailView: View {
                     .id(section.id)
 
                 VStack(alignment: .leading, spacing: Theme.Space.s) {
-                    Text("Gate \(dharana.number) of 112 · \(section.title)")
+                    Text("\(library.gateWord) \(dharana.number) · \(section.title)")
                         .font(Theme.Typography.eyebrow)
                         .textCase(.uppercase)
                         .foregroundStyle(hue)
@@ -140,12 +140,14 @@ struct DharanaDetailView: View {
         .animation(.easeInOut(duration: 0.3), value: number)
     }
 
-    /// Previous · Practice · Next, in the thumb zone.
+    /// Previous · Practice · Next, in the thumb zone, walking the persona's gates.
     private func bottomBar(collection: DharanaCollection, dharana: Dharana) -> some View {
-        let count = collection.allDharanas.count
+        let numbers = collection.allDharanas.map(\.number)
+        let previous = numbers.last { $0 < dharana.number } ?? numbers.last ?? dharana.number
+        let next = numbers.first { $0 > dharana.number } ?? numbers.first ?? dharana.number
         return HStack(spacing: Theme.Space.s) {
             Button {
-                number = dharana.number > 1 ? dharana.number - 1 : count
+                number = previous
             } label: {
                 Image(systemName: "chevron.left")
             }
@@ -162,7 +164,7 @@ struct DharanaDetailView: View {
             .spectralEdge()
 
             Button {
-                number = dharana.number < count ? dharana.number + 1 : 1
+                number = next
             } label: {
                 Image(systemName: "chevron.right")
             }
@@ -185,19 +187,19 @@ struct DharanaPracticeView: View {
 
     var body: some View {
         if let collection = library.collection,
-           let dharana = collection.dharana(number: number),
-           let section = collection.section(containing: number) {
+           let dharana = library.dharana(number: number),
+           let section = library.section(containing: number) {
             GuidedPracticeView(
                 pattern: section.pattern(for: dharana),
                 cycles: section.targetCycles(for: dharana),
                 world: section.theme,
                 focus: section.focus,
-                title: "Gate \(dharana.number) · \(dharana.title)",
+                title: "\(library.gateWord) \(dharana.number) · \(dharana.title)",
                 guidance: dharana.text,
                 gate: dharana,
                 onComplete: { library.markPracticed(dharana) }
             ) { leave in
-                CompletionCard(eyebrow: "Gate \(dharana.number) practiced", hue: Theme.prism[section.hue(in: collection)], title: dharana.title) {
+                CompletionCard(eyebrow: "\(library.gateWord) \(dharana.number) practiced", hue: Theme.prism[section.hue(in: collection)], title: dharana.title) {
                     VStack(alignment: .leading, spacing: Theme.Space.xs) {
                         Text("To carry with you")
                             .font(Theme.Typography.eyebrow)

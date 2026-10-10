@@ -35,6 +35,7 @@ struct SessionView: View {
     @Environment(PatternLibrary.self) private var library
     @Environment(DharanaLibrary.self) private var gates
     @AppStorage(BreathTheme.storageKey) private var savedTheme: BreathTheme = .aurora
+    @AppStorage(BreathTheme.automaticKey) private var isAutomaticScene = true
     @AppStorage(SessionFocus.storageKey) private var savedFocus: SessionFocus = .calmAnxiety
     @AppStorage(Persona.storageKey) private var persona: Persona = .adults
     // Openings are offered, not imposed: off until the person asks for them every time.
@@ -65,10 +66,16 @@ struct SessionView: View {
     @State private var controlsResting = false
     @State private var restTask: Task<Void, Never>?
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
+    @Environment(\.dismiss) private var dismiss
+
+    /// A fixed length in minutes, in place of the chosen one (the home's one-minute breath).
+    private let lengthOverride: Int?
 
     init(rhythm: BreathPattern? = nil, world: BreathTheme? = nil, focus: SessionFocus? = nil, title: String? = nil,
-         guidance: String? = nil, gate: Dharana? = nil, allowsOpening: Bool = true, practice: Practice? = nil) {
+         guidance: String? = nil, gate: Dharana? = nil, allowsOpening: Bool = true, practice: Practice? = nil,
+         length: Int? = nil) {
         self.rhythm = rhythm
+        lengthOverride = length
         self.practice = practice
         worldOverride = world
         focusOverride = focus
@@ -88,9 +95,17 @@ struct SessionView: View {
     /// The chosen scene, unless it isn't one for whoever's breathing (a storm, for a child).
     private var theme: BreathTheme {
         if let worldOverride { return worldOverride }
+        if isAutomaticScene { return .ofTheMoment(persona: persona) }
         return savedTheme.personas.contains(persona) ? savedTheme : .aurora
     }
     private var focus: SessionFocus { focusOverride ?? savedFocus }
+    /// How long a free session lasts, in minutes; 0 breathes until stopped.
+    private var length: Int { lengthOverride ?? minutes }
+
+    /// Picking a scene here keeps it, rather than following the day.
+    private var chosenScene: Binding<BreathTheme> {
+        Binding(get: { theme }, set: { savedTheme = $0; isAutomaticScene = false })
+    }
     /// A session started from Today or the Breathe list, rather than a course day or a
     /// practice, which bring their own length and completion card.
     private var isFree: Bool { titleOverride == nil && worldOverride == nil }
@@ -122,8 +137,10 @@ struct SessionView: View {
             .ignoresSafeArea(edges: .vertical)
             .backgroundExtensionEffect()
 
-            // A soft floor of shade so the words and glass read over bright worlds.
-            LinearGradient(colors: [.clear, .black.opacity(0.55)], startPoint: .center, endPoint: .bottom)
+            // Soft shade above and below, so the words and controls read over bright worlds.
+            LinearGradient(stops: [.init(color: .black.opacity(0.5), location: 0), .init(color: .clear, location: 0.35),
+                                   .init(color: .clear, location: 0.55), .init(color: .black.opacity(0.6), location: 1)],
+                           startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
 
@@ -163,15 +180,15 @@ struct SessionView: View {
                     }
                     Spacer(minLength: 0)
                     if showsCompletion {
-                        FreeSessionCompletion(minutes: minutes, onAgain: { begin() }, onDone: session.stop)
+                        FreeSessionCompletion(minutes: length, onAgain: { begin() }, onDone: end)
                             .transition(.opacity.combined(with: .move(edge: .bottom)))
                     } else {
-                        TransportControls(onBegin: { begin() })
-                            .opacity(controlsResting ? 0.06 : 1)
-                            .allowsHitTesting(!controlsResting)
+                        // Resting controls stay faintly visible and still work on the first tap.
+                        TransportControls(onBegin: { begin() }, onEnd: end)
+                            .opacity(controlsResting ? 0.25 : 1)
                     }
                     // Journeys and gates set their own focus and length, so there's nothing to choose.
-                    if showsDetails, isFree {
+                    if showsDetails, isFree, lengthOverride == nil {
                         SessionDetailsCard(focus: $savedFocus, minutes: $minutes, onChooseFocus: chooseRhythm)
                             .transition(.opacity.combined(with: .move(edge: .bottom)))
                     }
@@ -299,7 +316,7 @@ struct SessionView: View {
             @Bindable var session = session
             SoundSettingsSheet(
                 theme: theme,
-                scene: worldOverride == nil ? $savedTheme : nil,
+                scene: worldOverride == nil ? chosenScene : nil,
                 natureSound: $natureSound,
                 tone: $tone,
                 opensWithPersonalPrompt: $opensWithPersonalPrompt,
@@ -353,7 +370,7 @@ extension SessionView {
         if isFree {
             // Whole breaths that fill the chosen length; open-ended when no length is set.
             let cycle = max(session.engine.pattern.cycleDuration, 1)
-            session.engine.targetCycles = minutes > 0 ? max(1, Int((Double(minutes * 60) / cycle).rounded())) : nil
+            session.engine.targetCycles = length > 0 ? max(1, Int((Double(length * 60) / cycle).rounded())) : nil
         }
         // A practice has its own spoken settling-in, so the written opening steps aside.
         let writtenOpening = opensWithPersonalPrompt && allowsOpening && practice == nil
@@ -403,6 +420,12 @@ extension SessionView {
         }
     }
 
+    /// Ends the session and leaves it, in one tap.
+    private func end() {
+        session.stop()
+        dismiss()
+    }
+
     private func skipSettling() {
         settling?.cancel()
         settling = nil
@@ -444,6 +467,9 @@ private struct SettlingIn: View {
             }
             .multilineTextAlignment(.center)
             .shadow(color: .black.opacity(0.6), radius: 10)
+            .padding(.vertical, Theme.Space.s)
+            .padding(.horizontal, Theme.Space.m)
+            .background(.black.opacity(0.32), in: RoundedRectangle(cornerRadius: Theme.Radius.large, style: .continuous))
             .padding(.top, Theme.Space.m)
             .accessibilityElement(children: .combine)
 
@@ -530,6 +556,9 @@ private struct RhythmBadge: View {
             Text("\(pattern.name) · \(pattern.timingLabel)")
                 .font(.footnote.monospacedDigit().weight(.medium))
                 .foregroundStyle(.white.opacity(0.9))
+                // One line inside the capsule; long rhythms shrink a little rather than wrap.
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
         }
         .padding(.horizontal, Theme.Space.s)
         .frame(minHeight: 32)
@@ -596,42 +625,33 @@ private struct QuickSettings: View {
 private struct TransportControls: View {
     @Environment(SessionViewModel.self) private var session
     var onBegin: () -> Void
+    var onEnd: () -> Void
 
     private var state: BreathEngine.State { session.engine.state }
 
     var body: some View {
-        HStack(spacing: Theme.Space.s) {
+        HStack(alignment: .bottom, spacing: Theme.Space.l) {
             switch state {
-            case .idle, .finished, .paused:
-                Button {
-                    if state == .paused { session.togglePlayback() } else { onBegin() }
-                } label: {
-                    Label(state == .paused ? "Resume" : "Begin", systemImage: "play.fill")
+            case .idle, .finished:
+                Button(action: onBegin) {
+                    Label("Begin", systemImage: "play.fill")
                 }
                 .buttonStyle(.pill)
                 .spectralEdge()
                 .transition(.opacity)
 
+            case .paused:
+                SessionControl(title: "Resume", systemImage: "play.fill") { session.togglePlayback() }
+                    .transition(.opacity)
+
             case .running:
-                Button {
-                    session.togglePlayback()
-                } label: {
-                    Image(systemName: "pause.fill")
-                }
-                .buttonStyle(.tool)
-                .accessibilityLabel("Pause")
-                .transition(.opacity)
+                SessionControl(title: "Pause", systemImage: "pause.fill") { session.togglePlayback() }
+                    .transition(.opacity)
             }
 
             if state == .running || state == .paused {
-                Button {
-                    session.stop()
-                } label: {
-                    Image(systemName: "stop.fill")
-                }
-                .buttonStyle(.tool)
-                .accessibilityLabel("Stop")
-                .transition(.opacity)
+                SessionControl(title: "End", systemImage: "xmark", action: onEnd)
+                    .transition(.opacity)
             }
         }
         .animation(.easeInOut(duration: 0.3), value: state)

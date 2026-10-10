@@ -21,6 +21,10 @@ enum ExploreRoute: Hashable {
     case rhythm(BreathPattern.ID)
     case places
     case practices
+    /// One minute of easy breathing, straight away: the quickest relief there is.
+    case oneMinute
+    /// A minute pointed away from the screen, at something real.
+    case anchor(Anchor.ID)
 }
 
 /// The breathing rhythms, and where in the app you are: the tab, and each tab's stack.
@@ -45,6 +49,11 @@ final class PatternLibrary {
     func start(_ route: ExploreRoute, in session: SessionViewModel) {
         if case .rhythm(let id) = route, let pattern = pattern(id: id) { session.select(pattern) }
         session.beginsOnArrival = true
+        homePath.append(route)
+    }
+
+    /// Goes somewhere from the home that starts itself, like an anchor.
+    func visit(_ route: ExploreRoute) {
         homePath.append(route)
     }
 

@@ -59,7 +59,7 @@ struct MomentRemindersSheet: View {
     }
 
     private func row(for moment: Moment) -> some View {
-        let gate = gates.collection?.dharana(number: moment.gate)
+        let gate = gates.dharana(number: moment.gate)
         let setting = reminders.setting(for: moment)
 
         return VStack(alignment: .leading, spacing: Theme.Space.s) {

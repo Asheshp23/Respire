@@ -144,7 +144,9 @@ extension DharanaSection {
     }
 
     /// Each section takes one of the prism's colors, red through violet and around again.
+    /// Taken from the numeral, so a section keeps its color when a persona sees fewer.
     func hue(in collection: DharanaCollection) -> Int {
-        (collection.sections.firstIndex(of: self) ?? 0) % 7
+        let numerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
+        return (numerals.firstIndex(of: numeral) ?? collection.sections.firstIndex { $0.id == id } ?? 0) % 7
     }
 }

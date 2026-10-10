@@ -24,11 +24,16 @@ extension View {
     /// Canadian fall night: northern lights over the Rockies), soft pools
     /// of spectrum light, and light refracting in from the top corner. Everything
     /// here is still, so it costs nothing to keep on screen.
-    func paperBackground() -> some View {
+    /// `softened` blurs the scene to a wash of its colors, for screens whose own card
+    /// already shows it (the home), so it isn't seen twice.
+    func paperBackground(softened: Bool = false) -> some View {
         background {
             ZStack(alignment: .topTrailing) {
                 Theme.Palette.paper
                 NightScene()
+                    .blur(radius: softened ? 40 : 0)
+                // A soft shade at the top, where titles sit over the scene's art.
+                LinearGradient(colors: [.black.opacity(0.4), .clear], startPoint: .top, endPoint: .init(x: 0.5, y: 0.35))
                 AmbientLight()
                 LightLeak()
             }
@@ -46,9 +51,18 @@ extension View {
 /// chose. Dim enough that the glass above it reads first.
 private struct NightScene: View {
     @AppStorage(BreathTheme.storageKey) private var theme: BreathTheme = .aurora
+    @AppStorage(BreathTheme.automaticKey) private var isAutomatic = true
+    @AppStorage(Persona.storageKey) private var persona: Persona = .adults
 
     var body: some View {
-        ThemeBackdrop(theme: theme)
+        // Automatic: the scene follows the hour, and changes from day to day.
+        TimelineView(.everyMinute) { timeline in
+            let scene = isAutomatic ? BreathTheme.ofTheMoment(at: timeline.date, persona: persona) : theme
+            ThemeBackdrop(theme: scene)
+                .id(scene)
+                .transition(.opacity)
+                .animation(.easeInOut(duration: 1.2), value: scene)
+        }
     }
 }
 
@@ -267,6 +281,38 @@ struct ToolButtonStyle: ButtonStyle {
             .background { IceGlass(shape: Circle(), frost: false).opacity(configuration.isPressed ? 0.6 : 1) }
             .opacity(isEnabled ? 1 : 0.35)
             .contentShape(Circle())
+    }
+}
+
+/// A session control: a larger circle with its name written underneath, on a dark
+/// backing so it can be found over bright scenes. The name is tappable too.
+struct SessionControl: View {
+    let title: String
+    let systemImage: String
+    var action: () -> Void
+
+    @ScaledMetric(relativeTo: .body) private var size: CGFloat = 56
+
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: Theme.Space.xxs) {
+                Image(systemName: systemImage)
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: size, height: size)
+                    .background(.black.opacity(0.4), in: Circle())
+                    .overlay { Circle().strokeBorder(.white.opacity(0.35), lineWidth: 1) }
+                Text(title)
+                    .font(Theme.Typography.label)
+                    .foregroundStyle(.white)
+                    .shadow(color: .black.opacity(0.7), radius: 4)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(title)
+        .accessibilityAddTraits(.isButton)
     }
 }
 

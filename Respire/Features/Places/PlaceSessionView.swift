@@ -29,9 +29,12 @@ struct PlaceCanvas: View {
 
 extension Place {
     /// Paper-toned places need dark ink for their words.
-    var hasLightGround: Bool {
-        ["waterfall-house", "cabin-falls", "tea-house", "cloud-ferry"].contains(id)
-    }
+    var hasLightGround: Bool { Self.lightGrounds.contains(id) }
+
+    private static let lightGrounds: Set<String> = [
+        "waterfall-house", "cabin-falls", "tea-house", "cloud-ferry", "kite-hill", "rainbow-pond", "forest-trail",
+        "morning-dock", "alpine-lake", "garden-bench", "seaside-promenade",
+    ]
 }
 
 struct PlaceSessionView: View {
@@ -237,24 +240,15 @@ struct PlaceSessionView: View {
                     .accessibilityElement()
                     .accessibilityLabel(engine.state == .paused ? "Paused" : engine.phase.instruction)
                     .accessibilityAddTraits(.updatesFrequently)
-                HStack(spacing: Theme.Space.s) {
-                    Button {
+                // Resting controls stay faintly visible and still work on the first tap.
+                HStack(alignment: .bottom, spacing: Theme.Space.l) {
+                    SessionControl(title: engine.state == .paused ? "Resume" : "Pause",
+                                   systemImage: engine.state == .paused ? "play.fill" : "pause.fill") {
                         session.togglePlayback()
-                    } label: {
-                        Image(systemName: engine.state == .paused ? "play.fill" : "pause.fill")
                     }
-                    .buttonStyle(.tool)
-                    .accessibilityLabel(engine.state == .paused ? "Resume" : "Pause")
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                    .buttonStyle(.tool)
-                    .accessibilityLabel("Leave")
+                    SessionControl(title: "Leave", systemImage: "xmark") { dismiss() }
                 }
-                .opacity(controlsResting && engine.state == .running ? 0.04 : 1)
-                .allowsHitTesting(!(controlsResting && engine.state == .running))
+                .opacity(controlsResting && engine.state == .running ? 0.25 : 1)
             }
         case .finished:
             CompletionCard(eyebrow: place.durationLabel, hue: place.tint, title: "You have arrived.") {
@@ -288,7 +282,7 @@ struct PlaceSessionView: View {
 
     private var closingLine: String {
         switch place.mechanic {
-        case .stages(let names): "You breathed your way to \(names.last ?? place.title)."
+        case .stages(let names): "You breathed your way from \(names.first ?? place.title) to \(names.last ?? place.title)."
         case .find(let count, let verb, let noun): "You \(verb) all \(count) \(noun), one breath at a time."
         case .counter: "You were here for \(Int(place.duration)) seconds, and that was enough."
         case .release(let items): "You let go of \(items.count) things, one out-breath at a time."
@@ -319,6 +313,16 @@ struct PlaceSessionView: View {
     NavigationStack {
         if let temple = Place.place(id: "bowl-temple") {
             PlaceSessionView(place: temple)
+        }
+    }
+    .environment(SessionViewModel())
+    .preferredColorScheme(.dark)
+}
+
+#Preview("Kite Hill") {
+    NavigationStack {
+        if let hill = Place.place(id: "kite-hill") {
+            PlaceSessionView(place: hill)
         }
     }
     .environment(SessionViewModel())

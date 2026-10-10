@@ -24,7 +24,7 @@ struct JourneyPracticeView: View {
             focus: chapter.focus,
             title: "Day \(chapter.day) · \(chapter.title)",
             guidance: chapter.practice.guidance,
-            gate: chapter.gate.flatMap { gates.collection?.dharana(number: $0) },
+            gate: chapter.gate.flatMap { gates.dharana(number: $0) },
             onComplete: { progress.complete(chapter, in: journey) }
         ) { leave in
             CompletionCard(eyebrow: "Day \(chapter.day) complete", hue: hue, title: chapter.completion.title) {

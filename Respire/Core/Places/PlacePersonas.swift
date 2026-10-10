@@ -30,13 +30,36 @@ extension Place {
             [.teens, .adults, .wise]
         case "tea-house", "moon-gates", "waterfall-house", "ocean-postbox":
             [.adults, .wise]
+        // The daytime places.
+        case "kite-hill", "rainbow-pond":
+            [.kids, .adults]
+        case "garden-bench", "seaside-promenade":
+            [.kids, .adults, .wise]
+        case "rooftop-sunrise":
+            [.teens, .adults]
+        case "forest-trail", "morning-dock", "alpine-lake":
+            [.teens, .adults, .wise]
         default:
             [.adults]
         }
     }
 
+    /// The places that suit a persona, its own favorites first.
     static func places(for persona: Persona) -> [Place] {
-        all.filter { $0.personas.contains(persona) }
+        let suited = all.filter { $0.personas.contains(persona) }
+        let first = featured(for: persona)
+        return suited.filter { first.contains($0.id) }.sorted { (first.firstIndex(of: $0.id) ?? 0) < (first.firstIndex(of: $1.id) ?? 0) }
+            + suited.filter { !first.contains($0.id) }
+    }
+
+    /// The places made with each persona in mind, so they lead the shelf.
+    private static func featured(for persona: Persona) -> [String] {
+        switch persona {
+        case .kids: ["kite-hill", "rainbow-pond", "garden-bench", "seaside-promenade"]
+        case .teens: ["rooftop-sunrise", "forest-trail", "alpine-lake", "morning-dock"]
+        case .adults: ["morning-dock", "alpine-lake", "forest-trail", "seaside-promenade"]
+        case .wise: ["garden-bench", "seaside-promenade", "morning-dock", "alpine-lake"]
+        }
     }
 
     /// A different place each day, from those that suit this persona.

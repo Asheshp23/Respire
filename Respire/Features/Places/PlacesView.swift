@@ -105,6 +105,7 @@ struct PlaceTile: View {
 
 #Preview("Contact sheet 1–10") { PlaceContactSheet(range: 0..<10) }
 #Preview("Contact sheet 11–20") { PlaceContactSheet(range: 10..<20) }
+#Preview("Contact sheet 21–29") { PlaceContactSheet(range: 20..<Place.all.count) }
 #Preview("Singing Bowl Temple, stages") {
     // Before, midway, and with all seven bowls singing.
     VStack(spacing: 4) {

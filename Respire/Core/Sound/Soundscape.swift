@@ -25,7 +25,9 @@ final class Soundscape {
     private static let logger = Logger(subsystem: "Respire", category: "Sound")
 
     // Voice.
-    private let speech = AVSpeechSynthesizer()
+    /// Replaced whenever a line is cut off mid-render: a synthesizer stopped while writing
+    /// can stop delivering audio for every line after, which left sessions stuck settling in.
+    private var speech = AVSpeechSynthesizer()
     private let voicePlayer = AVAudioPlayerNode()
     private var voiceFormat: AVAudioFormat?
     private var currentLine: SpokenLine?
@@ -46,7 +48,7 @@ final class Soundscape {
     func play(theme: BreathTheme, nature: Bool, toneHz: Double, cues: Bool = false, guide: Bool = false,
               voice: Bool = false, hum: Bool = false, following breathEngine: BreathEngine) {
         humEnabled = hum
-        synth.theme = BreathTheme.allCases.firstIndex(of: theme) ?? 0
+        synth.theme = BreathTheme.allCases.firstIndex(of: theme.soundWorld) ?? 0
         synth.natureTarget = nature ? 1 : 0
         synth.toneTarget = toneHz
         cuesEnabled = cues
@@ -118,6 +120,25 @@ final class Soundscape {
             Self.render(utterance, with: speech) { [weak self] buffer in
                 self?.receive(buffer, for: line)
             }
+            watch(line, speaking: utterance)
+        }
+    }
+
+    /// A line never holds the session longer than it could take to say: if its audio
+    /// stalls, the line ends anyway and the next one gets a fresh synthesizer.
+    private func watch(_ line: SpokenLine, speaking utterance: AVSpeechUtterance) {
+        // Slow speech runs about ten characters a second; allow well beyond that.
+        let pace = max(Double(utterance.rate / AVSpeechUtteranceDefaultSpeechRate), 0.5)
+        let limit = 4 + Double(utterance.speechString.count) * 0.12 / pace
+        Task { [weak self] in
+            try? await Task.sleep(for: .seconds(limit))
+            guard let self, !line.isFinished else { return }
+            Self.logger.info("A spoken line stalled; moving on")
+            if line === self.currentLine {
+                self.stopVoice()
+            } else {
+                self.finish(line)
+            }
         }
     }
 
@@ -125,6 +146,7 @@ final class Soundscape {
     func stopVoice() {
         guard let line = currentLine else { return }
         speech.stopSpeaking(at: .immediate)
+        if !line.isRendered { speech = AVSpeechSynthesizer() }
         if voicePlayer.engine != nil { voicePlayer.stop() }
         finish(line)
     }

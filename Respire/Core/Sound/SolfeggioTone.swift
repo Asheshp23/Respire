@@ -66,6 +66,8 @@ enum SolfeggioTone: String, CaseIterable, Identifiable {
         case .aurora: .hz963
         // The tone most often sung to water.
         case .cymatics: .hz528
+        // Daylight scenes carry the tone of the world they borrow their sound from.
+        case .meadow, .alpine, .seaside, .garden, .forest, .lake: tone(for: theme.soundWorld)
         }
     }
 
@@ -96,6 +98,10 @@ extension BreathTheme {
         case .wind: "Gusts that rise with the in-breath"
         case .thunder: "Rain, and thunder rolling far away"
         case .cymatics: "A singing bowl, humming as you breathe"
+        case .meadow, .forest: "A warm breeze through the grass and trees"
+        case .alpine: "Cool mountain air"
+        case .seaside, .lake: "Gentle waves lapping"
+        case .garden: "A light breeze and wind chimes"
         }
     }
 }

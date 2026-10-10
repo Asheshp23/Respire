@@ -29,6 +29,8 @@ import SwiftUI
 
 enum BreathTheme: String, CaseIterable, Identifiable {
     case aurora, ocean, sakura, desert, waterfall, volcano, rain, wind, thunder, cymatics
+    // Daylight, drawn from the bright Places.
+    case meadow, alpine, seaside, garden, forest, lake
 
     static let storageKey = "breath.theme"
 
@@ -46,6 +48,12 @@ enum BreathTheme: String, CaseIterable, Identifiable {
         case .wind: "Prairie Wind"
         case .thunder: "Distant Storm"
         case .cymatics: "Cymatics"
+        case .meadow: "Kite Meadow"
+        case .alpine: "Alpine Lake"
+        case .seaside: "Seaside"
+        case .garden: "Garden Morning"
+        case .forest: "Sunlit Forest"
+        case .lake: "Morning Lake"
         }
     }
 
@@ -61,6 +69,12 @@ enum BreathTheme: String, CaseIterable, Identifiable {
         case .wind: "wind"
         case .thunder: "cloud.bolt.rain"
         case .cymatics: "circle.hexagongrid"
+        case .meadow: "wind"
+        case .alpine: "mountain.2"
+        case .seaside: "sun.max"
+        case .garden: "bird"
+        case .forest: "tree"
+        case .lake: "sun.horizon"
         }
     }
 
@@ -118,6 +132,36 @@ enum BreathTheme: String, CaseIterable, Identifiable {
         case (.cymatics, .holdFull): "Be still, and watch it settle into form."
         case (.cymatics, .exhale): "Breathe out as it gathers to the center."
         case (.cymatics, .holdEmpty): "Rest in the hum beneath everything."
+        case (.meadow, nil): "Breathe on the open hill."
+        case (.meadow, .inhale): "Breathe in, and let the kites lift."
+        case (.meadow, .holdFull): "Hang there, light, on the wind."
+        case (.meadow, .exhale): "Breathe out as they drift down."
+        case (.meadow, .holdEmpty): "Rest in the warm grass."
+        case (.alpine, nil): "Breathe by the still water."
+        case (.alpine, .inhale): "Breathe in the cool mountain air."
+        case (.alpine, .holdFull): "Still, like the peaks in the lake."
+        case (.alpine, .exhale): "Breathe out, and let the water settle."
+        case (.alpine, .holdEmpty): "Rest in the high, clear quiet."
+        case (.seaside, nil): "Breathe the sea air."
+        case (.seaside, .inhale): "Breathe in as the sails fill."
+        case (.seaside, .holdFull): "Pause, like a gull on the wind."
+        case (.seaside, .exhale): "Breathe out with the waves."
+        case (.seaside, .holdEmpty): "Rest in the sound of the sea."
+        case (.garden, nil): "Breathe in the morning garden."
+        case (.garden, .inhale): "Breathe in the scent of the flowers."
+        case (.garden, .holdFull): "Still, so the birds stay."
+        case (.garden, .exhale): "Breathe out, soft as birdsong."
+        case (.garden, .holdEmpty): "Rest in the sun on the bench."
+        case (.forest, nil): "Breathe among the pines."
+        case (.forest, .inhale): "Breathe in the green, sunlit air."
+        case (.forest, .holdFull): "Stand still, like the trees."
+        case (.forest, .exhale): "Breathe out along the trail."
+        case (.forest, .holdEmpty): "Rest in the dappled light."
+        case (.lake, nil): "Breathe with the morning lake."
+        case (.lake, .inhale): "Breathe in the cool morning."
+        case (.lake, .holdFull): "Still, like the water at dawn."
+        case (.lake, .exhale): "Breathe out as the mist lifts."
+        case (.lake, .holdEmpty): "Rest at the end of the dock."
         }
     }
 }
@@ -732,6 +776,14 @@ struct ThemeBackdrop: View {
             case .cymatics:
                 CymaticsScene(openness: 0.4, time: 0)
                     .opacity(0.5)
+            case .meadow, .alpine, .seaside, .garden, .forest, .lake:
+                // Behind screens of text: the quiet start of the scene (no kites or birds
+                // crossing the words), under enough shade for light text to read.
+                DaylightScene(theme: theme, openness: 0.5, time: 3, arrived: 0)
+                    .overlay {
+                        LinearGradient(colors: [.black.opacity(0.5), .black.opacity(0.3), .black.opacity(0.5)],
+                                       startPoint: .top, endPoint: .bottom)
+                    }
             }
         }
         .allowsHitTesting(false)

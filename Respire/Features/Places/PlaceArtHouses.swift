@@ -158,26 +158,37 @@ extension PlaceArt {
         let table = CGRect(x: w * 0.06, y: h * 0.68, width: w * 0.88, height: h * 0.05)
         c.fill(Path(roundedRect: table, cornerRadius: 4), with: .color(Sketch.hex(0x6A4428)))
         Sketch.ink(&c, Path(roundedRect: table, cornerRadius: 4), ink, width: 1.4)
-        // The kettle on the left, its spout turned toward the cups.
-        let kettle = CGRect(x: w * 0.08, y: h * 0.56, width: w * 0.2, height: h * 0.12)
-        c.fill(Path(ellipseIn: kettle), with: .color(Sketch.hex(0x2E3A34)))
-        Sketch.ink(&c, Path(ellipseIn: kettle), ink, width: 1.4)
+        // A cast-iron kettle on the left: round body, lid and knob, a top handle, and a
+        // slender spout turned toward the cups.
+        let bodyWidth = min(w * 0.17, h * 0.2)
+        let kettle = CGRect(x: w * 0.1, y: table.minY - bodyWidth * 0.78, width: bodyWidth, height: bodyWidth * 0.78)
+        let iron = Sketch.hex(0x2E3A34)
         var spout = Path()
-        spout.move(to: CGPoint(x: kettle.maxX - 4, y: kettle.midY))
-        spout.addQuadCurve(to: CGPoint(x: kettle.maxX + w * 0.06, y: kettle.minY + 4), control: CGPoint(x: kettle.maxX + w * 0.04, y: kettle.midY))
-        Sketch.ink(&c, spout, Sketch.hex(0x2E3A34), width: 5)
+        spout.move(to: CGPoint(x: kettle.maxX - kettle.width * 0.1, y: kettle.maxY - kettle.height * 0.35))
+        spout.addQuadCurve(to: CGPoint(x: kettle.maxX + kettle.width * 0.32, y: kettle.minY + kettle.height * 0.15),
+                           control: CGPoint(x: kettle.maxX + kettle.width * 0.22, y: kettle.maxY - kettle.height * 0.3))
+        c.stroke(spout, with: .color(iron), style: StrokeStyle(lineWidth: kettle.width * 0.09, lineCap: .round))
+        c.fill(Path(ellipseIn: kettle), with: .linearGradient(Gradient(colors: [Sketch.hex(0x46544C), iron]),
+                                                              startPoint: CGPoint(x: kettle.minX, y: kettle.minY), endPoint: CGPoint(x: kettle.maxX, y: kettle.maxY)))
+        Sketch.ink(&c, Path(ellipseIn: kettle), ink, width: 1.4)
+        let lid = CGRect(x: kettle.midX - kettle.width * 0.24, y: kettle.minY - kettle.height * 0.06, width: kettle.width * 0.48, height: kettle.height * 0.16)
+        c.fill(Path(ellipseIn: lid), with: .color(Sketch.hex(0x3A4842)))
+        c.fill(Path(ellipseIn: CGRect(x: kettle.midX - 4, y: lid.minY - 6, width: 8, height: 8)), with: .color(iron))
         var handle = Path()
-        handle.addArc(center: CGPoint(x: kettle.midX, y: kettle.minY), radius: kettle.width * 0.32, startAngle: .degrees(200), endAngle: .degrees(340), clockwise: false)
-        Sketch.ink(&c, handle, ink, width: 2)
+        handle.addArc(center: CGPoint(x: kettle.midX, y: kettle.minY + kettle.height * 0.1), radius: kettle.width * 0.42,
+                      startAngle: .degrees(195), endAngle: .degrees(345), clockwise: false)
+        Sketch.ink(&c, handle, ink, width: 2.4)
+        // The rim of the spout, where the steam leaves.
+        let spoutTip = CGPoint(x: kettle.maxX + kettle.width * 0.32, y: kettle.minY + kettle.height * 0.15)
         // Steam rises as the breath goes out.
         let steam = 1 - f.openness
         for k in 0..<3 {
             var wisp = Path()
-            let x0 = kettle.maxX + w * 0.06 + Double(k) * 6
-            wisp.move(to: CGPoint(x: x0, y: kettle.minY))
+            let x0 = spoutTip.x + Double(k - 1) * 4
+            wisp.move(to: CGPoint(x: x0, y: spoutTip.y))
             for step in 1...10 {
                 let t = Double(step) / 10
-                wisp.addLine(to: CGPoint(x: x0 + sin(t * 6 + f.time + Double(k)) * 8, y: kettle.minY - t * h * 0.16 * (0.4 + steam)))
+                wisp.addLine(to: CGPoint(x: x0 + sin(t * 6 + f.time + Double(k)) * 8, y: spoutTip.y - t * h * 0.16 * (0.4 + steam)))
             }
             c.stroke(wisp, with: .color(.white.opacity(0.6 * steam)), lineWidth: 2)
         }

@@ -28,6 +28,14 @@ struct HomeShelves: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.xl) {
+            Shelf(title: "Anchors", subtitle: "A minute away from the screen, with something real.") {
+                ForEach(Anchor.all) { anchor in
+                    NavigationLink(value: ExploreRoute.anchor(anchor.id)) {
+                        AnchorShelfCard(anchor: anchor)
+                    }
+                }
+            }
+
             Shelf(title: "Guided sessions", subtitle: persona.subtitle) {
                 ForEach(Practice.practices(for: persona)) { practice in
                     NavigationLink(value: ExploreRoute.practice(practice.id)) {
@@ -44,10 +52,13 @@ struct HomeShelves: View {
                 }
             }
 
-            Shelf(title: "Courses", subtitle: "A few minutes a day, for five days.") {
-                ForEach(journeys.journeys) { journey in
-                    NavigationLink(value: ExploreRoute.course(journey.id)) {
-                        CourseCard(journey: journey, completed: progress.completedCount(in: journey))
+            // The courses walk the gates in grown-up words, so children don't see them.
+            if persona != .kids {
+                Shelf(title: "Courses", subtitle: "A few minutes a day, for five days.") {
+                    ForEach(journeys.journeys) { journey in
+                        NavigationLink(value: ExploreRoute.course(journey.id)) {
+                            CourseCard(journey: journey, completed: progress.completedCount(in: journey))
+                        }
                     }
                 }
             }
@@ -62,7 +73,7 @@ struct HomeShelves: View {
 
             if let collection = practices.collection {
                 NavigationLink(value: ExploreRoute.practices) {
-                    LibraryCard(count: collection.allDharanas.count, practiced: practices.practiced.count)
+                    LibraryCard(count: collection.allDharanas.count, practiced: practices.practiced.count, persona: persona)
                 }
                 .buttonStyle(.plain)
                 .padding(.horizontal, Theme.Space.page)
@@ -255,6 +266,34 @@ private struct PracticeCard: View {
     }
 }
 
+/// An anchor on the shelf: its sense, its name, and what to notice.
+private struct AnchorShelfCard: View {
+    let anchor: Anchor
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Theme.Space.xs) {
+            Image(systemName: anchor.sense.symbol)
+                .font(.title2)
+                .foregroundStyle(Theme.prism[(Anchor.all.firstIndex(of: anchor) ?? 0) % Theme.prism.count])
+            Spacer(minLength: 0)
+            Text(anchor.title)
+                .font(.system(.subheadline, design: .serif).weight(.semibold))
+                .foregroundStyle(Theme.Palette.ink)
+                .lineLimit(2)
+            Text(anchor.sense.title)
+                .font(Theme.Typography.caption)
+                .foregroundStyle(Theme.Palette.inkSecondary)
+        }
+        .padding(Theme.Space.s)
+        .frame(width: 150, alignment: .topLeading)
+        .frame(minHeight: 150, alignment: .topLeading)
+        .background { IceGlass(shape: cardShape, frost: false) }
+        .contentShape(cardShape)
+        .accessibilityElement(children: .combine)
+        .accessibilityHint(anchor.invitation)
+    }
+}
+
 private struct PlaceCard: View {
     let place: Place
 
@@ -309,7 +348,9 @@ private struct CourseCard: View {
                 .foregroundStyle(Theme.Palette.inkSecondary)
         }
         .padding(Theme.Space.m)
-        .frame(width: 200, height: 150, alignment: .topLeading)
+        // Grows for larger text rather than clipping the title or the days.
+        .frame(width: 200, alignment: .topLeading)
+        .frame(minHeight: 150, alignment: .topLeading)
         .background { IceGlass(shape: cardShape, frost: false) }
         .contentShape(cardShape)
         .accessibilityElement(children: .combine)
@@ -341,6 +382,20 @@ private struct RhythmCard: View {
 private struct LibraryCard: View {
     let count: Int
     let practiced: Int
+    let persona: Persona
+
+    private var title: String {
+        persona == .kids ? "Little practices: \(count) to try" : "The library: \(count) practices"
+    }
+
+    private var detail: String {
+        let about = switch persona {
+        case .kids: "Tiny ways to notice your breath, your body, and the world."
+        case .teens: "Short practices for focus and calm, from an ancient tradition."
+        case .adults, .wise: "Short meditations from the Vijñāna Bhairava Tantra."
+        }
+        return practiced > 0 ? "\(practiced) practiced. \(about)" : about
+    }
 
     var body: some View {
         HStack(spacing: Theme.Space.m) {
@@ -349,12 +404,10 @@ private struct LibraryCard: View {
                 .foregroundStyle(Theme.prism[4])
                 .frame(width: 44, height: 44)
             VStack(alignment: .leading, spacing: 2) {
-                Text("The library: \(count) practices")
+                Text(title)
                     .font(.system(.headline, design: .serif))
                     .foregroundStyle(Theme.Palette.ink)
-                Text(practiced > 0
-                     ? "\(practiced) practiced. Short meditations from the Vijñāna Bhairava Tantra."
-                     : "Short meditations from the Vijñāna Bhairava Tantra. Start with the foundations.")
+                Text(detail)
                     .font(Theme.Typography.caption)
                     .foregroundStyle(Theme.Palette.inkSecondary)
                     .multilineTextAlignment(.leading)
@@ -411,6 +464,12 @@ private struct RespireDestination: View {
             PlacesView()
         case .practices:
             DharanaLibraryView()
+        case .oneMinute:
+            SessionView(rhythm: .calm, allowsOpening: false, length: 1)
+        case .anchor(let id):
+            if let anchor = Anchor.anchor(id: id) {
+                AnchorView(anchor: anchor)
+            }
         }
     }
 }

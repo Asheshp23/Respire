@@ -17,6 +17,7 @@ struct SettingsView: View {
     @AppStorage("sound.nature") private var natureSound = false
     @AppStorage(SolfeggioTone.storageKey) private var tone: SolfeggioTone = .off
     @AppStorage(BreathTheme.storageKey) private var scene: BreathTheme = .aurora
+    @AppStorage(BreathTheme.automaticKey) private var isAutomaticScene = true
     @AppStorage(SessionFocus.storageKey) private var focus: SessionFocus = .calmAnxiety
     @AppStorage(Persona.storageKey) private var persona: Persona = .adults
     @AppStorage("session.minutes") private var minutes = 3
@@ -72,9 +73,11 @@ struct SettingsView: View {
             }
 
             Section {
-                Picker("Scene", selection: $scene) {
+                Picker("Scene", selection: sceneChoice) {
+                    Text("Automatic").tag(BreathTheme?.none)
+                    Divider()
                     ForEach(BreathTheme.scenes(for: persona)) { option in
-                        Text(option.title).tag(option)
+                        Text(option.title).tag(BreathTheme?.some(option))
                     }
                 }
                 Toggle("Sound of the scene", isOn: $natureSound)
@@ -86,7 +89,7 @@ struct SettingsView: View {
             } header: {
                 Text("Scene & sound")
             } footer: {
-                Text("Tones follow the old solfeggio tuning, offered for listening only. Respire makes no claims about what they do.")
+                Text("Automatic follows the day: bright scenes in the morning and afternoon, dusk in the evening, night after dark, and a different one each day. Tones follow the old solfeggio tuning, offered for listening only. Respire makes no claims about what they do.")
             }
 
             Section("Reminders") {
@@ -128,6 +131,21 @@ struct SettingsView: View {
             await session.voice.sample()
             isPlayingSample = false
         }
+    }
+
+    /// `nil` is Automatic; picking a scene keeps it.
+    private var sceneChoice: Binding<BreathTheme?> {
+        Binding(
+            get: { isAutomaticScene ? nil : scene },
+            set: { choice in
+                if let choice {
+                    scene = choice
+                    isAutomaticScene = false
+                } else {
+                    isAutomaticScene = true
+                }
+            }
+        )
     }
 
     static func label(for tone: SolfeggioTone) -> String {

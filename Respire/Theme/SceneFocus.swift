@@ -27,6 +27,7 @@ struct SceneThumbnail: View {
             case .wind: WindScene(openness: 0.6, time: 3)
             case .thunder: ThunderScene(openness: 0.6, time: 3)
             case .cymatics: CymaticsScene(openness: 0.7, time: 3)
+            case .meadow, .alpine, .seaside, .garden, .forest, .lake: DaylightScene(theme: theme, openness: 0.6, time: 3)
             }
         }
         .allowsHitTesting(false)
@@ -52,9 +53,9 @@ struct SceneFocus: View {
         let w = size.width, h = size.height
         let o = openness
         switch theme {
-        case .aurora, .cymatics:
+        case .aurora, .cymatics, .meadow, .alpine, .seaside, .garden, .forest, .lake:
             // The lotus opening is the guide, with no ring of light over it;
-            // Cymatics lights its own bowl.
+            // Cymatics lights its own bowl, and daylight needs no extra glow.
             break
         case .ocean:
             // The setting sun swells, and its path of light widens across the sea.

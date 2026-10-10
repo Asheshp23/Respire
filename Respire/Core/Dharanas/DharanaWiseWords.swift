@@ -1,0 +1,155 @@
+//
+//  DharanaWiseWords.swift
+//  Respire
+//
+//  The gates for the Wise, retold without screens and machines: the same practices,
+//  found in a kettle, a window, a garden, a letter, a clock, and a lifetime.
+//
+
+import Foundation
+
+extension Dharana {
+    static let wiseVersions: [Int: Wording] = [
+        // I · Breath
+        1: .init("The In-Between Breath",
+            "Pause at the quiet turning point between the in-breath and the out-breath, before you speak or begin a task."),
+        3: .init("The Long, Easy Exhale",
+            "Let each out-breath grow a little longer than the in-breath, and feel the whole body ease and slow."),
+        4: .init("Sensing the Palms",
+            "Rest your hands open in your lap and feel the quiet warmth and tingling in your palms."),
+        5: .init("The Heart Center",
+            "Rest your attention in the middle of your chest whenever you hear news, good or difficult."),
+        7: .init("Three Silent Breaths",
+            "Take three gentle breaths without reaching for a single thought, plan, or memory."),
+        8: .init("A Breath Between Rooms",
+            "Take one full, quiet breath each time you pass through a doorway from one room to the next."),
+        9: .init("The Navel Anchor",
+            "Rest your awareness just below the navel whenever the day feels hurried or loud."),
+        10: .init("Breathing in Light",
+            "Imagine breathing soft light in through the brow, easing tired eyes and a full mind."),
+        11: .init("Breathing Out Through the Skin",
+            "Breathe out as if through every pore, letting the busyness of the mind drift away."),
+        12: .init("The Unbroken Thread",
+            "Notice the breath as one continuous thread, running quietly beneath everything you do."),
+
+        // II · The senses
+        13: .init("The Soft Gaze",
+            "Let your eyes soften on a window or a garden until the shapes melt into light and color."),
+        14: .init("Listening Without Names",
+            "Listen to the kettle, the rain, or the clock, not as things but as pure sound."),
+        15: .init("Pure Touch",
+            "Touch a cup, a cloth, or the arm of your chair without naming it; rest in the feeling alone."),
+        16: .init("Resting Behind Closed Eyes",
+            "Close your eyes after looking at something bright, and rest in the soft darkness behind the eyelids."),
+        18: .init("The Music of a Voice",
+            "Listen to a voice on the radio or a friend's voice, hearing only its pitch and rhythm, not its words."),
+        19: .init("Widening the View",
+            "While looking ahead, let your awareness widen gently to the far left and the far right."),
+        20: .init("The Unseen Smell",
+            "Notice the faint smell of the air in your room: wood, tea, flowers, the season outside."),
+        21: .init("Taste of Presence",
+            "Sip some water or tea slowly, with nothing else to do, tasting it completely."),
+        22: .init("The One Who Sees",
+            "Let your attention turn gently back toward the one who is looking out through your eyes."),
+
+        // III · Open space
+        26: .init("The Empty Page",
+            "Sit before a blank page or an empty table without filling it; rest in what has not yet begun."),
+        27: .init("Clearing the Mind",
+            "Imagine setting down every errand and worry, like clearing a table after a meal."),
+        31: .init("The Unforeseen Moment",
+            "Notice that no one, not even you, can know exactly what the next moment will bring."),
+        32: .init("The Silence After the Sound",
+            "When a bell, a bird, or a doorbell stops, follow the fading sound all the way into silence."),
+        33: .init("Light on Glass",
+            "Look at a window and see it simply as light passing through glass."),
+        34: .init("A Minute of Nothing",
+            "Spend one minute resting in awareness, doing nothing, reading nothing, planning nothing."),
+        36: .init("The Background of Awareness",
+            "See that every thought and memory appears on the same unchanging background: your own awareness."),
+
+        // IV · Feeling
+        37: .init("The Pull of Urgency",
+            "Feel the tug of hurry in the body when you reach to do something at once, and pause before acting."),
+        39: .init("Letting Anger Be Energy",
+            "When something upsetting is said, feel it simply as heat and energy in the body, without taking a side."),
+        40: .init("Resting in Delight",
+            "When joy or insight arrives, rest in the joy itself before telling anyone about it."),
+        41: .init("Contentment Within",
+            "Feel quiet satisfaction in something you've done, without needing anyone's praise."),
+        43: .init("A Steady Heart",
+            "Listen to the day's news while keeping your heart steady and calm, like still water."),
+        45: .init("Enjoying the Question",
+            "Hold a question in mind for a few minutes before looking up or asking; enjoy simply wondering."),
+        46: .init("The Roles We Play",
+            "Notice the roles you play, parent, friend, neighbor, as clothes you wear, not who you are."),
+        48: .init("Resting in Not Knowing",
+            "Let yourself not know an answer for a while, rather than rushing to be certain."),
+
+        // V · Sound
+        51: .init("The Hum of the House",
+            "Use the steady hum of the fridge, the wind, or a fan as an anchor into inner quiet."),
+        57: .init("The Silence Between Words",
+            "Listen for the small stillnesses between the words of someone speaking."),
+
+        // VI · The body
+        65: .init("Feeling the Heartbeat",
+            "Feel your pulse at the wrist or in the chest, simply and patiently, with nothing to measure."),
+        69: .init("Easing Stiffness",
+            "Breathe gently into any stiffness in the neck, shoulders, or back, and let it soften."),
+
+        // VII · Awareness
+        73: .init("The Quiet Observer",
+            "While the mind thinks and plans, notice that you are the one aware of the thinking."),
+        74: .init("What Cannot Be Measured",
+            "Find the part of your awareness that cannot be counted, weighed, or explained."),
+        76: .init("The Unbroken Witness",
+            "Notice that the awareness looking out today is the same awareness that looked out in your childhood."),
+        78: .init("Living Awareness",
+            "Feel the living warmth of your own awareness, here, now, alive."),
+        80: .init("Watching the Mind Weigh",
+            "Watch the mind weigh up a choice, seeing thoughts form and pass like clouds."),
+        81: .init("The Quiet Spark",
+            "Treasure the sudden intuitions and good ideas that arise out of silence."),
+        83: .init("Not the Story",
+            "Remind yourself: \"I am not my worries, I am not my story; I am the space in which they appear.\""),
+
+        // VIII · Sleep and thresholds
+        85: .init("The Evening Bridge",
+            "Turn off the lights and the radio a little before bed, and rest as the mind slowly darkens."),
+        87: .init("The Waking Moment",
+            "Notice the first instant of awareness on waking, before the day's thoughts arrive."),
+        88: .init("The Dreamlike Day",
+            "See the stories, pictures, and memories of the day as a gentle waking dream."),
+        91: .init("Beginning With Intention",
+            "Before you begin a task, a visit, or a meal, quietly name your intention."),
+        92: .init("Ending With Care",
+            "When you finish something, pause, and gather your attention back into your body."),
+        93: .init("The Midnight Silence",
+            "In the quiet of the night, feel the stillness that lies beneath the whole sleeping world."),
+
+        // IX · One field
+        97: .init("The Sacred in Everything",
+            "Sense one living awareness shining through every leaf, stone, and person."),
+        98: .init("The World as Awareness",
+            "See your room, your body, and the garden outside as one field of awareness."),
+        99: .init("One Space",
+            "Feel that the space in your room, the space in the sky, and the space in your heart are one space."),
+        100: .init("The Unmoving Center",
+            "Rest in your quiet inner center while the busy world turns around you."),
+        104: .init("The Divine Play (Lila)",
+            "See the whole of life, its seasons and its changes, as consciousness playing with itself."),
+        105: .init("Every Place Is Sacred",
+            "Know that a cluttered kitchen is no less sacred than a mountain temple."),
+        106: .init("Every Action as an Offering",
+            "Do each small thing, pouring tea, folding cloth, watering a plant, as an offering of presence."),
+        108: .init("Freedom From Outcomes",
+            "Do things fully and with care, and let go of how they turn out."),
+        109: .init("The Self Containing the World",
+            "Feel that the whole world, near and far, appears within your awareness, not outside it."),
+        111: .init("Dissolving Into Light",
+            "Imagine your whole being softly dissolving into warm, boundless light."),
+        112: .init("The Ultimate Realization (Soham)",
+            "Rest in the final truth of the Vijñāna Bhairava Tantra: \"I am not the body, I am not the mind; I am the infinite awareness in which all things appear.\""),
+    ]
+}
