@@ -19,7 +19,20 @@ struct VoiceLine {
 enum VoiceScript {
     // MARK: Settling in
 
-    static func intro(focus: SessionFocus, minutes: Int?, guidance: String?, breathSound: Bool) -> [VoiceLine] {
+    /// The settling-in. `brief` is for people who've heard the full one a few times already:
+    /// a welcome back, the one line about this session, and straight in.
+    static func intro(focus: SessionFocus, minutes: Int?, guidance: String?, breathSound: Bool, brief: Bool = false) -> [VoiceLine] {
+        if brief {
+            var lines = [
+                VoiceLine(text: "Welcome back.", pause: 1),
+                VoiceLine(text: "Get comfortable, and close your eyes when you're ready.", pause: 3),
+            ]
+            if let guidance, !guidance.isEmpty {
+                lines.append(VoiceLine(text: guidance, pause: 2))
+            }
+            lines.append(VoiceLine(text: "Let's begin.", pause: 1))
+            return lines
+        }
         var lines: [VoiceLine] = [
             VoiceLine(text: "Welcome.", pause: 1.5),
             VoiceLine(text: "Find a position that feels comfortable. Sitting or lying down are both fine."),

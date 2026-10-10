@@ -16,6 +16,9 @@ final class VoiceGuide {
     static let storageKey = "sound.voice"
     /// Breaths spoken aloud before the voice falls quiet.
     private static let spokenBreaths = 2
+    /// How many times the full settling-in is spoken before it shortens.
+    private static let fullIntros = 3
+    private static let introsHeardKey = "voice.introsHeard"
 
     private let soundscape: Soundscape
     /// `nil` for a Place, which has a shorter closing.
@@ -115,7 +118,11 @@ final class VoiceGuide {
             await speak(practice.intro)
             return
         }
-        let lines = VoiceScript.intro(focus: focus ?? .calmAnxiety, minutes: minutes, guidance: guidance, breathSound: breathSound)
+        // The full settling-in for the first few sessions, then a short one.
+        let heard = UserDefaults.standard.integer(forKey: Self.introsHeardKey)
+        UserDefaults.standard.set(heard + 1, forKey: Self.introsHeardKey)
+        let lines = VoiceScript.intro(focus: focus ?? .calmAnxiety, minutes: minutes, guidance: guidance,
+                                      breathSound: breathSound, brief: heard >= Self.fullIntros)
         await speak(lines)
     }
 

@@ -28,6 +28,12 @@ struct HomeShelves: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.Space.xl) {
+            NavigationLink(value: ExploreRoute.prescribe) {
+                MakeSessionCard()
+            }
+            .buttonStyle(.plain)
+            .padding(.horizontal, Theme.Space.page)
+
             Shelf(title: "Anchors", subtitle: "A minute away from the screen, with something real.") {
                 ForEach(Anchor.all) { anchor in
                     NavigationLink(value: ExploreRoute.anchor(anchor.id)) {
@@ -55,7 +61,7 @@ struct HomeShelves: View {
             // The courses walk the gates in grown-up words, so children don't see them.
             if persona != .kids {
                 Shelf(title: "Courses", subtitle: "A few minutes a day, for five days.") {
-                    ForEach(journeys.journeys) { journey in
+                    ForEach(journeys.journeys.filter { $0.suits(persona) }) { journey in
                         NavigationLink(value: ExploreRoute.course(journey.id)) {
                             CourseCard(journey: journey, completed: progress.completedCount(in: journey))
                         }
@@ -266,6 +272,35 @@ private struct PracticeCard: View {
     }
 }
 
+/// The way into a session made for how you feel right now.
+private struct MakeSessionCard: View {
+    var body: some View {
+        HStack(spacing: Theme.Space.m) {
+            Image(systemName: "wand.and.sparkles")
+                .font(.title2)
+                .foregroundStyle(Theme.prism[3])
+                .frame(width: 44, height: 44)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Make my session")
+                    .font(.system(.headline, design: .serif))
+                    .foregroundStyle(Theme.Palette.ink)
+                Text("A few quick questions, safety first, then a session made for how you feel.")
+                    .font(Theme.Typography.caption)
+                    .foregroundStyle(Theme.Palette.inkSecondary)
+                    .multilineTextAlignment(.leading)
+            }
+            Spacer(minLength: 0)
+            Image(systemName: "chevron.right")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Theme.Palette.inkTertiary)
+        }
+        .padding(Theme.Space.m)
+        .background { IceGlass(shape: cardShape, frost: false) }
+        .contentShape(cardShape)
+        .accessibilityElement(children: .combine)
+    }
+}
+
 /// An anchor on the shelf: its sense, its name, and what to notice.
 private struct AnchorShelfCard: View {
     let anchor: Anchor
@@ -470,6 +505,8 @@ private struct RespireDestination: View {
             if let anchor = Anchor.anchor(id: id) {
                 AnchorView(anchor: anchor)
             }
+        case .prescribe:
+            PrescribeView()
         }
     }
 }

@@ -39,6 +39,20 @@ nonisolated struct Journey: Codable, Identifiable, Hashable, Sendable {
     }
 }
 
+extension Journey {
+    /// Courses written around screens and prompts, which the Wise don't see; they get the
+    /// ones about breath and sound. Children don't see courses at all.
+    private static let screenCourses: Set<String> = ["the-unprompted-mind", "digital-twilight", "coming-home-to-the-body"]
+
+    func suits(_ persona: Persona) -> Bool {
+        switch persona {
+        case .kids: false
+        case .wise: !Self.screenCourses.contains(id)
+        case .teens, .adults: true
+        }
+    }
+}
+
 nonisolated struct JourneyChapter: Codable, Identifiable, Hashable, Sendable {
     var id: String
     var day: Int

@@ -185,7 +185,7 @@ struct SessionView: View {
                     } else {
                         // Resting controls stay faintly visible and still work on the first tap.
                         TransportControls(onBegin: { begin() }, onEnd: end)
-                            .opacity(controlsResting ? 0.25 : 1)
+                            .opacity(controlsResting ? 0.35 : 1)
                     }
                     // Journeys and gates set their own focus and length, so there's nothing to choose.
                     if showsDetails, isFree, lengthOverride == nil {

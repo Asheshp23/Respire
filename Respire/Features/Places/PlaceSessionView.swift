@@ -248,7 +248,7 @@ struct PlaceSessionView: View {
                     }
                     SessionControl(title: "Leave", systemImage: "xmark") { dismiss() }
                 }
-                .opacity(controlsResting && engine.state == .running ? 0.25 : 1)
+                .opacity(controlsResting && engine.state == .running ? 0.35 : 1)
             }
         case .finished:
             CompletionCard(eyebrow: place.durationLabel, hue: place.tint, title: "You have arrived.") {

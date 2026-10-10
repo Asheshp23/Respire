@@ -216,7 +216,9 @@ final class Soundscape {
             var converted: AVAudioPCMBuffer?
             if let pcm = buffer as? AVAudioPCMBuffer, pcm.frameLength > 0 {
                 converted = Self.floatBuffer(from: pcm, converter: &converter)
-                if converted == nil { return }
+                // Nothing came out of this one (or it failed): wait for the next, rather than
+                // scheduling an empty buffer or ending the line early.
+                guard let output = converted, output.frameLength > 0 else { return }
             }
             nonisolated(unsafe) let delivered = converted
             DispatchQueue.main.async {

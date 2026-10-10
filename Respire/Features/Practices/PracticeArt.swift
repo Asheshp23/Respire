@@ -211,7 +211,8 @@ enum PracticeArt {
     private static func sleepyStarfish(_ c: inout GraphicsContext, _ s: CGSize, _ f: PlaceFrame) {
         let w = s.width, h = s.height, m = min(w, h)
         Sketch.night(&c, s, top: Sketch.hex(0x0A1030), bottom: Sketch.hex(0x2A3A6A), stars: 110, starsTo: 0.45, time: f.time)
-        let moon = CGPoint(x: w * 0.72, y: h * 0.16)
+        // Low enough to stay clear of the title bar above it.
+        let moon = CGPoint(x: w * 0.74, y: h * 0.28)
         Sketch.glow(&c, at: moon, radius: m * 0.3, color: Sketch.hex(0xF0F0FF), opacity: 0.3)
         c.fill(Path(ellipseIn: CGRect(x: moon.x - m * 0.06, y: moon.y - m * 0.06, width: m * 0.12, height: m * 0.12)),
                with: .color(Sketch.hex(0xF4F0E0)))

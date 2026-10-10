@@ -25,6 +25,8 @@ enum ExploreRoute: Hashable {
     case oneMinute
     /// A minute pointed away from the screen, at something real.
     case anchor(Anchor.ID)
+    /// A session made on demand for how someone feels right now.
+    case prescribe
 }
 
 /// The breathing rhythms, and where in the app you are: the tab, and each tab's stack.

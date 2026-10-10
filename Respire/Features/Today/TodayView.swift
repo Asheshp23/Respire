@@ -38,9 +38,16 @@ struct TodayView: View {
                         library.start(.practice(practice.id), in: session)
                     }
 
-                    // The quickest way in: one minute, no settling-in, breathing at once.
-                    OneMinuteButton {
-                        library.start(.oneMinute, in: session)
+                    // Made for how you feel, or the quickest way in: one minute, breathing at once.
+                    HStack(spacing: Theme.Space.s) {
+                        QuietButton(title: "Make my session", systemImage: "wand.and.sparkles",
+                                    hint: "A few questions, then a session made for how you feel") {
+                            library.visit(.prescribe)
+                        }
+                        QuietButton(title: "One minute", systemImage: "timer",
+                                    hint: "Begins one minute of calm breathing right away") {
+                            library.start(.oneMinute, in: session)
+                        }
                     }
                 }
                 .padding(.horizontal, Theme.Space.page)
@@ -86,7 +93,10 @@ private struct AnchorHero: View {
                 // and showed a second moon and mountain behind the card.
                 Color.black
                 SceneThumbnail(theme: .current(at: date, persona: persona))
-                LinearGradient(colors: [.clear, .black.opacity(0.75)], startPoint: .center, endPoint: .bottom)
+                // Shade from a third of the way down, so the words read over busy daytime art.
+                LinearGradient(stops: [.init(color: .clear, location: 0.3), .init(color: .black.opacity(0.55), location: 0.55),
+                                       .init(color: .black.opacity(0.85), location: 1)],
+                               startPoint: .top, endPoint: .bottom)
 
                 VStack(alignment: .leading, spacing: Theme.Space.s) {
                     Text("\(moment) · About a minute")
@@ -204,13 +214,18 @@ private struct ReliefButton: View {
     }
 }
 
-/// One minute of breathing, for when there's no time for anything else.
-private struct OneMinuteButton: View {
+/// A quiet capsule on the home: a session made for you, or one minute of breathing.
+private struct QuietButton: View {
+    let title: String
+    let systemImage: String
+    let hint: String
     var action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            Label("Just one minute", systemImage: "timer")
+            Label(title, systemImage: systemImage)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
                 .font(Theme.Typography.label)
                 .foregroundStyle(Theme.Palette.ink)
                 .frame(maxWidth: .infinity, minHeight: Theme.minTapTarget + 4)
@@ -218,7 +233,7 @@ private struct OneMinuteButton: View {
                 .contentShape(Capsule())
         }
         .buttonStyle(PressableCardStyle())
-        .accessibilityHint("Begins one minute of calm breathing right away")
+        .accessibilityHint(hint)
     }
 }
 

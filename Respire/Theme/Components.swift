@@ -305,7 +305,9 @@ struct SessionControl: View {
                 Text(title)
                     .font(Theme.Typography.label)
                     .foregroundStyle(.white)
-                    .shadow(color: .black.opacity(0.7), radius: 4)
+                    .padding(.horizontal, Theme.Space.xs)
+                    .padding(.vertical, 2)
+                    .background(.black.opacity(0.4), in: Capsule())
             }
             .contentShape(Rectangle())
         }
